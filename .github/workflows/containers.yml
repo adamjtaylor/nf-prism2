@@ -1,0 +1,102 @@
+name: build-containers
+
+# Builds the two linux/amd64 images and pushes them to GHCR.
+# Needed because these cannot be built on Apple Silicon: the flash-attn wheel is x86_64-only.
+#
+# After the first successful run, make the packages public (once):
+#   gh api -X PATCH /user/packages/container/nf-prism2-trident --field visibility=public
+#   gh api -X PATCH /user/packages/container/nf-prism2-prism2  --field visibility=public
+# otherwise AWS Batch cannot pull them without registry credentials.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'containers/**'
+      - '.github/workflows/containers.yml'
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Which image to build'
+        type: choice
+        options: [both, trident, prism2]
+        default: both
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: trident
+            dockerfile: containers/trident.Dockerfile
+          - name: prism2
+            dockerfile: containers/prism2.Dockerfile
+    steps:
+      - uses: actions/checkout@v4
+
+      # The pytorch CUDA base images are ~9 GB; the default runner disk is not enough.
+      - name: Free disk space
+        run: |
+          df -h /
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc \
+                      /usr/local/share/boost /usr/local/lib/node_modules \
+                      "$AGENT_TOOLSDIRECTORY" || true
+          sudo docker image prune -af || true
+          df -h /
+
+      - name: Skip unselected image
+        id: gate
+        run: |
+          want='${{ github.event.inputs.image || "both" }}'
+          if [ "$want" = "both" ] || [ "$want" = "${{ matrix.name }}" ]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: docker/setup-buildx-action@v3
+        if: steps.gate.outputs.build == 'true'
+
+      - uses: docker/login-action@v3
+        if: steps.gate.outputs.build == 'true'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/metadata-action@v5
+        if: steps.gate.outputs.build == 'true'
+        id: meta
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/nf-prism2-${{ matrix.name }}
+          tags: |
+            type=raw,value=1.0.0
+            type=raw,value=latest
+            type=sha,format=short
+
+      - uses: docker/build-push-action@v6
+        if: steps.gate.outputs.build == 'true'
+        with:
+          context: containers
+          file: ${{ matrix.dockerfile }}
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}
+
+      - name: Report digest
+        if: steps.gate.outputs.build == 'true'
+        run: |
+          echo "### nf-prism2-${{ matrix.name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ steps.meta.outputs.tags }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

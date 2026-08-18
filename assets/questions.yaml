@@ -1,0 +1,44 @@
+# PRISM2 question set. Edit freely, or point --questions at your own copy.
+#
+# Three blocks, all optional:
+#   yes_no          -> model.yes_no_score(question=...)  -> one float per slide (higher = yes)
+#   open_ended      -> model.get_response(prompt=...)    -> free text
+#   multiple_choice -> model.get_response(prompt=...)    -> free text, prompt lists options
+#   report          -> a single get_response call for a narrative report
+#
+# `id` values become column names in results.tsv and must be unique across all blocks.
+
+yes_no:
+  - id: invasive_carcinoma
+    question: "Is invasive carcinoma present?"
+  - id: in_situ_carcinoma
+    question: "Is carcinoma in situ present?"
+  - id: lvi
+    question: "Is lymphovascular invasion present?"
+  - id: perineural_invasion
+    question: "Is perineural invasion present?"
+  - id: necrosis
+    question: "Is tumor necrosis present?"
+  - id: high_grade
+    question: "Is the tumor high grade?"
+
+open_ended:
+  - id: cancer_type
+    prompt: "What type of cancer is this?"
+  - id: tumor_grade
+    prompt: "What is the tumor grade?"
+  - id: notable_features
+    prompt: "Describe the most notable histologic features of this specimen."
+
+multiple_choice:
+  - id: specimen_adequacy
+    prompt: |
+      Is this specimen adequate for diagnostic assessment?
+      Options:
+      A. Adequate
+      B. Suboptimal but interpretable
+      C. Inadequate
+
+report:
+  prompt: "Write a report"
+  max_new_tokens: 300

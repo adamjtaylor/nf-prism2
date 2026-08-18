@@ -1,0 +1,147 @@
+# Usage
+
+## 1. Model access (do this first)
+
+Both models are gated:
+
+1. Log in to HuggingFace with an **institutional email** and accept the licences at
+   <https://huggingface.co/paige-ai/Virchow2> and <https://huggingface.co/paige-ai/Prism2>.
+2. Create a read token and register it as a Nextflow secret:
+
+   ```bash
+   nextflow secrets set HF_TOKEN "hf_..."
+   ```
+
+   On Seqera Platform: *Credentials → Secrets → Add secret* named `HF_TOKEN`, then attach it
+   to the pipeline. Only `STAGE_MODELS` needs it in normal operation (`TRIDENT_EMBED` and
+   `PRISM2_INFER` also declare it so an unexpected cache miss can still self-heal).
+
+`STAGE_MODELS` downloads ~10 GB once per run and passes the cache directory to every task.
+For repeat runs, publish the cache to S3 once and skip the step:
+
+```bash
+--hf_cache s3://my-bucket/hf_cache
+```
+
+## 2. Build and publish the containers
+
+```bash
+docker build -f containers/trident.Dockerfile -t <registry>/nf-prism2-trident:1.0.0 containers
+docker build -f containers/prism2.Dockerfile  -t <registry>/nf-prism2-prism2:1.0.0  containers
+docker push <registry>/nf-prism2-trident:1.0.0
+docker push <registry>/nf-prism2-prism2:1.0.0
+```
+
+Then edit `params.container_trident` / `params.container_prism2` in `conf/base.config`.
+Pin by digest (`@sha256:...`) for reproducibility.
+
+### flash-attn wheel
+
+PRISM2 wants `flash-attn>=2.6.3`. The Dockerfile installs a prebuilt wheel because a source
+build takes about an hour. If the build fails on the wheel, the tags did not match the base
+image. Check them:
+
+```bash
+docker run --rm pytorch/pytorch:2.6.0-cuda12.4-cudnn9-devel python -c \
+  "import sys, torch; print(sys.version_info[:2], torch.__version__, torch._C._GLIBCXX_USE_CXX11_ABI)"
+```
+
+Pick the matching asset from <https://github.com/Dao-AILab/flash-attention/releases> —
+`cu12torch<VER>cxx11abi{TRUE,FALSE}-cp<PY>-cp<PY>-linux_x86_64.whl` — and pass it in:
+
+```bash
+docker build -f containers/prism2.Dockerfile --build-arg FLASH_ATTN_WHEEL=<url> -t ... containers
+```
+
+## 3. Compute environment (AWS Batch / Seqera Platform)
+
+* Create a **GPU-enabled** Batch compute environment (ECS GPU-optimised AMI). Both GPU steps
+  request `accelerator = 1`.
+* GPU sizing:
+  * `TRIDENT_EMBED` (`gpu_small`) — Virchow2 forward passes; a T4/A10G is fine.
+  * `PRISM2_INFER` (`gpu_large`) — 4.4B params in bf16 plus up to `max_tiles × 1280` tile
+    embeddings. Use **≥24 GB VRAM** (g5.2xlarge / A10G or better). If you hit OOM, lower
+    `--max_tiles` before reaching for a bigger instance.
+* Set `--gpu_queue <queue>` so CPU steps (`STAGE_MODELS`, `COLLECT_RESULTS`) can run on a
+  cheaper CPU queue; if omitted, everything goes to `--queue`.
+* `conf/awsbatch.config` enables Fusion + Wave so WSIs stream from S3 instead of being fully
+  copied into each task. On Seqera Platform the compute environment's own settings win.
+* Use an S3 work directory (`-work-dir s3://...` or the compute environment default).
+
+Launch from the CLI:
+
+```bash
+nextflow run . -profile awsbatch \
+    --input samplesheet.csv \
+    --outdir s3://my-bucket/prism2-results \
+    --queue my-cpu-queue \
+    --gpu_queue my-gpu-queue \
+    -work-dir s3://my-bucket/work
+```
+
+On Seqera Platform, add the repo as a pipeline; `nextflow_schema.json` renders the launch
+form, so `input`, `outdir`, `questions`, `gpu_queue` and the tiling/inference knobs are all
+editable in the UI.
+
+## 4. Verification ladder
+
+```bash
+# a. wiring, filenames, channel topology - no GPU and no container engine needed.
+#    Every step is stubbed except COLLECT_RESULTS, which runs for real against the
+#    stubbed per-slide JSON, so the merge logic is covered too.
+nextflow run . -profile test,local -stub
+
+# b. gated access + encoder registry, inside the trident image
+docker run --rm -e HF_TOKEN=$HF_TOKEN <registry>/nf-prism2-trident:1.0.0 \
+    trident-doctor --profile patch-encoders --check-gated
+
+# c. real single slide (public OpenSlide CMU-1.svs) on one GPU box
+#    add `local` if the box has less RAM than the gpu_large label requests (48 GB)
+nextflow run . -profile test,docker_gpu,local --outdir results_test
+
+# d. same, on Batch
+nextflow run . -profile test,awsbatch --outdir s3://my-bucket/test --gpu_queue my-gpu-queue
+
+# e. full cohort, then confirm -resume is a no-op
+nextflow run . -profile awsbatch --input samplesheet.csv --outdir s3://... -resume
+```
+
+What to check after (c):
+
+* `results_test/tiles/CMU-1/qc/` — tissue contours look sane, tile overlay covers tissue.
+* `python -c "import h5py; f=h5py.File('<work>/CMU-1.features.h5'); print({k: f[k].shape for k in f})"`
+  → features `(N, 1280)`.
+* `results_test/prism2/CMU-1/CMU-1.prism2.json` → `base_embedding_dim: 2560`,
+  `diagnostic_embedding_dim: 3072`, finite yes/no scores, non-empty `report`.
+* `results_test/results.tsv` → one row per slide, one column per question id.
+
+### Profiles
+
+| Profile | Effect |
+|---|---|
+| `local` | Local executor with `resourceLimits` capped to 4 CPU / 8 GB, so label requests do not exceed a laptop |
+| `docker` | Docker, no GPU flags (stub / CPU work) |
+| `docker_gpu` | Docker with `--gpus all` |
+| `singularity` | Singularity/Apptainer with `--nv` and auto-mounts |
+| `awsbatch` | AWS Batch executor, Fusion + Wave, GPU queue routing |
+| `test` | CMU-1.svs, tiny question set, `max_tiles=2000`, `segmenter=otsu` |
+
+## 5. Troubleshooting
+
+| Symptom | Cause / fix |
+|---|---|
+| `HF_TOKEN is empty` in `STAGE_MODELS` | Secret not set or not attached to the run. |
+| `401/403` on `hf download` | Licence not accepted by the token's account, or non-institutional email. |
+| `tile embeddings are 2560-d but PRISM2 requires 1280-d` | TRIDENT ran with `virchow2` instead of `virchow2-cls`. The encoder is deliberately hard-coded in `modules/local/trident_embed/main.nf`; check for local edits. |
+| `zero tiles` | Segmentation found no foreground. Try `--segmenter otsu`, or check the slide is readable by OpenSlide. |
+| TRIDENT errors about MPP / magnification | Slide metadata lacks microns-per-pixel — add the `mpp` column for that row in the samplesheet. |
+| CUDA OOM in `PRISM2_INFER` | Lower `--max_tiles` (default 50000), or use a bigger GPU. |
+| `ImportError: flash_attn` | Wheel/base-image mismatch — see the flash-attn section above. |
+| `Process requirement exceeds available memory` | Local executor vs the `gpu_large` label - add `-profile ...,local`. |
+| Non-pyramidal or exotic formats | Convert first: `trident convert --input_dir ... --mpp_csv ...` inside the trident image, then point the samplesheet at the converted TIFFs. |
+
+## 6. Deviations from a full nf-core template
+
+Deliberately lightweight: no `nf-schema` plugin (validation is inline in `main.nf`;
+`nextflow_schema.json` is kept purely so the Seqera launch form is usable), no
+`versions.yml` collection, no MultiQC, four local modules only.

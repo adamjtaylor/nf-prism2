@@ -1,0 +1,4 @@
+sample,slide,mpp
+SLIDE_A,s3://my-bucket/wsis/SLIDE_A.svs,
+SLIDE_B,s3://my-bucket/wsis/SLIDE_B.ndpi,
+SLIDE_C_no_metadata,s3://my-bucket/wsis/SLIDE_C.tif,0.2425

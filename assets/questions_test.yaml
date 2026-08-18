@@ -1,0 +1,12 @@
+# Tiny question set for the -profile test smoke run.
+yes_no:
+  - id: invasive_carcinoma
+    question: "Is invasive carcinoma present?"
+
+open_ended:
+  - id: cancer_type
+    prompt: "What type of cancer is this?"
+
+report:
+  prompt: "Write a report"
+  max_new_tokens: 64

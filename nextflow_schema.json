@@ -1,0 +1,199 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "nf-prism2 pipeline parameters",
+    "description": "OpenSlide WSI -> Virchow2 class-token tile embeddings -> PRISM2 slide embeddings, yes/no scores, Q&A and report",
+    "type": "object",
+    "definitions": {
+        "input_output_options": {
+            "title": "Input/output options",
+            "type": "object",
+            "required": [
+                "input",
+                "outdir"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "format": "file-path",
+                    "mimetype": "text/csv",
+                    "description": "Samplesheet CSV with columns sample,slide[,mpp]",
+                    "help_text": "'slide' is any OpenSlide-readable path (local, https or s3://). 'mpp' is optional and only needed for slides whose metadata lacks microns-per-pixel."
+                },
+                "outdir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "default": "results",
+                    "description": "Output directory (local path or s3://)"
+                },
+                "questions": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Question set YAML (yes_no / open_ended / multiple_choice / report). Defaults to assets/questions.yaml."
+                }
+            }
+        },
+        "tiling_options": {
+            "title": "Tiling and tile encoder",
+            "type": "object",
+            "description": "PRISM2 was trained on 224 px tiles at 20x; changing these is off-label.",
+            "properties": {
+                "mag": {
+                    "type": "integer",
+                    "default": 20,
+                    "enum": [
+                        5,
+                        10,
+                        20,
+                        40
+                    ],
+                    "description": "Tiling magnification"
+                },
+                "patch_size": {
+                    "type": "integer",
+                    "default": 224,
+                    "description": "Tile size in pixels"
+                },
+                "segmenter": {
+                    "type": "string",
+                    "default": "hest",
+                    "enum": [
+                        "hest",
+                        "grandqc",
+                        "otsu"
+                    ],
+                    "description": "TRIDENT tissue segmentation model"
+                },
+                "seg_conf_thresh": {
+                    "type": "number",
+                    "default": 0.5,
+                    "description": "Segmentation confidence threshold"
+                },
+                "remove_artifacts": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Drop tiles on artefacts"
+                },
+                "remove_penmarks": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Drop tiles on pen marks"
+                },
+                "remove_holes": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Drop tiles inside tissue holes"
+                },
+                "tile_batch_size": {
+                    "type": "integer",
+                    "default": 32,
+                    "description": "Virchow2 forward-pass batch size"
+                },
+                "reader_type": {
+                    "type": "string",
+                    "description": "Force a WSI reader (openslide, image, cucim, sdpc, omezarr, czi)"
+                }
+            }
+        },
+        "inference_options": {
+            "title": "PRISM2 inference",
+            "type": "object",
+            "properties": {
+                "max_tiles": {
+                    "type": "integer",
+                    "default": 50000,
+                    "description": "Seeded random subsample cap on tiles per slide (0 = no cap)"
+                },
+                "max_new_tokens": {
+                    "type": "integer",
+                    "default": 100,
+                    "description": "Default generation length for open-ended answers"
+                },
+                "seed": {
+                    "type": "integer",
+                    "default": 42,
+                    "description": "Random seed for tile subsampling"
+                },
+                "save_embeddings": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Write base (2560-d) and diagnostic (3072-d) embeddings as .npz"
+                }
+            }
+        },
+        "model_weights_options": {
+            "title": "Model weights",
+            "type": "object",
+            "description": "paige-ai/Virchow2 and paige-ai/Prism2 are gated (CC-BY-NC-ND 4.0). Provide HF_TOKEN as a secret.",
+            "properties": {
+                "hf_cache": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Pre-staged HuggingFace cache directory; skips the download step"
+                },
+                "hf_repos_extra": {
+                    "type": "string",
+                    "default": "MahmoodLab/hest-tissue-seg",
+                    "description": "Extra HF repos to pre-stage (comma-separated, best-effort)"
+                }
+            }
+        },
+        "execution_options": {
+            "title": "Execution",
+            "type": "object",
+            "properties": {
+                "gpu_queue": {
+                    "type": "string",
+                    "description": "AWS Batch queue for GPU tasks (needs a GPU-enabled compute environment)"
+                },
+                "queue": {
+                    "type": "string",
+                    "description": "AWS Batch queue for CPU tasks"
+                },
+                "aws_region": {
+                    "type": "string",
+                    "default": "us-east-1",
+                    "description": "AWS region"
+                },
+                "publish_dir_mode": {
+                    "type": "string",
+                    "default": "copy",
+                    "enum": [
+                        "copy",
+                        "symlink",
+                        "link",
+                        "move",
+                        "rellink"
+                    ],
+                    "hidden": true
+                },
+                "help": {
+                    "type": "boolean",
+                    "default": false,
+                    "hidden": true
+                },
+                "cpu_only": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Drop GPU (accelerator) requests - only for CPU-queue smoke tests, real runs need GPUs"
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/input_output_options"
+        },
+        {
+            "$ref": "#/definitions/tiling_options"
+        },
+        {
+            "$ref": "#/definitions/inference_options"
+        },
+        {
+            "$ref": "#/definitions/model_weights_options"
+        },
+        {
+            "$ref": "#/definitions/execution_options"
+        }
+    ]
+}
