@@ -5,7 +5,7 @@
 process PRISM2_INFER {
     tag "${meta.id}"
     label 'gpu_large'
-    secret 'HF_TOKEN'
+    secret params.hf_token_secret
 
     publishDir path: { "${params.outdir}/prism2/${meta.id}" }, mode: params.publish_dir_mode
 
@@ -22,6 +22,7 @@ process PRISM2_INFER {
     script:
     def save_emb = params.save_embeddings ? '--save-embeddings' : ''
     """
+    export HF_TOKEN="\${${params.hf_token_secret}:-}"
     export HF_HOME=\$PWD/${hf_cache}
     export OMP_NUM_THREADS=${task.cpus}
     export TOKENIZERS_PARALLELISM=false

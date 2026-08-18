@@ -134,6 +134,11 @@
                     "type": "string",
                     "default": "MahmoodLab/hest-tissue-seg",
                     "description": "Extra HF repos to pre-stage (comma-separated, best-effort)"
+                },
+                "hf_token_secret": {
+                    "type": "string",
+                    "default": "HF_TOKEN",
+                    "description": "Name of the Nextflow/Seqera secret holding the HuggingFace token (e.g. AJT_HF_TOKEN)"
                 }
             }
         },

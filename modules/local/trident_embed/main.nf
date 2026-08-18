@@ -7,7 +7,7 @@
 process TRIDENT_EMBED {
     tag "${meta.id}"
     label 'gpu_small'
-    secret 'HF_TOKEN'
+    secret params.hf_token_secret
 
     publishDir path: { "${params.outdir}/tiles/${meta.id}" }, mode: params.publish_dir_mode,
         pattern: 'qc/*'
@@ -28,6 +28,7 @@ process TRIDENT_EMBED {
     def holes     = params.remove_holes     ? '--remove_holes'     : ''
     def reader    = params.reader_type      ? "--reader_type ${params.reader_type}" : ''
     """
+    export HF_TOKEN="\${${params.hf_token_secret}:-}"
     export HF_HOME=\$PWD/${hf_cache}
     export TORCH_HOME=\$PWD/${hf_cache}/torch
     export TRIDENT_HOME=\${TRIDENT_HOME:-/opt/trident}

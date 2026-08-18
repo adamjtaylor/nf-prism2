@@ -8,7 +8,7 @@
 process STAGE_MODELS {
     tag 'hf_weights'
     label 'process_low'
-    secret 'HF_TOKEN'
+    secret params.hf_token_secret
 
     output:
     path 'hf_cache', emit: cache
@@ -16,13 +16,17 @@ process STAGE_MODELS {
     script:
     def extra = params.hf_repos_extra ? params.hf_repos_extra.tokenize(',')*.trim().findAll() : []
     """
+    # the task env var is named after the secret, so normalise it to HF_TOKEN
+    export HF_TOKEN="\${${params.hf_token_secret}:-}"
     export HF_HOME=\$PWD/hf_cache
     export HF_HUB_ENABLE_HF_TRANSFER=0
     mkdir -p hf_cache
 
     if [ -z "\${HF_TOKEN:-}" ]; then
-        echo "ERROR: HF_TOKEN is empty. Both paige-ai/Virchow2 and paige-ai/Prism2 are gated." >&2
-        echo "       Run: nextflow secrets set HF_TOKEN \\"hf_...\\"  (or add it as a Seqera secret)" >&2
+        echo "ERROR: secret '${params.hf_token_secret}' is empty. paige-ai/Virchow2 and paige-ai/Prism2 are gated." >&2
+        echo "       nextflow secrets set ${params.hf_token_secret} \\"hf_...\\"   (local)" >&2
+        echo "       tw secrets add -w <WS_ID> -n ${params.hf_token_secret} -v hf_...  (Seqera workspace)" >&2
+        echo "       or point --hf_token_secret at an existing secret name" >&2
         exit 1
     fi
 
