@@ -52,9 +52,12 @@ jobs:
 
       - name: Skip unselected image
         id: gate
+        env:
+          WANT: ${{ github.event.inputs.image }}
+          NAME: ${{ matrix.name }}
         run: |
-          want='${{ github.event.inputs.image || "both" }}'
-          if [ "$want" = "both" ] || [ "$want" = "${{ matrix.name }}" ]; then
+          want="${WANT:-both}"
+          if [ "$want" = "both" ] || [ "$want" = "$NAME" ]; then
             echo "build=true" >> "$GITHUB_OUTPUT"
           else
             echo "build=false" >> "$GITHUB_OUTPUT"
