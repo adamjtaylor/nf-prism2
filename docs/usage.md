@@ -83,6 +83,47 @@ On Seqera Platform, add the repo as a pipeline; `nextflow_schema.json` renders t
 form, so `input`, `outdir`, `questions`, `gpu_queue` and the tiling/inference knobs are all
 editable in the UI.
 
+## 3b. Seqera Platform (tower.sagebionetworks.org)
+
+The platform launches from a Git URL, so run from
+`https://github.com/adamjtaylor/nf-prism2` (public - no Git credential needed in the
+workspace). Images come from GHCR, built by `.github/workflows/containers.yml`.
+
+**Stub run on a CPU queue** (no GPU, no weights, no token - proves the plumbing):
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOWER_ACCESS_TOKEN" \
+  -H 'Content-Type: application/json' \
+  "$TOWER_API_ENDPOINT/workflow/launch?workspaceId=<WS_ID>" -d '{
+  "launch": {
+    "computeEnvId": "<CE_ID>",
+    "pipeline": "https://github.com/adamjtaylor/nf-prism2",
+    "revision": "main",
+    "stubRun": true,
+    "pullLatest": true,
+    "paramsText": "input: '"'"'https://raw.githubusercontent.com/adamjtaylor/nf-prism2/main/assets/samplesheet_stub.csv'"'"'\noutdir: '"'"'s3://<bucket>/nf-prism2-stub'"'"'\ncpu_only: true\ncontainer_trident: '"'"'python:3.12-slim'"'"'\ncontainer_prism2: '"'"'python:3.12-slim'"'"'\n"
+  }}'
+```
+
+`cpu_only: true` drops the `accelerator 1` request (implemented as a closure on the GPU
+labels, since Nextflow's strict config parser forbids `if` statements in config files) and
+`stubRun` skips the real work. Only `COLLECT_RESULTS` executes for real.
+
+**Real run** additionally needs:
+
+1. A queue with GPU instance types in the compute environment, and `cpu_only` left at
+   `false` so `accelerator 1` is requested.
+2. `HF_TOKEN` as a **workspace** secret - user-level secrets are only visible in your
+   personal workspace, not in an org workspace:
+   `tw secrets add -w <WS_ID> -n HF_TOKEN -v hf_...`
+3. The GHCR packages made public once, after the first successful build:
+   ```bash
+   gh api -X PATCH /user/packages/container/nf-prism2-trident --field visibility=public
+   gh api -X PATCH /user/packages/container/nf-prism2-prism2  --field visibility=public
+   ```
+   (Actions-created packages start private even in a public repo, and AWS Batch pulls
+   anonymously.)
+
 ## 4. Verification ladder
 
 ```bash
