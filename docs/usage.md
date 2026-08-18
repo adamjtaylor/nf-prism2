@@ -101,7 +101,7 @@ curl -s -X POST -H "Authorization: Bearer $TOWER_ACCESS_TOKEN" \
     "revision": "main",
     "stubRun": true,
     "pullLatest": true,
-    "paramsText": "input: '"'"'https://raw.githubusercontent.com/adamjtaylor/nf-prism2/main/assets/samplesheet_stub.csv'"'"'\noutdir: '"'"'s3://<bucket>/nf-prism2-stub'"'"'\ncpu_only: true\ncontainer_trident: '"'"'python:3.12-slim'"'"'\ncontainer_prism2: '"'"'python:3.12-slim'"'"'\n"
+    "paramsText": "input: '"'"'https://raw.githubusercontent.com/adamjtaylor/nf-prism2/main/assets/samplesheet_stub.csv'"'"'\noutdir: '"'"'s3://<bucket>/nf-prism2-stub'"'"'\ncpu_only: true\ncontainer_trident: '"'"'python:3.12'"'"'\ncontainer_prism2: '"'"'python:3.12'"'"'\n"
   }}'
 ```
 
