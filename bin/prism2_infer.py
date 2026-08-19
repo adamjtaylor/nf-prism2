@@ -13,6 +13,7 @@ clinical or diagnostic use.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import logging
 import sys
@@ -38,10 +39,25 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--out-json", required=True, type=Path)
     p.add_argument("--out-report", required=True, type=Path)
     p.add_argument("--out-npz", required=True, type=Path)
-    p.add_argument("--max-tiles", type=int, default=50000)
+    p.add_argument(
+        "--max-tiles",
+        type=int,
+        default=0,
+        help="0 uses every tile. PRISM2 compresses any tile count to 256 image tokens, so this "
+             "is an out-of-memory guard, not a cost control.",
+    )
     p.add_argument("--max-new-tokens", type=int, default=100)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--save-embeddings", action="store_true")
+    p.add_argument(
+        "--scoring-dtype",
+        choices=("bf16", "fp32"),
+        default="bf16",
+        help="bf16 (default) matches how PRISM2 is served, but quantises yes/no scores onto a "
+             "coarse grid (~0.03 in logit space), which creates artificial ties. Use fp32 for "
+             "AUC or calibration work. fp32 loads the model in float32, about 17 GB of weights, "
+             "so it needs a 40 GB GPU.",
+    )
     p.add_argument("--model-id", default=MODEL_ID)
     p.add_argument(
         "--model-revision",
@@ -56,7 +72,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def load_tile_embeddings(path: Path, max_tiles: int, seed: int) -> tuple[torch.Tensor, int]:
-    """Read (N, 1280) tile embeddings, seeded-subsampling down to max_tiles."""
+    """Read (N, 1280) tile embeddings, seeded-subsampling down to max_tiles if capped."""
     with h5py.File(path, "r") as h5:
         keys = list(h5.keys())
         if "features" in keys:
@@ -132,8 +148,9 @@ def unwrap(value):
     return value
 
 
-def respond(model, batch, prompt: str, max_new_tokens: int) -> str:
-    with torch.inference_mode(), torch.autocast("cuda", torch.bfloat16):
+def respond(model, batch, prompt: str, max_new_tokens: int, ctx=None) -> str:
+    ctx = ctx or (lambda: torch.autocast("cuda", torch.bfloat16))
+    with torch.inference_mode(), ctx():
         out = model.get_response(**batch, prompt=prompt, max_new_tokens=max_new_tokens)
     text = unwrap(out)
     return text.strip() if isinstance(text, str) else str(text)
@@ -152,6 +169,15 @@ def main() -> int:
     spec = load_questions(args.questions)
     tiles, n_total = load_tile_embeddings(args.features, args.max_tiles, args.seed)
     log.info("%s: %d tile embeddings of dim %d", args.sample, tiles.shape[0], tiles.shape[1])
+
+    # bf16 is how PRISM2 is served and fits a 24 GB card. fp32 exists for quantitative
+    # scoring, where bf16's coarse logit grid would turn genuine differences into ties.
+    fp32 = args.scoring_dtype == "fp32"
+    model_dtype = torch.float32 if fp32 else torch.bfloat16
+
+    def compute_ctx():
+        """No autocast in fp32 mode, otherwise the bf16 grid comes straight back."""
+        return contextlib.nullcontext() if fp32 else torch.autocast("cuda", torch.bfloat16)
 
     hf_kwargs = {"trust_remote_code": True}
     if args.model_revision:
@@ -172,6 +198,7 @@ def main() -> int:
         "sample": args.sample,
         "model_id": args.model_id,
         "model_revision": args.model_revision or "unpinned",
+        "scoring_dtype": args.scoring_dtype,
         "n_tiles_total": int(n_total),
         "n_tiles_used": int(tiles.shape[0]),
         "tile_embedding_dim": int(tiles.shape[1]),
@@ -182,7 +209,7 @@ def main() -> int:
     }
 
     # --- slide representations ---------------------------------------------
-    with torch.inference_mode(), torch.autocast("cuda", torch.bfloat16):
+    with torch.inference_mode(), compute_ctx():
         base = model.get_base_embedding(**batch)
         diag = model.get_diagnostic_embedding(**batch)
     result["base_embedding_dim"] = int(base.shape[-1])
@@ -199,7 +226,7 @@ def main() -> int:
 
     # --- zero-shot yes/no scoring ------------------------------------------
     for entry in spec.get("yes_no") or []:
-        with torch.inference_mode(), torch.autocast("cuda", torch.bfloat16):
+        with torch.inference_mode(), compute_ctx():
             score = model.yes_no_score(
                 tile_embeddings=batch["tile_embeddings"],
                 attention_mask=batch["attention_mask"],
@@ -215,7 +242,11 @@ def main() -> int:
     for block in ("open_ended", "multiple_choice"):
         for entry in spec.get(block) or []:
             answer = respond(
-                model, batch, entry["prompt"], int(entry.get("max_new_tokens", args.max_new_tokens))
+                model,
+                batch,
+                entry["prompt"],
+                int(entry.get("max_new_tokens", args.max_new_tokens)),
+                ctx=compute_ctx,
             )
             result[block][entry["id"]] = {"prompt": entry["prompt"], "answer": answer}
             log.info("%s %s -> %s", block, entry["id"], answer[:120].replace("\n", " "))
@@ -228,7 +259,7 @@ def main() -> int:
         prompt = report_spec.get("prompt", "Write a report")
         result["report_prompt"] = prompt
         result["report"] = respond(
-            model, batch, prompt, int(report_spec.get("max_new_tokens", 300))
+            model, batch, prompt, int(report_spec.get("max_new_tokens", 300)), ctx=compute_ctx
         )
 
     args.out_json.write_text(json.dumps(result, indent=2) + "\n")

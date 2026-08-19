@@ -59,9 +59,9 @@ docker build -f containers/prism2.Dockerfile --build-arg FLASH_ATTN_WHEEL=<url> 
   request `accelerator = 1`.
 * GPU sizing:
   * `TRIDENT_EMBED` (`gpu_small`) — Virchow2 forward passes; a T4/A10G is fine.
-  * `PRISM2_INFER` (`gpu_large`) — 4.4B params in bf16 plus up to `max_tiles × 1280` tile
-    embeddings. Use **≥24 GB VRAM** (g5.2xlarge / A10G or better). If you hit OOM, lower
-    `--max_tiles` before reaching for a bigger instance.
+  * `PRISM2_INFER` (`gpu_large`) — 4.4B params in bf16. Measured peak on CMU-1 with all 6,182
+    tiles: 8.8 GB VRAM, 12.2 GB RSS. **24 GB VRAM is right-sized** (g5.2xlarge / A10G). Only
+    `--scoring_dtype fp32` needs more, about 40 GB, because it loads the model in float32.
 * Set `--gpu_queue <queue>` so CPU steps (`STAGE_MODELS`, `COLLECT_RESULTS`) can run on a
   cheaper CPU queue; if omitted, everything goes to `--queue`.
 * `conf/awsbatch.config` enables Fusion + Wave so WSIs stream from S3 instead of being fully
@@ -165,7 +165,7 @@ What to check after (c):
 | `docker_gpu` | Docker with `--gpus all` |
 | `singularity` | Singularity/Apptainer with `--nv` and auto-mounts |
 | `awsbatch` | AWS Batch executor, Fusion + Wave, GPU queue routing |
-| `test` | CMU-1.svs, tiny question set, `max_tiles=2000`, `segmenter=otsu` |
+| `test` | CMU-1.svs, tiny question set, all tiles, `segmenter=otsu` |
 
 ## 5. Troubleshooting
 
@@ -176,7 +176,8 @@ What to check after (c):
 | `tile embeddings are 2560-d but PRISM2 requires 1280-d` | TRIDENT ran with `virchow2` instead of `virchow2-cls`. The encoder is deliberately hard-coded in `modules/local/trident_embed/main.nf`; check for local edits. |
 | `zero tiles` | Segmentation found no foreground. Try `--segmenter otsu`, or check the slide is readable by OpenSlide. |
 | TRIDENT errors about MPP / magnification | Slide metadata lacks microns-per-pixel — add the `mpp` column for that row in the samplesheet. |
-| CUDA OOM in `PRISM2_INFER` | Lower `--max_tiles` (default 50000), or use a bigger GPU. |
+| CUDA OOM in `PRISM2_INFER` | Set `--max_tiles` to cap the slide (default 0, meaning all tiles). This is purely an OOM guard: PRISM2 compresses any tile count to 256 image tokens, so capping does not make the run cheaper or faster. |
+| Yes/no scores tie across slides | bf16 quantises them onto a ~0.03 logit grid. Use `--scoring_dtype fp32` (needs a 40 GB GPU) for AUC or calibration. |
 | `ImportError: flash_attn` | Wheel/base-image mismatch — see the flash-attn section above. |
 | `Process requirement exceeds available memory` | Local executor vs the `gpu_large` label - add `-profile ...,local`. |
 | Non-pyramidal or exotic formats | Convert first: `trident convert --input_dir ... --mpp_csv ...` inside the trident image, then point the samplesheet at the converted TIFFs. |

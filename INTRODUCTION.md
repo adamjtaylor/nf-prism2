@@ -43,8 +43,12 @@ end to end, already running on the infrastructure we will use at scale:
    what is missing.
 3. **It runs where the data and the budget are.** Seqera Platform on AWS Batch, S3 work
    directory, spot instances for the expensive tile pass.
-4. **It produces measurements, not promises.** Every run writes a trace file with per-task
-   duration and cost drivers. Ten slides give a defensible estimate for 2,165.
+4. **It produces measurements, not promises.** Measured on one A10G (g5.2xlarge), 19 Aug 2026,
+   Aperio CMU-1 at 20x with 6,182 tiles: Virchow2 embedding runs at 108 tiles/s (1m37s), PRISM2
+   inference over all tiles takes 31s, and peak GPU memory is 8.8 GB. That is about $0.027 of
+   GPU time per slide, so the whole 2,165-slide HTAN collection is on the order of $94 to $387
+   depending on slide size. **GPU spend is not a constraint on this work.** Raw artefacts are in
+   `benchmark_results/gpu_smoke_20260819/`.
 5. **It adds a text interface that the models named in the proposal do not have.** PRISM2
    returns human-readable statements about a slide, and a calibrated-looking score for
    yes/no questions. That gives Aim 1 a way to enrich HTAN metadata directly, and gives
@@ -172,7 +176,11 @@ Stated plainly, so nobody plans around capability that is not there.
 * No validation of the question bank. The questions in `assets/questions.yaml` are
   placeholders. The graded bank in `PRISM2_question_bank.md` still needs benchmarking against
   HTAN ground truth before any answer is trusted.
-* Tested on one public slide (Aperio CMU-1) plus stub runs. Not yet run across HTAN.
+* Tested end to end on one public slide (Aperio CMU-1) on a real GPU, plus stub runs on AWS
+  Batch. Not yet run across HTAN, and never on a slide with a known diagnosis, so no output has
+  been checked against ground truth.
+* Yes/no scores are quantised by bf16 to a grid of about 0.03 in logit space. Usable as a
+  smoke test, not yet usable for AUC or calibration without `--scoring_dtype fp32`.
 
 ## 6. Suggested next steps for Epic 4
 

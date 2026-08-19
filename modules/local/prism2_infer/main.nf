@@ -38,6 +38,7 @@ process PRISM2_INFER {
         --max-tiles ${params.max_tiles} \\
         --max-new-tokens ${params.max_new_tokens} \\
         --seed ${params.seed} \\
+        --scoring-dtype ${params.scoring_dtype} \\
         ${revision} ${save_emb}
     """
 

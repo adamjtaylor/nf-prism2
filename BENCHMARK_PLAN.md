@@ -166,6 +166,16 @@ The graded question bank in `PRISM2_question_bank.md` already marks each questio
 needs validation, or exploratory. Only the strong and validate categories enter the benchmark.
 Exploratory questions are reported as observations, not as results.
 
+**Prerequisite: run the scoring in fp32.** Measured on CMU-1, bf16 quantises yes/no scores onto
+a grid of about 0.03 in logit space. Two runs whose slide embeddings differed (cosine 0.9998)
+returned a bit-identical score. On a grid that coarse, slides that genuinely differ will tie,
+ties break rank order arbitrarily, and the resulting AUC is partly a dtype artefact rather than
+a property of the model. Use `--scoring_dtype fp32` for every quantitative yes/no result. It
+loads the model in float32, roughly 17 GB of weights, so it needs a 40 GB GPU rather than the
+24 GB card that suffices for bf16 embedding work. Report the dtype alongside every AUC, and
+treat a bf16 AUC as a smoke test only. The dtype is recorded in each per-slide JSON as
+`scoring_dtype`.
+
 ### 5.4 Practical costs, recorded as results
 
 Cost is a selection criterion, not an afterthought. From the Nextflow trace we record GPU
@@ -263,9 +273,40 @@ cost:
 | 4 | Full HTAN, winning stack | Resource generation, not benchmarking. |
 
 Rough scale of the fan-out: tile passes cost `slides × segmenters × tile encoders`. Slide
-encoders on top are close to free. Phase 2 on about 100 slides with 6 tile encoders is
-therefore a few hundred tile passes, which is affordable. The same sweep across all 2,165
-slides would be tens of thousands and is not affordable, which is why phases exist.
+encoders on top are close to free, and PRISM2 in particular is constant-cost in tile count
+(see 5.4).
+
+**Measured costs make GPU spend a non-constraint.** At 108 tiles/s on an A10G, a CMU-1-sized
+slide costs about $0.027 of GPU time, and the whole 2,165-slide collection is roughly $94 at
+that size, $186 at 20k tiles per slide, and $387 at 50k. Even the full three-axis sweep across
+every slide would be a few thousand dollars, not the blocker this section originally assumed.
+
+So the phases stay, but for different reasons: **GPU availability and iteration speed**, not
+money. A wrong configuration discovered on slide 2,000 costs days, not dollars. Phase 1 exists
+to kill the segmentation axis early if it does not matter, and Phase 3 exists to catch centre
+effects before committing to a full run.
+
+### 7.1 Getting throughput from multi-GPU instances
+
+The shared Sage compute environments currently offer only multi-GPU instance types
+(`p4d.24xlarge` and larger) because they were forged before g5 was added to the allowed list.
+That is workable for the benchmark without waiting for the v14 re-forge, because AWS Batch
+bin-packs jobs onto an instance whenever each job asks for a fraction of it. A
+`p4d.24xlarge` has 8 A100s, 96 vCPU and about 1.1 TB of RAM, so with each task requesting
+1 GPU, 8 vCPU and 24 GB it can host 8 slides at once. Batch sets `NVIDIA_VISIBLE_DEVICES` per
+container, so every task sees its own GPU as device 0 and no code changes are needed.
+
+Packing changes the arithmetic from about $32.77 per hour for one slide to about $4.10 per
+hour per slide-slot. That is roughly 3x a right-sized `g5.2xlarge` rather than 27x, and the
+instance start-up cost is amortised across 8 slides instead of paid per slide.
+
+Two practical consequences:
+
+* **Never debug a single slide on a multi-GPU instance.** One task holds one GPU and the other
+  seven sit idle at full price. That is exactly what the early smoke tests did.
+* **Watch the staging bandwidth**, not the GPU. Eight concurrent tasks each staging the model
+  cache from S3 will saturate the instance network long before the GPUs are busy. Point them
+  at a shared `--hf_cache` and check the first packed run before scaling up.
 
 ## 8. Outputs
 

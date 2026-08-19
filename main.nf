@@ -28,7 +28,9 @@ def helpMessage() {
     Common options:
       --questions     Question set YAML (default: ${params.questions})
       --hf_cache      Pre-staged HuggingFace cache dir; skips STAGE_MODELS
-      --max_tiles     Cap on tiles fed to PRISM2 (default: ${params.max_tiles})
+      --max_tiles     OOM guard only; 0 (default) uses every tile. PRISM2 is constant-cost
+                      in tile count, so subsampling saves nothing.
+      --scoring_dtype bf16 (default) or fp32. Use fp32 for AUC or calibration work, see docs.
       --segmenter     TRIDENT tissue segmenter: hest | grandqc | otsu (default: ${params.segmenter})
       --gpu_queue     AWS Batch queue for GPU tasks (awsbatch profile)
 
