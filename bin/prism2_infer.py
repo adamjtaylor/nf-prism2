@@ -156,8 +156,14 @@ def main() -> int:
     hf_kwargs = {"trust_remote_code": True}
     if args.model_revision:
         hf_kwargs["revision"] = args.model_revision
+    # NOT torch_dtype="auto": paige-ai/Prism2 config.json declares torch_dtype float32, which
+    # loads ~17 GB of weights and OOMs a 24 GB card before the first forward pass. The model is
+    # trained and served in bf16 (every forward here is under autocast(bfloat16) anyway).
+    # Measured on an A10G: fp32 -> CUDA OOM at 22.06 GiB; bf16 -> 9.0 GB peak on a 6,182-tile slide.
     model = (
-        AutoModel.from_pretrained(args.model_id, torch_dtype="auto", **hf_kwargs).cuda().eval()
+        AutoModel.from_pretrained(args.model_id, torch_dtype=torch.bfloat16, **hf_kwargs)
+        .cuda()
+        .eval()
     )
     processor = AutoProcessor.from_pretrained(args.model_id, **hf_kwargs)
     batch = processor(tile_embeddings=[tiles]).to("cuda")

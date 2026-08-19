@@ -20,13 +20,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         curl ca-certificates procps \
     && rm -rf /var/lib/apt/lists/*
 
-# transformers is pinned BELOW 4.53 deliberately. PRISM2's remote code calls
-# Phi3Model._prepare_4d_causal_attention_mask_with_cache_position, which was removed by the
-# attention-mask refactor in 4.53. With a newer version get_base_embedding works but
-# get_diagnostic_embedding and all text generation fail with AttributeError.
-# The model card says >=4.51; the working range is >=4.51,<4.53.
+# transformers is pinned to 4.51.3 exactly. PRISM2's remote code calls
+# Phi3Model._prepare_4d_causal_attention_mask_with_cache_position(..., device=..., config=...,
+# past_key_values=...). That helper was removed outright by the attention-mask refactor in 4.53
+# (AttributeError), and 4.52 kept the name but dropped the `device` parameter
+# (TypeError: unexpected keyword argument 'device'). Verified on an A10G 2026-08-19:
+# 4.57.6 -> AttributeError, 4.52.4 -> TypeError, 4.51.3 -> works.
+# The model card says >=4.51; the actual working version is 4.51.3.
 RUN pip install --no-cache-dir \
-        "transformers==4.52.4" \
+        "transformers==4.51.3" \
         "huggingface_hub[cli]>=0.34" \
         accelerate \
         einops \
