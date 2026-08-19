@@ -163,37 +163,90 @@ differences that cosine distance washes out, and that is worth testing separatel
 
 ![tile umap](figures/fig4_tile_umap.png)
 
-10,059 tiles, 1,500 sampled per slide so a 58,000-tile slide cannot dominate the projection.
-PCA to 50 components, then UMAP on cosine distance. k-means agreement with the labels, using the
-metrics Epic 4 names:
+10,059 tiles, 1,500 sampled per slide so a 58,000-tile slide cannot dominate. PCA to 50
+components, then UMAP on cosine distance. Every slide forms its own island, and the three lung
+slides sit in three separate, distant regions rather than merging.
 
-| Partition | k | Adjusted Rand | macro F1 | macro Jaccard |
-|---|---|---|---|---|
-| by slide | 8 | **0.901** | 0.831 | 0.799 |
-| by organ | 6 | 0.643 | 0.862 | 0.798 |
+Communities were found with **Leiden on the cosine kNN graph (k=30)**, not k-means. An earlier
+pass used k-means with k fixed to the number of slides, which is a weak test: it builds
+"clusters equal slides" into the method, and Euclidean k-means assumes isotropic blobs while the
+projection uses cosine. Leiden needs no k, so a resolution sweep shows whether slide separation
+is real or an artefact of that choice.
 
-Every slide forms its own island, and the three lung slides sit in three separate, distant
-regions rather than merging. So **at tile level, slide identity is a stronger signal than organ
-identity**, which is the opposite of what the slide-level embedding showed in section 7.
+![leiden sweep](figures/fig5_leiden_sweep.png)
 
-This is coherent rather than contradictory. PRISM2's Perceiver aggregates thousands of tiles into
-one vector and in doing so abstracts away slide-specific texture, leaving morphology. Raw Virchow2
-tile embeddings retain that texture, which includes stain, scanner and section-preparation
-signature.
+| Resolution | Communities | ARI vs slide | ARI vs organ | NMI vs slide | Communities where one slide supplies >=90% | % of tiles in those |
+|---|---|---|---|---|---|---|
+| 0.1 | 10 | 0.912 | 0.719 | 0.945 | **10/10** | **100.0** |
+| 0.25 | 14 | 0.842 | 0.655 | 0.912 | 13/14 | 99.5 |
+| 0.5 | 19 | 0.666 | 0.500 | 0.843 | 18/19 | 99.5 |
+| 1.0 | 26 | 0.514 | 0.375 | 0.784 | 25/26 | 99.0 |
+| 2.0 | 39 | 0.389 | 0.278 | 0.731 | **38/39** | **99.5** |
 
-Two caveats on how far this can be pushed. Slide and organ are largely confounded here, because
-only lung has more than one slide. And the three lung slides differ in centre, scanner, container
-format, specimen type (one is a small core, one a resection) and diagnosis all at once, so the
-separation cannot be attributed to stain batch alone from this design.
+The result is not an artefact of choosing k. At every resolution, 99 to 100 percent of tiles sit
+in communities dominated by a single slide, and raising the resolution subdivides *within* slides
+rather than merging *across* them. ARI against slide falls at high resolution only because the
+partition becomes finer than the label, which is why the slide-dominance column matters more than
+ARI here.
 
-**The consequence for Aim 1.5 is concrete and testable.** Nearest neighbours of a query tile will
-preferentially come from the same slide. An image search tool built on raw tile embeddings will
-tend to return "more of the slide you just queried" rather than morphologically similar regions
-from other patients, which is precisely the failure the rank-stability and cross-centre tests in
-`BENCHMARK_PLAN.md` exist to catch. Practical options: exclude same-slide hits at query time,
-normalise per slide before indexing, or search the aggregated slide space and drill down. This
-should be measured on the designed contrast set, where the same tissue type appears across
-centres, before the search tool is built on top.
+So at tile level, slide identity is a stronger signal than organ identity, the opposite of the
+slide-level result in section 7. That is coherent: PRISM2's Perceiver aggregates thousands of
+tiles and abstracts away slide-specific texture, while raw Virchow2 embeddings retain stain,
+scanner and section-preparation signature.
+
+Two limits on how far this can be pushed. Slide and organ are largely confounded, since only lung
+has more than one slide. And the three lung slides differ in centre, scanner, container format,
+specimen type (one is a small core, one a resection) and diagnosis all at once, so stain batch
+cannot be isolated from genuine morphological difference with this design.
+
+## 7c. Does per-slide normalisation fix it?
+
+Three treatments were compared against the raw space, on the same 10,059 tiles. Two metrics that
+pull in opposite directions, because a correction that mixes slides by destroying biology is
+worthless:
+
+* **mixing** = mean fraction of a tile's 30 nearest neighbours coming from a different slide.
+  The ceiling, if slide identity were ignored entirely, is 0.875 (7 of 8 slides).
+* **p@10 cross-slide** = precision at 10 for same organ, with the index built from every tile
+  *except the query's own slide*, which is how a search tool would have to do it. Evaluable only
+  on the three lung slides. Chance is 0.205, computed per query from its own candidate pool.
+
+![normalisation](figures/fig6_normalisation.png)
+
+| Treatment | mixing (ceiling 0.875) | p@10 cross-slide lung (chance 0.205) |
+|---|---|---|
+| raw, L2 only | 0.005 | 0.410 |
+| per-slide centering | 0.009 | 0.357 |
+| per-slide standardise (z-score per dimension) | 0.012 | 0.385 |
+| Harmony, slide as batch | **0.027** | **0.476** |
+
+What this says, and it is mostly a negative result:
+
+1. **The raw space is almost perfectly slide-locked.** Half a percent of nearest neighbours come
+   from another slide, against a ceiling of 87.5 percent. Nearest-neighbour search over raw tile
+   embeddings is, in practice, a same-slide search.
+2. **Cheap per-slide affine corrections do not fix it and make retrieval worse.** Centering moves
+   mixing from 0.005 to 0.009, which is nothing, and drops cross-slide precision from 0.410 to
+   0.357. Subtracting the slide mean removes real signal, which makes sense: the mean of a lung
+   slide is lung-like, so it is not pure nuisance.
+3. **Harmony is the only treatment that improves both**, roughly five times the mixing and p@10
+   from 0.410 to 0.476. But mixing is still 30 times below the ceiling, so it does not make the
+   space slide-agnostic either. It is also transductive: it fits on the whole set at once, so it
+   cannot be applied to an incrementally growing index without refitting or a fixed reference
+   projection. That is a real constraint for a BigQuery vector table that gains slides over time.
+4. **Excluding same-slide hits at query time already gets 2x chance with no correction at all**
+   (0.410 against 0.205). It is the cheapest effective fix and it is exact rather than
+   approximate.
+
+**Recommendation for Aim 1.5.** Do not normalise embeddings as the first move. Exclude same-slide
+(and ideally same-patient) hits at query time, and treat any embedding-space correction as an
+experiment to be measured on the contrast set, where the same tissue type appears across several
+centres, rather than assumed to help. If a correction is wanted later, Harmony-style batch
+correction with a fixed reference is the candidate, and stain normalisation applied to the images
+before embedding is the untested alternative that avoids the transductive problem entirely.
+
+Caveats: one organ with more than one slide, 10,059 tiles, and a single tile encoder. This is a
+direction-setting measurement, not a settled result.
 
 ## 8. Generated text is not trustworthy on its own
 
@@ -226,8 +279,9 @@ All three need a pathologist. They are the kind of thing the Epic 7 validation l
 5. **Fix slide-pass staging** before any cohort run. 1380 to 1918 s per slide for 30 s of compute
    makes the current per-slide cost transfer-bound.
 6. **Treat BigQuery pixel dimensions as a lower bound** when planning tile counts and cost.
-7. **Do not build tile-level cosine search without a same-slide control.** Tile embeddings cluster
-   by slide at ARI 0.90, so unconstrained nearest-neighbour search will return same-slide tiles.
+7. **Do not build tile-level cosine search without a same-slide control.** Only 0.5 percent of a
+   tile's nearest neighbours come from another slide. Excluding same-slide hits at query time
+   gives 2x chance precision immediately, whereas per-slide centering makes retrieval worse.
 8. **Publish tile embeddings.** Aim 1.4 promises them in BigQuery, and the pipeline currently
    keeps them only in the work directory. Added as `--publish_tile_features`, off by default
    because it is about 630 MB per 10 slides, so roughly 137 GB across the full collection.
@@ -241,5 +295,8 @@ All three need a pathologist. They are the kind of thing the Epic 7 validation l
 | `embeddings/*.npz` | base (2560-d) and diagnostic (3072-d) per slide |
 | `figures/` | the three figures above |
 | `make_figures.py` | regenerates figures 1 to 3; palette validated with the dataviz validator |
-| `make_tile_figures.py` | tile-level UMAP and cluster purity (figure 4) |
-| `tile_clustering_metrics.json` | the ARI, F1 and Jaccard numbers above |
+| `make_tile_figures.py` | tile-level UMAP (figure 4) |
+| `make_leiden.py` | Leiden resolution sweep and slide-dominance (figure 5) |
+| `make_normalisation.py` | per-slide normalisation comparison (figure 6) |
+| `tile_clustering_metrics.json` | the Leiden sweep numbers |
+| `normalisation_metrics.json` | the mixing and p@10 numbers |

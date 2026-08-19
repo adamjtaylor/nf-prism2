@@ -1,0 +1,31 @@
+{
+  "n_tiles": 10059,
+  "n_neighbours": 30,
+  "note": "mixing ceiling if slide were ignored = 0.875; p@10 index excludes the query's own slide",
+  "results": [
+    {
+      "treatment": "raw (L2 only)",
+      "mixing": 0.005,
+      "p_at_10_cross_slide_lung": 0.41,
+      "chance": 0.205
+    },
+    {
+      "treatment": "per-slide centering",
+      "mixing": 0.009,
+      "p_at_10_cross_slide_lung": 0.357,
+      "chance": 0.205
+    },
+    {
+      "treatment": "per-slide standardise",
+      "mixing": 0.012,
+      "p_at_10_cross_slide_lung": 0.385,
+      "chance": 0.205
+    },
+    {
+      "treatment": "harmony (slide as batch)",
+      "mixing": 0.027,
+      "p_at_10_cross_slide_lung": 0.476,
+      "chance": 0.205
+    }
+  ]
+}

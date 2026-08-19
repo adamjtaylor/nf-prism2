@@ -99,7 +99,7 @@ for ax, (lab, title, keys) in zip(axes, [
     ax.set_xlabel("UMAP 1"); ax.set_ylabel("UMAP 2")
     leg = ax.legend(frameon=False, fontsize=7.5, markerscale=3.2, loc="best")
 fig.suptitle(f"Virchow2 tile embeddings, {X.shape[0]:,} tiles ({PER_SLIDE} sampled per slide)\n"
-             f"k-means agreement: ARI {res['slide']['ari']} vs slide, {res['organ']['ari']} vs organ",
+             "community metrics are in make_leiden.py, which supersedes the k-means pass here",
              fontsize=12, color=INK)
 fig.savefig(os.path.join(FIG, "fig4_tile_umap.png"), dpi=180)
 print("wrote fig4")
