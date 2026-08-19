@@ -1,0 +1,129 @@
+# Question set for the HTAN progression cohort.
+#
+# Every scored question maps to an HTAN field that is actually populated for H&E slides. The
+# audit is in assets/htan_label_availability.json; the mapping and the pre-registered scoring
+# are in assets/questions_htan_progression.md.
+#
+# Primary endpoint is TumorTissueType (92% populated, specimen level), an ordinal axis:
+#   normal < normal adjacent < atypia/hyperplasia < premalignant < premalignant in situ < primary
+# The yes/no ladder below is designed so each question has a predicted PROFILE across that axis,
+# which is a stronger test than any single binary split.
+
+yes_no:
+  # --- the progression ladder. Phrasings chosen to match pathology report language, since the
+  # pilot showed PRISM2 volunteers exactly these forms ("The specimen is negative for tumor").
+  - id: negative_for_tumor
+    question: "Is the specimen negative for tumor?"
+  - id: benign
+    question: "Is this tissue benign?"
+  - id: hyperplasia_metaplasia
+    question: "Is hyperplasia or metaplasia present?"
+  - id: dysplasia
+    question: "Is epithelial dysplasia present?"
+  - id: atypia
+    question: "Is cytologic atypia present?"
+  - id: precancerous_lesion
+    question: "Is a precancerous lesion present?"
+  - id: carcinoma_in_situ
+    question: "Is carcinoma in situ present?"
+  - id: invasive_carcinoma
+    question: "Is invasive carcinoma present?"
+  - id: malignancy
+    question: "Is malignancy present?"
+
+  # --- secondary, scored against TumorGrade (77% populated), two vocabularies, see the mapping
+  - id: high_grade
+    question: "Is the tumor high grade?"
+
+  # --- exploratory only. The fields behind these are 7 to 11% populated network-wide, so they
+  # are reported as observations and never as accuracy.
+  - id: lymphovascular_invasion
+    question: "Is lymphovascular invasion present?"
+  - id: perineural_invasion
+    question: "Is perineural invasion present?"
+  - id: necrosis
+    question: "Is tumor necrosis present?"
+  - id: tumor_infiltrating_lymphocytes
+    question: "Are tumor infiltrating lymphocytes prominent?"
+
+multiple_choice:
+  # Options are the HTAN data model's own valid values, so an answer is comparable to the
+  # metadata string with no translation step. Two compromises, both recorded in
+  # questions_htan_progression.md rather than made silently:
+  #   * the model lists 333 valid values for Tissue or Organ of Origin and 505 for Primary
+  #     Diagnosis, which cannot go in a prompt, so options are restricted to the values the
+  #     H&E cohort actually realises
+  #   * values that are not distinguishable from morphology are collapsed. "Normal adjacent"
+  #     and "Normal distant" differ from "Normal" by where the block was taken, not by what
+  #     the tissue looks like, and "Additional Primary" and "Recurrent" are clinical history.
+  #     Asking PRISM2 to separate those would manufacture errors.
+
+  # PRIMARY ENDPOINT, scored against TumorTissueType (92% populated, specimen level).
+  - id: progression_stage_mc
+    prompt: |
+      Which single option best describes this tissue?
+      Options:
+      A. Normal
+      B. Atypia - hyperplasia
+      C. Premalignant
+      D. Premalignant - in situ
+      E. Primary
+      F. Metastatic
+
+  # Scored against TissueorOrganofOrigin (95% populated), collapsed to organ level: the cohort
+  # records Sigmoid colon, Cecum, Rectum NOS, Ascending and Transverse colon, Rectosigmoid
+  # junction and Appendix separately, and likewise three skin subsites.
+  - id: primary_site_mc
+    prompt: |
+      What is the tissue or organ of origin?
+      Options:
+      A. Breast
+      B. Lung
+      C. Colon or rectum
+      D. Skin
+      E. Pancreas
+      F. Fallopian tube or ovary
+
+  # Scored against PrimaryDiagnosis (85% populated). Options are the exact model strings the
+  # cohort uses. Option H is NOT a data model value: PrimaryDiagnosis has no vocabulary for
+  # "no carcinoma", yet this cohort deliberately includes normal specimens, so the option has
+  # to be added. That gap is itself worth reporting.
+  - id: histologic_type_mc
+    prompt: |
+      What is the primary diagnosis?
+      Options:
+      A. Adenocarcinoma NOS
+      B. Squamous cell carcinoma NOS
+      C. Ductal carcinoma in situ NOS
+      D. Lobular carcinoma NOS
+      E. Malignant melanoma NOS
+      F. High-grade serous carcinoma
+      G. Pancreatobiliary-type carcinoma
+      H. No carcinoma present
+
+  # Scored against TumorGrade (77% populated). The data model itself carries two grade
+  # vocabularies, G1 to G4 plus GX and GB, and Low/Intermediate/High, so both are offered and
+  # mapped onto three levels.
+  - id: tumor_grade_mc
+    prompt: |
+      What is the tumor grade?
+      Options:
+      A. G1 or Low Grade
+      B. G2 or Intermediate Grade
+      C. G3, G4 or High Grade
+      D. GX, cannot be assessed
+      E. Not applicable, no tumor present
+
+open_ended:
+  - id: cancer_type
+    prompt: "What type of cancer is this?"
+  - id: primary_site
+    prompt: "What is the primary site or organ of origin?"
+  - id: tumor_grade
+    prompt: "What is the tumor grade?"
+  - id: precursor_description
+    prompt: "Describe any precancerous or in situ changes in this specimen."
+
+report:
+  prompt: "Write a report"
+  max_new_tokens: 300
