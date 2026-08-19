@@ -46,6 +46,26 @@ distinctions dropped are not visible in a section:
 "Recurrent" versus "Primary" is clinical history. Neither is a morphological claim, so scoring
 them separately would manufacture errors.
 
+## Off-cohort distractors
+
+Every multiple-choice list mixes values the cohort realises with real data model values that no
+slide here carries. Without distractors the option set leaks the answer: a model could score well
+by elimination from a list that happens to contain only the six organs present. Distractors are
+picked to be morphologically confusable with something in the cohort rather than absurd.
+
+| Question | In cohort | Off-cohort distractors | Chance |
+|---|---|---|---|
+| `progression_stage_mc` | Normal, Atypia - hyperplasia, Premalignant, Premalignant - in situ, Primary | Metastatic, Post therapy neoadjuvant, Local recurrence | 0.125 |
+| `primary_site_mc` | Breast, Lung, Colon or rectum, Skin, Pancreas, Fallopian tube or ovary | Stomach NOS, Prostate gland, Kidney NOS, Esophagus NOS | 0.10 |
+| `histologic_type_mc` | Adenocarcinoma NOS, Squamous cell carcinoma NOS, DCIS NOS, Lobular carcinoma NOS, Malignant melanoma NOS, High-grade serous carcinoma, Pancreatobiliary-type carcinoma | Basal cell carcinoma NOS, Hepatocellular carcinoma NOS, Combined small cell carcinoma, Urothelial carcinoma NOS | 0.083 |
+| `tumor_grade_mc` | G1/Low, G2/Intermediate, G3-G4/High | GX, GB | 0.167 |
+
+**Report the distractor rate separately from accuracy.** An off-cohort answer is a different kind
+of error from an in-cohort confusion: picking "Hepatocellular carcinoma NOS" for a breast slide
+says something quite different from picking "Lobular carcinoma NOS". Distractor selections are also
+the cheapest available check that the model is reading morphology rather than exploiting the option
+list, so a near-zero distractor rate is itself a result.
+
 ## Primary endpoints
 
 1. **Forced-choice stage accuracy.** `progression_stage_mc` against the collapsed axis. Report a

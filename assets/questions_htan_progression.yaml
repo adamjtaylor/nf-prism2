@@ -47,18 +47,24 @@ yes_no:
     question: "Are tumor infiltrating lymphocytes prominent?"
 
 multiple_choice:
-  # Options are the HTAN data model's own valid values, so an answer is comparable to the
-  # metadata string with no translation step. Two compromises, both recorded in
-  # questions_htan_progression.md rather than made silently:
+  # Options are the HTAN data model's own valid values, so an answer is comparable to the metadata
+  # string with no translation step, and a wrong answer is still a valid HTAN term.
+  #
+  # Each list mixes values the cohort realises with **off-cohort distractors**: real data model
+  # values that no slide in this cohort carries. Without them the option list leaks the answer,
+  # because a model could score well by elimination from a suspiciously convenient set. Distractors
+  # are chosen to be morphologically confusable with something in the cohort (stomach and colon,
+  # basal cell carcinoma and squamous, small cell and high-grade serous), not obviously absurd.
+  #
+  # Two compromises, recorded rather than made silently:
   #   * the model lists 333 valid values for Tissue or Organ of Origin and 505 for Primary
-  #     Diagnosis, which cannot go in a prompt, so options are restricted to the values the
-  #     H&E cohort actually realises
-  #   * values that are not distinguishable from morphology are collapsed. "Normal adjacent"
-  #     and "Normal distant" differ from "Normal" by where the block was taken, not by what
-  #     the tissue looks like, and "Additional Primary" and "Recurrent" are clinical history.
-  #     Asking PRISM2 to separate those would manufacture errors.
+  #     Diagnosis, so options sample those lists rather than reproduce them
+  #   * values that are not distinguishable from morphology are collapsed, since "Normal adjacent"
+  #     versus "Normal" is about where the block was taken and "Recurrent" versus "Primary" is
+  #     clinical history
 
   # PRIMARY ENDPOINT, scored against TumorTissueType (92% populated, specimen level).
+  # Chance with 8 options is 0.125. D, G and H are off-cohort for this cohort.
   - id: progression_stage_mc
     prompt: |
       Which single option best describes this tissue?
@@ -69,10 +75,11 @@ multiple_choice:
       D. Premalignant - in situ
       E. Primary
       F. Metastatic
+      G. Post therapy neoadjuvant
+      H. Local recurrence
 
-  # Scored against TissueorOrganofOrigin (95% populated), collapsed to organ level: the cohort
-  # records Sigmoid colon, Cecum, Rectum NOS, Ascending and Transverse colon, Rectosigmoid
-  # junction and Appendix separately, and likewise three skin subsites.
+  # Scored against TissueorOrganofOrigin (95%), collapsed to organ level. A to F are in cohort,
+  # G to J are not. Chance 0.10.
   - id: primary_site_mc
     prompt: |
       What is the tissue or organ of origin?
@@ -83,11 +90,15 @@ multiple_choice:
       D. Skin
       E. Pancreas
       F. Fallopian tube or ovary
+      G. Stomach NOS
+      H. Prostate gland
+      I. Kidney NOS
+      J. Esophagus NOS
 
-  # Scored against PrimaryDiagnosis (85% populated). Options are the exact model strings the
-  # cohort uses. Option H is NOT a data model value: PrimaryDiagnosis has no vocabulary for
-  # "no carcinoma", yet this cohort deliberately includes normal specimens, so the option has
-  # to be added. That gap is itself worth reporting.
+  # Scored against PrimaryDiagnosis (85%). A to G are in cohort, I to L are not. Chance 0.083.
+  # Option H is NOT a data model value: PrimaryDiagnosis has no vocabulary for "no carcinoma",
+  # yet this cohort deliberately includes normal specimens, so it has to be added. That gap in
+  # the data model is worth reporting in its own right.
   - id: histologic_type_mc
     prompt: |
       What is the primary diagnosis?
@@ -100,10 +111,13 @@ multiple_choice:
       F. High-grade serous carcinoma
       G. Pancreatobiliary-type carcinoma
       H. No carcinoma present
+      I. Basal cell carcinoma NOS
+      J. Hepatocellular carcinoma NOS
+      K. Combined small cell carcinoma
+      L. Urothelial carcinoma NOS
 
-  # Scored against TumorGrade (77% populated). The data model itself carries two grade
-  # vocabularies, G1 to G4 plus GX and GB, and Low/Intermediate/High, so both are offered and
-  # mapped onto three levels.
+  # Scored against TumorGrade (77%). Both grade vocabularies come from the data model itself,
+  # not from centre drift, so both are offered. GB is a valid value the cohort never uses.
   - id: tumor_grade_mc
     prompt: |
       What is the tumor grade?
@@ -112,7 +126,8 @@ multiple_choice:
       B. G2 or Intermediate Grade
       C. G3, G4 or High Grade
       D. GX, cannot be assessed
-      E. Not applicable, no tumor present
+      E. GB
+      F. Not applicable, no tumor present
 
 open_ended:
   - id: cancer_type
