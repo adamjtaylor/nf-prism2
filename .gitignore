@@ -12,3 +12,6 @@ __pycache__/
 
 # large inputs pulled for embedding visualisation
 analysis/data/
+
+# tile feature h5 files are too big for the repo; keep the derived metrics instead
+benchmark_results/*/features/

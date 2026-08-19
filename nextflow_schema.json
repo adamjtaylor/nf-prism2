@@ -136,6 +136,11 @@
                         "fp32"
                     ],
                     "description": "Precision for yes/no scoring. bf16 quantises scores onto a coarse grid; use fp32 for AUC or calibration."
+                },
+                "publish_tile_features": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Publish the per-slide (N, 1280) tile embeddings. About 630 MB per 10 slides."
                 }
             }
         },

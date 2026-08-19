@@ -11,6 +11,10 @@ process TRIDENT_EMBED {
 
     publishDir path: { "${params.outdir}/tiles/${meta.id}" }, mode: params.publish_dir_mode,
         pattern: 'qc/*'
+    // Tile embeddings are an Aim 1.4 deliverable in their own right, but they are bulky
+    // (about 630 MB per 10 slides), so publishing them is opt-in.
+    publishDir path: { "${params.outdir}/tile_features" }, mode: params.publish_dir_mode,
+        pattern: '*.features.h5', enabled: params.publish_tile_features
 
     input:
     tuple val(meta), path(slide, stageAs: 'wsi/*')

@@ -1,0 +1,28 @@
+{
+  "n_sampled": 10059,
+  "per_slide": 1500,
+  "tiles_total": {
+    "BU_lung_adenocarcinoma_svs": 20460,
+    "BU_lung_squamous_ndpi": 196,
+    "SRRS_lung_squamous_svs": 5487,
+    "DUKE_breast_dcis_svs": 25955,
+    "HMS_colorectal_adenocarcinoma_ometiff": 58331,
+    "HMS_ovarian_hgserous_svs": 4732,
+    "HMS_skin_melanoma_ometiff": 863,
+    "WUSTL_pancreas_pbcarcinoma_svs": 2239
+  },
+  "purity": {
+    "slide": {
+      "k": 8,
+      "ari": 0.901,
+      "f1": 0.831,
+      "jaccard": 0.799
+    },
+    "organ": {
+      "k": 6,
+      "ari": 0.643,
+      "f1": 0.862,
+      "jaccard": 0.798
+    }
+  }
+}
