@@ -125,5 +125,14 @@ workflow {
     PRISM2_INFER(TRIDENT_EMBED.out.features, ch_slide, ch_questions)
 
     // --- merge per-slide JSON into one table -------------------------------
-    COLLECT_RESULTS(PRISM2_INFER.out.json.map { meta, json -> json }.collect())
+    // `ifEmpty([])` keeps the collector running when every slide failed, so the run still
+    // reports which samples are missing instead of ending with no output at all.
+    ch_expected = ch_slides
+        .map { meta, slide -> meta.id }
+        .collectFile(name: 'expected_samples.txt', newLine: true, sort: true)
+
+    COLLECT_RESULTS(
+        PRISM2_INFER.out.json.map { meta, json -> json }.collect().ifEmpty([]),
+        ch_expected
+    )
 }

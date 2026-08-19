@@ -49,5 +49,5 @@ neighbourhood structure. `--cluster kmeans --k N` switches back to k-means.
 Slide-level UMAP needs a cohort (roughly n >= 20 slides); with one slide the
 `base`/`diagnostic` vectors are shown as value fields only.
 
-See [`EMBEDDING_VISUALISATION.md`](EMBEDDING_VISUALISATION.md) for what the
-figures show and what the clusters turn out to be.
+See [`EMBEDDING_VISUALISATION.md`](EMBEDDING_VISUALISATION.md) for the numbered
+figures with captions, the cluster morphology table, and the interpretation.

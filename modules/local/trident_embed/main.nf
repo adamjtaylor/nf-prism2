@@ -21,8 +21,12 @@ process TRIDENT_EMBED {
     path 'qc/*'                                    , emit: qc, optional: true
 
     script:
-    def mpp_col   = meta.mpp ? 'wsi,mpp' : 'wsi'
-    def mpp_row   = meta.mpp ? "\${SLIDE},${meta.mpp}" : "\${SLIDE}"
+    // Taken from Groovy, not from the shell: Nextflow escapes interpolated paths, so both
+    // `basename "${slide}"` (keeps the backslashes) and `basename ${slide}` (relies on shell
+    // unescaping) are fragile. HTAN filenames do contain spaces.
+    def slide_name = slide.name.tokenize('/').last()   // stageAs puts it under wsi/
+    def mpp_col    = meta.mpp ? 'wsi,mpp' : 'wsi'
+    def mpp_row    = meta.mpp ? "${slide_name},${meta.mpp}" : slide_name
     def artifacts = params.remove_artifacts ? '--remove_artifacts' : ''
     def penmarks  = params.remove_penmarks  ? '--remove_penmarks'  : ''
     def holes     = params.remove_holes     ? '--remove_holes'     : ''
@@ -34,11 +38,9 @@ process TRIDENT_EMBED {
     export TRIDENT_HOME=\${TRIDENT_HOME:-/opt/trident}
     export OMP_NUM_THREADS=${task.cpus}
 
-    SLIDE=\$(basename "${slide}")
-
     # One-row work list: this is also how a per-slide mpp override is supplied for
     # slides whose OpenSlide metadata has no MPP.
-    printf '%s\\n%s\\n' '${mpp_col}' "${mpp_row}" > slide_list.csv
+    printf '%s\\n%s\\n' '${mpp_col}' '${mpp_row}' > slide_list.csv
 
     python \$TRIDENT_HOME/run_batch_of_slides.py \\
         --task all \\

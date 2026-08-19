@@ -205,6 +205,16 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Drop GPU (accelerator) requests - only for CPU-queue smoke tests, real runs need GPUs"
+                },
+                "ignore_failed_slides": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "After retries are exhausted, drop the failing slide and continue. Dropped samples are listed in failed_samples.txt. Set false to fail the run instead."
+                },
+                "retry_exit_codes": {
+                    "type": "array",
+                    "hidden": true,
+                    "description": "Exit codes that trigger a retry with escalated memory"
                 }
             }
         }

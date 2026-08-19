@@ -16,6 +16,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--in-dir", required=True, type=Path)
     p.add_argument("--out-tsv", required=True, type=Path)
     p.add_argument("--out-json", required=True, type=Path)
+    p.add_argument("--expected", type=Path, help="File of expected sample ids, one per line")
+    p.add_argument("--out-failed", type=Path, help="Where to write expected-but-missing samples")
     return p.parse_args()
 
 
@@ -67,6 +69,24 @@ def main() -> None:
             fh.write("\t".join(clean(row.get(c, "")) for c in columns) + "\n")
 
     print(f"Wrote {args.out_tsv} ({len(rows)} slides, {len(columns)} columns)")
+
+    # Reconcile against the samplesheet. A slide can be missing because it was dropped after
+    # retries (--ignore_failed_slides), so silence here would understate the cohort.
+    if args.expected and args.expected.exists():
+        expected = [x.strip() for x in args.expected.read_text().splitlines() if x.strip()]
+        got = {r.get("sample", "") for r in records}
+        missing = [s for s in expected if s not in got]
+        if args.out_failed:
+            args.out_failed.write_text("\n".join(missing) + ("\n" if missing else ""))
+        if missing:
+            print(f"WARNING: {len(missing)}/{len(expected)} samples produced no result: "
+                  f"{', '.join(missing)}")
+            print("         See the trace file for their exit status. They were dropped rather "
+                  "than failing the run because --ignore_failed_slides is true.")
+        else:
+            print(f"All {len(expected)} expected samples produced results")
+    elif args.out_failed:
+        args.out_failed.write_text("")
 
 
 if __name__ == "__main__":
