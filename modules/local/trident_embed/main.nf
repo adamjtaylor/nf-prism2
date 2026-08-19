@@ -43,8 +43,16 @@ process TRIDENT_EMBED {
     //      OpenSlide-unreadable TIFF fails hard even though ImageWSI would have opened it.
     //      Escalating on retry self-heals that whole class without curating a column for
     //      thousands of files. It cannot fix a missing MPP, which has no value to infer.
+    // Escalate the reader ONLY for containers whose extension makes TRIDENT's extension-based
+    // choice unreliable. Exit 1 has more than one cause: a host-RAM OOM during segmentation also
+    // surfaces as exit 1 (the DataLoader worker takes SIGKILL and the parent raises), and forcing
+    // ImageWSI on a 3-gigapixel svs would load far more into memory and make that worse. OpenSlide
+    // reads svs, ndpi, scn, mrxs and OME-TIFF reliably, so those retry unchanged and simply get
+    // the escalated memory.
+    def fragile = slide_name.toLowerCase() ==~ /.*\.(tif|tiff|qptiff)$/ ||
+                  !(slide_name.toLowerCase() ==~ /.*\.(svs|ndpi|scn|mrxs|ome\.tif|ome\.tiff|dcm|czi|sdpc)$/)
     def reader_type = meta.reader ?: params.reader_type ?:
-                      (task.attempt > 1 ? params.retry_reader : null)
+                      ((task.attempt > 1 && fragile) ? params.retry_reader : null)
     def reader    = reader_type             ? "--reader_type ${reader_type}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
