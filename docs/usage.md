@@ -194,6 +194,8 @@ What to check after (c):
 | Yes/no scores tie across slides | bf16 quantises them onto a ~0.03 logit grid. Use `--scoring_dtype fp32` (needs a 40 GB GPU) for AUC or calibration. |
 | `ImportError: flash_attn` | Wheel/base-image mismatch — see the flash-attn section above. |
 | `Process requirement exceeds available memory` | Local executor vs the `gpu_large` label - add `-profile ...,local`. |
+| `Failed to initialize WSI with OpenSlide: Unsupported or missing image file` | The container is not OpenSlide-readable even though its extension suggests it is. TRIDENT picks a reader from the extension with no probing and no fallback, so `.tiff` always goes to OpenSlide. The retry escalates to `--retry_reader` (default `image`); to be explicit, set the `reader` column for that row. |
+| `Unable to extract MPP from slide metadata` | The file has no microns-per-pixel tag. This happens with generic TIFF and OME-TIFF, and also with some cleaned or converted svs, so do not assume Aperio implies MPP. Set the `mpp` column for that row, e.g. from `imaging_level2_metadata_current.PhysicalSizeX`. No retry can fix this, since there is no value to infer. |
 | Non-pyramidal or exotic formats | Convert first: `trident convert --input_dir ... --mpp_csv ...` inside the trident image, then point the samplesheet at the converted TIFFs. |
 
 ## 6. Deviations from a full nf-core template

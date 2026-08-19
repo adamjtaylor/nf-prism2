@@ -30,9 +30,17 @@ process TRIDENT_EMBED {
     def artifacts = params.remove_artifacts ? '--remove_artifacts' : ''
     def penmarks  = params.remove_penmarks  ? '--remove_penmarks'  : ''
     def holes     = params.remove_holes     ? '--remove_holes'     : ''
-    // Per-slide reader beats the global default. Needed because a container format that
-    // OpenSlide cannot open (plain tiled TIFF, qptiff) is a property of the file, not the run.
-    def reader_type = meta.reader ?: params.reader_type
+    // Reader selection, in precedence order:
+    //   1. the samplesheet's per-slide `reader`
+    //   2. the global --reader_type
+    //   3. nothing on the first attempt, so TRIDENT auto-detects
+    //   4. --retry_reader on a retry, because TRIDENT picks its reader from the file extension
+    //      with no probing and no fallback. A plain .tiff matches OPENSLIDE_EXTENSIONS, so an
+    //      OpenSlide-unreadable TIFF fails hard even though ImageWSI would have opened it.
+    //      Escalating on retry self-heals that whole class without curating a column for
+    //      thousands of files. It cannot fix a missing MPP, which has no value to infer.
+    def reader_type = meta.reader ?: params.reader_type ?:
+                      (task.attempt > 1 ? params.retry_reader : null)
     def reader    = reader_type             ? "--reader_type ${reader_type}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"

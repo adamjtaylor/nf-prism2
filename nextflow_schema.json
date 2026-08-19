@@ -91,6 +91,11 @@
                 "reader_type": {
                     "type": "string",
                     "description": "Force a WSI reader (openslide, image, cucim, sdpc, omezarr, czi)"
+                },
+                "retry_reader": {
+                    "type": "string",
+                    "default": "image",
+                    "description": "Reader forced on a retry when none was specified, to self-heal files whose extension makes TRIDENT choose a reader that cannot open them. Set null to disable."
                 }
             }
         },
