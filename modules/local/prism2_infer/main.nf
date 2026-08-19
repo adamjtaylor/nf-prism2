@@ -21,6 +21,7 @@ process PRISM2_INFER {
 
     script:
     def save_emb = params.save_embeddings ? '--save-embeddings' : ''
+    def revision = params.prism2_revision ? "--model-revision ${params.prism2_revision}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
     export HF_HOME=\$PWD/${hf_cache}
@@ -37,7 +38,7 @@ process PRISM2_INFER {
         --max-tiles ${params.max_tiles} \\
         --max-new-tokens ${params.max_new_tokens} \\
         --seed ${params.seed} \\
-        ${save_emb}
+        ${revision} ${save_emb}
     """
 
     stub:

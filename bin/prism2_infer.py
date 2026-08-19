@@ -43,6 +43,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--save-embeddings", action="store_true")
     p.add_argument("--model-id", default=MODEL_ID)
+    p.add_argument(
+        "--model-revision",
+        default=None,
+        help="Pin the HF repo revision. Recommended: the model ships trust_remote_code files "
+             "that can change under you, which silently changes results.",
+    )
     return p.parse_args()
 
 
@@ -147,17 +153,19 @@ def main() -> int:
     tiles, n_total = load_tile_embeddings(args.features, args.max_tiles, args.seed)
     log.info("%s: %d tile embeddings of dim %d", args.sample, tiles.shape[0], tiles.shape[1])
 
+    hf_kwargs = {"trust_remote_code": True}
+    if args.model_revision:
+        hf_kwargs["revision"] = args.model_revision
     model = (
-        AutoModel.from_pretrained(args.model_id, trust_remote_code=True, torch_dtype="auto")
-        .cuda()
-        .eval()
+        AutoModel.from_pretrained(args.model_id, torch_dtype="auto", **hf_kwargs).cuda().eval()
     )
-    processor = AutoProcessor.from_pretrained(args.model_id, trust_remote_code=True)
+    processor = AutoProcessor.from_pretrained(args.model_id, **hf_kwargs)
     batch = processor(tile_embeddings=[tiles]).to("cuda")
 
     result = {
         "sample": args.sample,
         "model_id": args.model_id,
+        "model_revision": args.model_revision or "unpinned",
         "n_tiles_total": int(n_total),
         "n_tiles_used": int(tiles.shape[0]),
         "tile_embedding_dim": int(tiles.shape[1]),

@@ -117,6 +117,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Write base (2560-d) and diagnostic (3072-d) embeddings as .npz"
+                },
+                "prism2_revision": {
+                    "type": "string",
+                    "default": "450352d0ddc6b42b21ce20794ce0fbefe6b5a47a",
+                    "description": "Pinned paige-ai/Prism2 revision (the repo ships trust_remote_code files that can change)"
                 }
             }
         },
