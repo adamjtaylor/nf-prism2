@@ -1,0 +1,53 @@
+{
+  "sample": "CMU-1",
+  "n_tiles": 6182,
+  "tile_dim": 1280,
+  "encoder": "virchow2-cls",
+  "patch_size_level0": 224,
+  "pc_variance_ratio": [
+    0.184048593044281,
+    0.10994604974985123,
+    0.08837070316076279,
+    0.05163227394223213,
+    0.03523639589548111,
+    0.028858400881290436,
+    0.027702340856194496,
+    0.022716527804732323,
+    0.020216580480337143,
+    0.017110254615545273
+  ],
+  "clusters": {
+    "Cluster 1": 1818,
+    "Cluster 2": 1279,
+    "Cluster 3": 966,
+    "Cluster 4": 859,
+    "Cluster 5": 726,
+    "Cluster 6": 534
+  },
+  "prism2": {
+    "sample": "CMU-1",
+    "model_id": "paige-ai/Prism2",
+    "model_revision": "450352d0ddc6b42b21ce20794ce0fbefe6b5a47a",
+    "scoring_dtype": "bf16",
+    "n_tiles_total": 6182,
+    "n_tiles_used": 6182,
+    "tile_embedding_dim": 1280,
+    "yes_no": {
+      "invasive_carcinoma": {
+        "question": "Is invasive carcinoma present?",
+        "score": 0.01798621006309986
+      }
+    },
+    "open_ended": {
+      "cancer_type": {
+        "prompt": "What type of cancer is this?",
+        "answer": "This is a melanoma."
+      }
+    },
+    "multiple_choice": {},
+    "report": "The examination reveals a compound nevus.",
+    "base_embedding_dim": 2560,
+    "diagnostic_embedding_dim": 3072,
+    "report_prompt": "Write a report"
+  }
+}

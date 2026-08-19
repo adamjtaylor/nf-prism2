@@ -34,7 +34,7 @@ process TRIDENT_EMBED {
     export TRIDENT_HOME=\${TRIDENT_HOME:-/opt/trident}
     export OMP_NUM_THREADS=${task.cpus}
 
-    SLIDE=\$(basename ${slide})
+    SLIDE=\$(basename "${slide}")
 
     # One-row work list: this is also how a per-slide mpp override is supplied for
     # slides whose OpenSlide metadata has no MPP.

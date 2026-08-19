@@ -1,0 +1,11 @@
+sample,slide,mpp
+BU_lung_adenocarcinoma_svs,syn://syn53640639,
+BU_lung_squamous_ndpi,syn://syn68493420,
+DUKE_breast_dcis_svs,syn://syn52289971,
+DUKE_breast_dcis_tiff,syn://syn27056837,0.161
+HMS_ovarian_hgserous_svs,syn://syn68629518,
+HMS_skin_melanoma_ometiff,syn://syn51758553,0.347
+HMS_colorectal_adenocarcinoma_ometiff,syn://syn51692280,0.325
+SRRS_lung_squamous_svs,syn://syn52431239,
+WUSTL_pancreas_pbcarcinoma_svs,syn://syn27393120,
+HTAPP_breast_lobular_svs,syn://syn25882267,
