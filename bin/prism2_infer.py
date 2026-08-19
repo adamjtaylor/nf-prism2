@@ -194,6 +194,21 @@ def main() -> int:
     processor = AutoProcessor.from_pretrained(args.model_id, **hf_kwargs)
     batch = processor(tile_embeddings=[tiles]).to("cuda")
 
+    # PRISM2 mixes dtypes internally: the released modeling code casts the Perceiver to bfloat16
+    # regardless of torch_dtype, so requesting fp32 and disabling autocast makes an fp32 input
+    # meet bf16 weights and raises "expected mat1 and mat2 to have the same dtype". Cast the
+    # inputs to whatever the model actually is, and record it, rather than what was asked for.
+    param_dtypes = {str(p.dtype) for p in model.parameters()}
+    actual = next(model.parameters()).dtype
+    if batch["tile_embeddings"].dtype != actual:
+        log.info("casting tile embeddings %s -> %s to match the model",
+                 batch["tile_embeddings"].dtype, actual)
+        batch["tile_embeddings"] = batch["tile_embeddings"].to(actual)
+    if fp32 and param_dtypes != {"torch.float32"}:
+        log.warning("fp32 was requested but the model holds %s. PRISM2 hard-casts parts of itself, "
+                    "and flash attention does not support fp32, so scores remain bf16 limited.",
+                    sorted(param_dtypes))
+
     result = {
         "sample": args.sample,
         "model_id": args.model_id,
@@ -212,6 +227,7 @@ def main() -> int:
     with torch.inference_mode(), compute_ctx():
         base = model.get_base_embedding(**batch)
         diag = model.get_diagnostic_embedding(**batch)
+    result["model_param_dtypes"] = sorted(param_dtypes)   # what the weights really are
     result["base_embedding_dim"] = int(base.shape[-1])
     result["diagnostic_embedding_dim"] = int(diag.shape[-1])
     log.info("base=%s diagnostic=%s", tuple(base.shape), tuple(diag.shape))
