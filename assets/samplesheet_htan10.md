@@ -36,6 +36,27 @@ Total download about 4 GB. Six centres, six organs, eight diagnoses, four contai
   purpose: HTAN filenames do contain spaces and the pipeline has to survive them.
 * **`syn68629518` is 86016 x 204800 at 0.137 MPP**, about 17.6 gigapixels, which resamples to
   roughly 26,000 tiles at 20x. It is the throughput stress case.
+## What the first run actually showed (2026-08-19, run nf-prism2-htan10-v2)
+
+Two of the ten failed on read, and both were format problems rather than pipeline bugs. This is
+what the format-diverse selection was for.
+
+| sample | Outcome | Cause | Fix applied |
+|---|---|---|---|
+| `DUKE_breast_dcis_tiff` | failed, exit 1 | `Failed to initialize WSI with OpenSlide: Unsupported or missing image file`. The plain `.tiff` is not an OpenSlide-readable container. | `reader` column set to `image` for this row |
+| `HTAPP_breast_lobular_svs` | failed, exit 1 | `Unable to extract MPP from slide metadata`. An **svs with no MPP tag**, so the assumption that Aperio files always carry it natively is wrong for cleaned or converted files. | `mpp` set to 0.2762 from `PhysicalSizeX` |
+
+Both were dropped rather than killing the run, and appeared in `failed_samples.txt`.
+
+Measured `TRIDENT_EMBED` wall clock on `p4d.24xlarge`, 8 slides packed per instance, with the
+split model store in place: 143s (ndpi), 428s (ome.tif melanoma), 433s (ovarian svs), 473s
+(Duke svs). The previous run, staging a single 47 GB cache per task, had not finished any tile
+task by 2000s. Staging was the bottleneck, not tiling.
+
+**Lesson for the cohort run:** do not assume a container format implies readable, and do not
+assume svs implies MPP. Both need to be checked per file, and the samplesheet carries a
+`reader` column plus an `mpp` override for exactly this.
+
 ## Clinical metadata available for probing
 
 Pulled from the portal `diagnosis` table (HTAN Release 7.0). This is what the question set in

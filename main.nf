@@ -64,7 +64,15 @@ workflow {
             if (row.mpp && !(row.mpp ==~ /^[0-9]*\.?[0-9]+$/)) {
                 error "Sample '${row.sample}': 'mpp' must be a number, got '${row.mpp}'"
             }
-            def meta = [ id: row.sample.toString(), mpp: (row.mpp ?: '').toString() ]
+            def readers = ['openslide', 'image', 'cucim', 'sdpc', 'omezarr', 'czi']
+            if (row.reader && !(row.reader in readers)) {
+                error "Sample '${row.sample}': 'reader' must be one of ${readers.join(', ')}, got '${row.reader}'"
+            }
+            def meta = [
+                id    : row.sample.toString(),
+                mpp   : (row.mpp ?: '').toString(),
+                reader: (row.reader ?: '').toString()
+            ]
             tuple(meta, file(row.slide, checkIfExists: true))
         }
 

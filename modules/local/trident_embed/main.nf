@@ -30,7 +30,10 @@ process TRIDENT_EMBED {
     def artifacts = params.remove_artifacts ? '--remove_artifacts' : ''
     def penmarks  = params.remove_penmarks  ? '--remove_penmarks'  : ''
     def holes     = params.remove_holes     ? '--remove_holes'     : ''
-    def reader    = params.reader_type      ? "--reader_type ${params.reader_type}" : ''
+    // Per-slide reader beats the global default. Needed because a container format that
+    // OpenSlide cannot open (plain tiled TIFF, qptiff) is a property of the file, not the run.
+    def reader_type = meta.reader ?: params.reader_type
+    def reader    = reader_type             ? "--reader_type ${reader_type}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
     export HF_HOME=\$PWD/${tile_cache}

@@ -17,7 +17,7 @@
                     "format": "file-path",
                     "mimetype": "text/csv",
                     "description": "Samplesheet CSV with columns sample,slide[,mpp]",
-                    "help_text": "'slide' is any OpenSlide-readable path (local, https or s3://). 'mpp' is optional and only needed for slides whose metadata lacks microns-per-pixel."
+                    "help_text": "Columns: sample, slide, and optionally mpp and reader. 'slide' is any readable path (local, https, s3:// or syn:// with the nf-synapse plugin). 'mpp' overrides microns-per-pixel for files whose metadata lacks it, which includes generic TIFF, OME-TIFF and some cleaned svs. 'reader' forces a TRIDENT reader (openslide, image, cucim, sdpc, omezarr, czi) for containers OpenSlide cannot open."
                 },
                 "outdir": {
                     "type": "string",
