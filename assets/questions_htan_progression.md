@@ -66,6 +66,30 @@ says something quite different from picking "Lobular carcinoma NOS". Distractor 
 the cheapest available check that the model is reading morphology rather than exploiting the option
 list, so a near-zero distractor rate is itself a result.
 
+## Cohort structure
+
+`assets/samplesheet_progression.csv`, built by `scripts/build_progression_cohort.py`.
+188 slides, 146 patients, 70.7 GB.
+
+| Arm | What | Slides | Purpose |
+|---|---|---|---|
+| A | HTAN BU, lung, 18 patients in each of the 6 classes | 108 (+8 pairs) | the primary endpoint, measured **within one centre and one organ**, so a normal-versus-primary difference cannot be BU versus Duke |
+| B | HTAN Vanderbilt, colon, 4 classes | 27 | independent replication in a different organ and centre |
+| C | Primary only, Duke breast, HMS, WUSTL pancreas | 45 | several centres per organ, needed by the site and type questions and by the tile-locking analysis |
+
+BU is the only atlas carrying the whole axis including Primary, which is what makes the
+within-centre design possible. Every non-primary specimen in HTAN comes from a precancer atlas, so
+spreading the axis across centres would have confounded stage with scanner and stain.
+
+**32 patients contribute specimens at more than one progression class.** Those support a
+within-patient paired analysis, which removes patient-level confounding entirely, so report both
+the all-specimens analysis with patient as a random effect and the paired subset.
+
+`SiteofResectionorBiopsy` was considered as a third sampling axis and rejected: it is
+near-collinear with organ of origin, and in this cohort the two fields disagree on **0 of 188
+slides**, so the discrimination test it would have supported does not exist here. The
+`specimen_site` question is retained as descriptive only.
+
 ## Primary endpoints
 
 1. **Forced-choice stage accuracy.** `progression_stage_mc` against the collapsed axis. Report a

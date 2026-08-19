@@ -134,6 +134,11 @@ open_ended:
     prompt: "What type of cancer is this?"
   - id: primary_site
     prompt: "What is the primary site or organ of origin?"
+  # Asked separately from organ of origin because HTAN records both fields. In this cohort the two
+  # never disagree (0 of 188 slides), so this is descriptive rather than a discrimination test.
+  # Kept because it costs nothing and the fields do diverge elsewhere in HTAN.
+  - id: specimen_site
+    prompt: "From what anatomical site was this specimen taken?"
   - id: tumor_grade
     prompt: "What is the tumor grade?"
   - id: precursor_description
