@@ -27,7 +27,10 @@ def helpMessage() {
 
     Common options:
       --questions     Question set YAML (default: ${params.questions})
-      --hf_cache      Pre-staged HuggingFace cache dir; skips STAGE_MODELS
+      --model_store   Persistent cache location (local or s3://). Checked before downloading;
+                      populated on first run so later runs skip the download entirely.
+      --hf_cache_tile / --hf_cache_slide
+                      Explicit per-pass cache directories, skipping both check and download.
       --max_tiles     OOM guard only; 0 (default) uses every tile. PRISM2 is constant-cost
                       in tile count, so subsampling saves nothing.
       --scoring_dtype bf16 (default) or fp32. Use fp32 for AUC or calibration work, see docs.
@@ -75,20 +78,51 @@ workflow {
 
     ch_questions = file(params.questions, checkIfExists: true)
 
-    // --- model weights: staged once, reused by every task ------------------
-    // .first() makes this a value channel so every slide task reuses the same cache
-    // (on Nextflow <25 a single-item process output is a queue channel and would only
-    // feed one downstream task; on >=26 it is already a value channel and the operator
-    // is a harmless no-op).
-    ch_cache = params.hf_cache
-        ? Channel.fromPath(params.hf_cache, type: 'dir', checkIfExists: true).first()
-        : STAGE_MODELS().cache.first()
+    // --- model weights ------------------------------------------------------
+    // Two caches: the tile pass needs Virchow2 (~2.5 GB), the slide pass needs PRISM2
+    // (~17 GB). Staging only what each process opens matters when several slides pack onto
+    // one instance and all of them stage concurrently.
+    //
+    // Resolution order:
+    //   1. explicit --hf_cache_tile / --hf_cache_slide
+    //   2. --hf_cache (legacy single directory holding everything)
+    //   3. --model_store, if it already holds both .complete markers
+    //   4. otherwise download once via STAGE_MODELS, publishing to --model_store if set
+    //
+    // .first() makes each a value channel so every slide task reuses it. On Nextflow <25 a
+    // single-item process output is a queue channel and would feed only one task.
+    def store_ready = false
+    if (params.model_store) {
+        store_ready = file("${params.model_store}/tile_cache/.complete").exists() &&
+                      file("${params.model_store}/slide_cache/.complete").exists()
+        log.info(store_ready
+            ? "Model store hit: reusing ${params.model_store}, skipping download"
+            : "Model store miss at ${params.model_store}, will download and populate it")
+    }
+
+    if (params.hf_cache_tile && params.hf_cache_slide) {
+        ch_tile  = Channel.fromPath(params.hf_cache_tile,  type: 'dir', checkIfExists: true).first()
+        ch_slide = Channel.fromPath(params.hf_cache_slide, type: 'dir', checkIfExists: true).first()
+    }
+    else if (params.hf_cache) {
+        ch_tile  = Channel.fromPath(params.hf_cache, type: 'dir', checkIfExists: true).first()
+        ch_slide = ch_tile
+    }
+    else if (store_ready) {
+        ch_tile  = Channel.fromPath("${params.model_store}/tile_cache",  type: 'dir').first()
+        ch_slide = Channel.fromPath("${params.model_store}/slide_cache", type: 'dir').first()
+    }
+    else {
+        STAGE_MODELS()
+        ch_tile  = STAGE_MODELS.out.tile.first()
+        ch_slide = STAGE_MODELS.out.slide.first()
+    }
 
     // --- tile + embed with Virchow2 (class token, 1280-d) ------------------
-    TRIDENT_EMBED(ch_slides, ch_cache)
+    TRIDENT_EMBED(ch_slides, ch_tile)
 
     // --- PRISM2 aggregation + question answering ---------------------------
-    PRISM2_INFER(TRIDENT_EMBED.out.features, ch_cache, ch_questions)
+    PRISM2_INFER(TRIDENT_EMBED.out.features, ch_slide, ch_questions)
 
     // --- merge per-slide JSON into one table -------------------------------
     COLLECT_RESULTS(PRISM2_INFER.out.json.map { meta, json -> json }.collect())

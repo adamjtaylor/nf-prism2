@@ -141,8 +141,7 @@
             "properties": {
                 "hf_cache": {
                     "type": "string",
-                    "format": "directory-path",
-                    "description": "Pre-staged HuggingFace cache directory; skips the download step"
+                    "description": "Legacy single cache directory holding all models; used for both passes"
                 },
                 "hf_repos_extra": {
                     "type": "string",
@@ -153,6 +152,18 @@
                     "type": "string",
                     "default": "HF_TOKEN",
                     "description": "Name of the Nextflow/Seqera secret holding the HuggingFace token (e.g. AJT_HF_TOKEN)"
+                },
+                "model_store": {
+                    "type": "string",
+                    "description": "Persistent weights cache (local path or s3://). Checked for .complete markers before downloading, and populated on first run so later runs skip the ~20 GB download."
+                },
+                "hf_cache_tile": {
+                    "type": "string",
+                    "description": "Explicit cache dir for the tile pass (Virchow2 + segmenter)"
+                },
+                "hf_cache_slide": {
+                    "type": "string",
+                    "description": "Explicit cache dir for the slide pass (PRISM2)"
                 }
             }
         },

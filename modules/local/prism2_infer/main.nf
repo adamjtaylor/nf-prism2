@@ -11,7 +11,7 @@ process PRISM2_INFER {
 
     input:
     tuple val(meta), path(features)
-    path hf_cache
+    path slide_cache
     path questions
 
     output:
@@ -24,7 +24,7 @@ process PRISM2_INFER {
     def revision = params.prism2_revision ? "--model-revision ${params.prism2_revision}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
-    export HF_HOME=\$PWD/${hf_cache}
+    export HF_HOME=\$PWD/${slide_cache}
     export OMP_NUM_THREADS=${task.cpus}
     export TOKENIZERS_PARALLELISM=false
 

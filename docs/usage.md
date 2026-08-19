@@ -16,12 +16,26 @@ Both models are gated:
    to the pipeline. Only `STAGE_MODELS` needs it in normal operation (`TRIDENT_EMBED` and
    `PRISM2_INFER` also declare it so an unexpected cache miss can still self-heal).
 
-`STAGE_MODELS` downloads ~10 GB once per run and passes the cache directory to every task.
-For repeat runs, publish the cache to S3 once and skip the step:
+`STAGE_MODELS` downloads the weights once per run and hands them to every task as two separate
+caches: `tile_cache` (Virchow2 plus the segmenter, about 2.5 GB) for `TRIDENT_EMBED`, and
+`slide_cache` (PRISM2, about 17 GB) for `PRISM2_INFER`. The split matters because AWS Batch packs
+several slides onto one instance, and each task stages its cache independently. Sharing one
+directory meant every tile task pulled 20 GB it never opened.
+
+**Use a persistent store so the download happens once, ever:**
 
 ```bash
---hf_cache s3://my-bucket/hf_cache
+--model_store s3://my-bucket/nf-prism2-models
 ```
+
+On the first run the store is empty, so `STAGE_MODELS` downloads and publishes into it. Every
+later run finds the `.complete` markers and skips the process entirely. The markers are written
+after the downloads finish, so an interrupted run cannot leave a half-populated cache that a
+later run mistakes for a good one. If either marker is missing, both caches are re-staged.
+
+To bypass the check and point at directories directly, use `--hf_cache_tile` and
+`--hf_cache_slide`. The legacy `--hf_cache` still works and supplies one directory to both
+passes.
 
 ## 2. Build and publish the containers
 

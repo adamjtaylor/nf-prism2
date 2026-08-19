@@ -1,26 +1,34 @@
 /*
- * Download the gated model weights once, then hand the HF cache to every task.
+ * Download the gated model weights once, then hand them to every task.
  *
- * Doing this in a single task means: gating/licence failures surface immediately and
- * cheaply (no GPU burned), no HF rate limiting from N parallel slides, and the ~10 GB
- * of weights is fetched once instead of once per slide.
+ * Split into two caches on purpose. The tile pass needs Virchow2 (~2.5 GB) and the segmenter,
+ * while the ~17 GB of PRISM2 weights are only needed by the slide pass. Sharing one directory
+ * meant every TRIDENT_EMBED task staged 20 GB it never opened, which dominated wall clock when
+ * several slides pack onto one instance.
+ *
+ * Doing this in a single task also means gating and licence failures surface immediately and
+ * cheaply, with no GPU burned, and the weights are fetched once per run rather than per slide.
  */
 process STAGE_MODELS {
     tag 'hf_weights'
     label 'process_low'
     secret params.hf_token_secret
 
+    // Populate the persistent store on the way past, so the next run skips this process
+    // entirely. Enabled only when --model_store is set.
+    publishDir path: { params.model_store }, mode: 'copy', enabled: params.model_store as boolean
+
     output:
-    path 'hf_cache', emit: cache
+    path 'tile_cache' , emit: tile
+    path 'slide_cache', emit: slide
 
     script:
     def extra = params.hf_repos_extra ? params.hf_repos_extra.tokenize(',')*.trim().findAll() : []
     """
     # the task env var is named after the secret, so normalise it to HF_TOKEN
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
-    export HF_HOME=\$PWD/hf_cache
     export HF_HUB_ENABLE_HF_TRANSFER=0
-    mkdir -p hf_cache
+    mkdir -p tile_cache slide_cache
 
     if [ -z "\${HF_TOKEN:-}" ]; then
         echo "ERROR: secret '${params.hf_token_secret}' is empty. paige-ai/Virchow2 and paige-ai/Prism2 are gated." >&2
@@ -30,20 +38,26 @@ process STAGE_MODELS {
         exit 1
     fi
 
-    # Required, gated (CC-BY-NC-ND 4.0) - fail hard if the token lacks access
+    # --- tile cache: Virchow2 plus the segmenter weights -------------------
+    export HF_HOME=\$PWD/tile_cache
     hf download paige-ai/Virchow2
-    hf download paige-ai/Prism2
-
-    # Best-effort extras (e.g. TRIDENT segmenter weights); a miss is not fatal because
-    # TRIDENT can still fetch them at runtime.
     ${extra.collect { "hf download ${it} || echo 'WARN: could not pre-stage ${it}' >&2" }.join('\n    ')}
 
-    du -sh hf_cache
+    # --- slide cache: PRISM2 only ------------------------------------------
+    export HF_HOME=\$PWD/slide_cache
+    hf download paige-ai/Prism2
+
+    # Markers are what the next run checks for. Written last, so a half-finished download is
+    # never mistaken for a usable cache.
+    touch tile_cache/.complete slide_cache/.complete
+
+    du -sh tile_cache slide_cache
     """
 
     stub:
     """
-    mkdir -p hf_cache/hub
-    touch hf_cache/hub/.stub
+    mkdir -p tile_cache/hub slide_cache/hub
+    touch tile_cache/hub/.stub slide_cache/hub/.stub
+    touch tile_cache/.complete slide_cache/.complete
     """
 }

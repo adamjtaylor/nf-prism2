@@ -14,7 +14,7 @@ process TRIDENT_EMBED {
 
     input:
     tuple val(meta), path(slide, stageAs: 'wsi/*')
-    path hf_cache
+    path tile_cache
 
     output:
     tuple val(meta), path("${meta.id}.features.h5"), emit: features
@@ -29,8 +29,8 @@ process TRIDENT_EMBED {
     def reader    = params.reader_type      ? "--reader_type ${params.reader_type}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
-    export HF_HOME=\$PWD/${hf_cache}
-    export TORCH_HOME=\$PWD/${hf_cache}/torch
+    export HF_HOME=\$PWD/${tile_cache}
+    export TORCH_HOME=\$PWD/${tile_cache}/torch
     export TRIDENT_HOME=\${TRIDENT_HOME:-/opt/trident}
     export OMP_NUM_THREADS=${task.cpus}
 

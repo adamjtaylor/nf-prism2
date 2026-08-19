@@ -82,7 +82,7 @@ def rasterise(coords, values, step, fill=np.nan):
 
 
 def leiden(graph, resolution, seed):
-    """Leiden on UMAP's fuzzy kNN graph — the same connectivities scanpy clusters
+    """Leiden on UMAP's fuzzy kNN graph, the same connectivities scanpy clusters
     on, so the partition and the layout come from one neighbourhood structure."""
     import igraph as ig
     import leidenalg
@@ -98,7 +98,7 @@ def leiden(graph, resolution, seed):
 
 
 def dense_point(xy, mask, bins=25):
-    """Label anchor: the densest spot of a cluster, not its centroid — ring- or
+    """Label anchor: the densest spot of a cluster, not its centroid, since ring- or
     crescent-shaped clusters put their centroid in empty space. Smooth first, or
     a thin dense streak outvotes the diffuse main mass."""
     from scipy.ndimage import gaussian_filter
@@ -242,7 +242,7 @@ def main():
                for i in range(args.k)]
     fig.legend(handles=handles, loc='lower center', ncol=min(args.k, 3),
                bbox_to_anchor=(0.5, -0.10), labelcolor=INK_2)
-    fig.suptitle(f'{sample} — {args.k} morphology clusters, {method}, '
+    fig.suptitle(f'{sample}: {args.k} morphology clusters, {method}, '
                  f'same colours in both spaces',
                  x=0.055, ha='left', weight='semibold')
     fig.tight_layout(rect=(0, 0, 1, 0.94))
@@ -260,7 +260,7 @@ def main():
         ax = axes[0, i]
         ax.scatter(emb[~m, 0], emb[~m, 1], s=1.5, c=CONTEXT, linewidths=0)
         ax.scatter(emb[m, 0], emb[m, 1], s=1.8, c=SERIES[0], linewidths=0)
-        ax.set_title(f'{cluster_names[i]}\n{counts[i]:,} tiles · {counts[i] / n:.0%}',
+        ax.set_title(f'{cluster_names[i]}\n{counts[i]:,} tiles, {counts[i] / n:.0%}',
                      fontsize=9, color=INK)
         bare(ax, keep_frame=True)
         ax = axes[1, i]
@@ -273,7 +273,7 @@ def main():
         bare(ax, keep_frame=True)
     axes[0, 0].set_ylabel('UMAP space', color=INK_2)
     axes[1, 0].set_ylabel('Slide space', color=INK_2)
-    fig.suptitle(f'{sample} — one cluster per panel (grey = all other tiles)',
+    fig.suptitle(f'{sample}: one cluster per panel (grey = all other tiles)',
                  x=0.02, ha='left', weight='semibold')
     fig.savefig(out / f'{sample}.03_cluster_small_multiples.png', bbox_inches='tight')
     plt.close(fig)
@@ -309,7 +309,7 @@ def main():
         cb.ax.tick_params(length=0, labelsize=8, colors=MUTED)
     axes[0, 0].set_ylabel('UMAP space', color=INK_2)
     axes[1, 0].set_ylabel('Slide space', color=INK_2)
-    fig.suptitle(f'{sample} — continuous embedding structure, UMAP (top) vs slide (bottom)',
+    fig.suptitle(f'{sample}: continuous embedding structure, UMAP (top) vs slide (bottom)',
                  x=0.02, ha='left', weight='semibold')
     fig.savefig(out / f'{sample}.04_continuous.png', bbox_inches='tight')
     plt.close(fig)
@@ -327,7 +327,7 @@ def main():
             lim = np.nanpercentile(np.abs(v), 99)
             im = ax.imshow(img, cmap=DIV, vmin=-lim, vmax=lim, aspect='auto',
                            interpolation='nearest')
-            ax.set_title(f'PRISM2 {name} embedding — {v.size}-d '
+            ax.set_title(f'PRISM2 {name} embedding, {v.size}-d '
                          f'(‖v‖={np.linalg.norm(v):.1f}, {w} values per row)')
             bare(ax, keep_frame=True)
             cb = fig.colorbar(im, ax=ax, fraction=0.02, pad=0.01)
@@ -342,7 +342,7 @@ def main():
         for s in ('top', 'right'):
             ax.spines[s].set_visible(False)
         ax.grid(axis='y', color=AXIS, lw=0.5, alpha=0.5); ax.set_axisbelow(True)
-        fig.suptitle(f'{sample} — slide-level PRISM2 embeddings (n = 1 slide, so no UMAP)',
+        fig.suptitle(f'{sample}: slide-level PRISM2 embeddings (n = 1 slide, so no UMAP)',
                      x=0.02, ha='left', weight='semibold')
         fig.savefig(out / f'{sample}.05_slide_embedding.png', bbox_inches='tight')
         plt.close(fig)
@@ -381,7 +381,7 @@ def main():
             axes[i, 0].text(-0.08, 0.5, f'{cluster_names[i]}\n{counts[i]:,} tiles',
                             transform=axes[i, 0].transAxes, ha='right', va='center',
                             fontsize=8.5, color=INK_2)
-        fig.suptitle(f'{sample} — {m} most representative tiles per cluster '
+        fig.suptitle(f'{sample}: {m} most representative tiles per cluster '
                      f'({step} px @ {meta.get("target_magnification", 20):g}x, '
                      f'nearest the cluster centroid)', x=0.01, ha='left', weight='semibold')
         fig.savefig(out / f'{sample}.06_representative_tiles.png', bbox_inches='tight')
