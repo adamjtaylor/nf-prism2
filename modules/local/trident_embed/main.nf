@@ -68,6 +68,7 @@ process TRIDENT_EMBED {
         --overlap 0 \\
         --segmenter ${params.segmenter} \\
         --seg_conf_thresh ${params.seg_conf_thresh} \\
+        --min_tissue_proportion ${params.min_tissue_proportion} \\
         --batch_size ${params.tile_batch_size} \\
         --gpus 0 ${artifacts} ${penmarks} ${holes} ${reader}
 

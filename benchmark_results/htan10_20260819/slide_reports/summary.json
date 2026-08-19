@@ -1,0 +1,50 @@
+[
+  {
+    "sample": "BU_lung_adenocarcinoma_svs",
+    "n_tiles": 20460,
+    "communities": 8,
+    "mb_streamed": 8.6
+  },
+  {
+    "sample": "BU_lung_squamous_ndpi",
+    "n_tiles": 196,
+    "communities": 4,
+    "mb_streamed": 4.5
+  },
+  {
+    "sample": "DUKE_breast_dcis_svs",
+    "n_tiles": 25955,
+    "communities": 9,
+    "mb_streamed": 8.2
+  },
+  {
+    "sample": "HMS_colorectal_adenocarcinoma_ometiff",
+    "n_tiles": 58331,
+    "communities": 6,
+    "mb_streamed": 4.5
+  },
+  {
+    "sample": "HMS_ovarian_hgserous_svs",
+    "n_tiles": 4732,
+    "communities": 8,
+    "mb_streamed": 15.6
+  },
+  {
+    "sample": "HMS_skin_melanoma_ometiff",
+    "n_tiles": 863,
+    "communities": 7,
+    "mb_streamed": 7.8
+  },
+  {
+    "sample": "SRRS_lung_squamous_svs",
+    "n_tiles": 5487,
+    "communities": 11,
+    "mb_streamed": 11.6
+  },
+  {
+    "sample": "WUSTL_pancreas_pbcarcinoma_svs",
+    "n_tiles": 2239,
+    "communities": 8,
+    "mb_streamed": 2.9
+  }
+]

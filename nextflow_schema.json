@@ -96,6 +96,13 @@
                     "type": "string",
                     "default": "image",
                     "description": "Reader forced on a retry when none was specified, to self-heal files whose extension makes TRIDENT choose a reader that cannot open them. Set null to disable."
+                },
+                "min_tissue_proportion": {
+                    "type": "number",
+                    "default": 0.65,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Minimum tissue fraction for a tile to be kept. 0.65 matches the PRISM2 paper; TRIDENT's own default is 0.0."
                 }
             }
         },

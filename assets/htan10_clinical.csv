@@ -1,0 +1,11 @@
+sample,participant,synapse_id,PrimaryDiagnosis,TissueorOrganofOrigin,SiteofResectionorBiopsy,TumorGrade,AJCCPathologicStage,LymphaticInvasionPresent,PerineuralInvasionPresent,VascularInvasionPresent,BreslowThickness,TumorFocality
+BU_lung_adenocarcinoma_svs,HTA3_80014,syn53640639,Adenocarcinoma NOS,Lung NOS,Middle lobe lung,G1,Stage IA1,no,,no,,
+BU_lung_squamous_ndpi,HTA3_70153,syn68493420,Squamous cell carcinoma NOS,Lung NOS,Trachea,,,,,,,
+DUKE_breast_dcis_svs,HTA6_2411,syn52289971,Ductal carcinoma in situ NOS,Breast NOS,Breast NOS,G3,,,,,,
+DUKE_breast_dcis_tiff,HTA6_1020,syn27056837,Ductal carcinoma in situ NOS,Breast NOS,Breast NOS,Intermediate Grade,,,,,,
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,syn51692280,Adenocarcinoma NOS,Transverse colon,Transverse colon,Low Grade,Stage IVC,yes,yes,,,
+HMS_ovarian_hgserous_svs,HTA7_1258,syn68629518,High-grade serous carcinoma,Fallopian tube,Fallopian tube,,Stage IC,,,,,
+HMS_skin_melanoma_ometiff,HTA7_6,syn51758553,Malignant melanoma NOS,Skin of scalp and neck,Skin of scalp and neck,,,no,no,no,1.2,
+HTAPP_breast_lobular_svs,HTA1_880,syn25882267,Lobular carcinoma NOS,Breast NOS,Breast NOS,G2,,,,,,
+SRRS_lung_squamous_svs,HTA15_30001,syn52431239,Squamous cell carcinoma NOS (file-level label only),Lung,,,,,,,,
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,syn27393120,Pancreatobiliary-type carcinoma,Pancreas NOS,Pancreas NOS,G1,,Yes,Yes,Yes - Vascular Invasion Present,,

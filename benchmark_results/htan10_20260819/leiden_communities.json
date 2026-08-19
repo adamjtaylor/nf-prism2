@@ -1,0 +1,121 @@
+{
+  "resolution": 0.5,
+  "n_communities": 19,
+  "slide_dominated_90pct": 18,
+  "communities": [
+    {
+      "label": 1,
+      "n_tiles": 1094,
+      "dominant_slide": "BU_lung_adenocarcinoma_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 2,
+      "n_tiles": 306,
+      "dominant_slide": "BU_lung_adenocarcinoma_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 3,
+      "n_tiles": 98,
+      "dominant_slide": "BU_lung_adenocarcinoma_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 4,
+      "n_tiles": 194,
+      "dominant_slide": "BU_lung_squamous_ndpi",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 5,
+      "n_tiles": 1051,
+      "dominant_slide": "SRRS_lung_squamous_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 6,
+      "n_tiles": 349,
+      "dominant_slide": "SRRS_lung_squamous_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 7,
+      "n_tiles": 100,
+      "dominant_slide": "SRRS_lung_squamous_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 8,
+      "n_tiles": 699,
+      "dominant_slide": "DUKE_breast_dcis_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 9,
+      "n_tiles": 643,
+      "dominant_slide": "DUKE_breast_dcis_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 10,
+      "n_tiles": 142,
+      "dominant_slide": "DUKE_breast_dcis_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 11,
+      "n_tiles": 798,
+      "dominant_slide": "HMS_colorectal_adenocarcinoma_ometiff",
+      "dominant_share": 0.999
+    },
+    {
+      "label": 12,
+      "n_tiles": 677,
+      "dominant_slide": "HMS_colorectal_adenocarcinoma_ometiff",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 13,
+      "n_tiles": 55,
+      "dominant_slide": "HMS_colorectal_adenocarcinoma_ometiff",
+      "dominant_share": 0.455
+    },
+    {
+      "label": 14,
+      "n_tiles": 991,
+      "dominant_slide": "HMS_ovarian_hgserous_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 15,
+      "n_tiles": 502,
+      "dominant_slide": "HMS_ovarian_hgserous_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 16,
+      "n_tiles": 520,
+      "dominant_slide": "HMS_skin_melanoma_ometiff",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 17,
+      "n_tiles": 343,
+      "dominant_slide": "HMS_skin_melanoma_ometiff",
+      "dominant_share": 0.997
+    },
+    {
+      "label": 18,
+      "n_tiles": 1162,
+      "dominant_slide": "WUSTL_pancreas_pbcarcinoma_svs",
+      "dominant_share": 1.0
+    },
+    {
+      "label": 19,
+      "n_tiles": 335,
+      "dominant_slide": "WUSTL_pancreas_pbcarcinoma_svs",
+      "dominant_share": 1.0
+    }
+  ]
+}

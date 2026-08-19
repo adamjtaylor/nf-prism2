@@ -97,6 +97,7 @@ for ax, (lab, title, keys) in zip(axes, [
     ax.set_title(title, fontsize=10, color=INK)
     ax.set_xticks([]); ax.set_yticks([])
     ax.set_xlabel("UMAP 1"); ax.set_ylabel("UMAP 2")
+    ax.set_aspect("equal")
     leg = ax.legend(frameon=False, fontsize=7.5, markerscale=3.2, loc="best")
 fig.suptitle(f"Virchow2 tile embeddings, {X.shape[0]:,} tiles ({PER_SLIDE} sampled per slide)\n"
              "community metrics are in make_leiden.py, which supersedes the k-means pass here",

@@ -248,6 +248,38 @@ before embedding is the untested alternative that avoids the transductive proble
 Caveats: one organ with more than one slide, 10,059 tiles, and a single tile encoder. This is a
 direction-setting measurement, not a settled result.
 
+## 7d. Per-slide reports, and two tiling defaults that need changing
+
+`slide_reports/` holds one report per slide: thumbnail, a categorical grid of the within-slide
+Leiden community for every tile, the UMAP, three representative tiles per community (those nearest
+the community centroid), and a table of HTAN metadata against the PRISM2 answer.
+
+Tile images and thumbnails are read **by HTTP range request from the Synapse pre-signed URL**
+through tifffile's zarr store, so no slide is downloaded. All eight reports cost **64 MB in total**
+against roughly 4 GB of slide files, about 65 times less. Measured on one 1,070 MB svs: 0.4 MB to
+parse the TIFF structure, 6.4 MB for a thumbnail from the smallest pyramid level, and 0.4 MB for
+three full-resolution tiles.
+
+Two defaults are wrong, and the reports are what exposed them.
+
+**Tiles were kept regardless of tissue content.** TRIDENT's own recorded arguments show
+`min_tissue_proportion: 0.0`, while the PRISM2 paper discards tiles below 65 percent tissue. The
+parameter measures the fraction of a tile's area falling inside the tissue segmentation contour,
+not the fraction of non-white pixels, so 0.65 removes tiles straddling the tissue boundary without
+discarding genuine alveolar lung, where a tile can be mostly air and still sit wholly inside the
+contour. Changed to 0.65, which also brings the tile counts in section 3 down and explains why the
+lung slide's largest communities were edge-dominated.
+
+**Pen marks and ink are being embedded as if they were tissue.** The BU lung slide carries blue
+marker writing on the glass ("AAH", "0.1cm", circles, all visible in the thumbnail) and a green ink
+region. That green region forms its own Leiden community and scores 94 percent on a colour-variance
+tissue measure, because ink has plenty of colour variance. A second community is out-of-focus
+bubbles at 11 percent, and another is near-empty glass with a fold line at 2 percent. TRIDENT has
+`--remove_penmarks` and `--remove_artifacts` for exactly this and both are currently off. They are
+left off for now only because the pre-built model store does not contain the extra segmentation
+weights they need, and guessing that repository name would be worse than flagging it. This should
+be turned on for the cohort run once the weights are staged.
+
 ## 8. Generated text is not trustworthy on its own
 
 The clearest example: `SRRS_lung_squamous_svs` answered "squamous cell carcinoma" on forced
