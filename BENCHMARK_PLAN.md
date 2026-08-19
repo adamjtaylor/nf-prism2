@@ -171,6 +171,74 @@ Exploratory questions are reported as observations, not as results.
 Cost is a selection criterion, not an afterthought. From the Nextflow trace we record GPU
 minutes per slide, tiles per slide, peak memory, and dollars per 1,000 slides for each stack.
 
+**Measured baseline, 2026-08-19.** First real GPU run of `nf-prism2`, on one on-demand
+g5.2xlarge (1x A10G 24 GB, 8 vCPU, 32 GB RAM, $1.212/hr, us-east-1) in the `htan-dev` account.
+Slide: Aperio CMU-1 (the public OpenSlide test slide, ~170 MB), `otsu` segmenter, 20x / 224 px,
+6,182 tiles. Raw artefacts in `benchmark_results/gpu_smoke_20260819/`.
+
+| Stage | Wall time | Peak VRAM | Peak host RSS |
+|---|---|---|---|
+| `STAGE_MODELS` (~22 GB of gated weights) | 3 m 10 s, once per run | n/a | 4.0 GB |
+| `TRIDENT_EMBED` (segment + tile + Virchow2) | 1 m 37 s | 4.7 GB | 16.7 GB |
+| `PRISM2_INFER`, 2,000 tiles | 1 m 13 s | 7.6 GB | 12.2 GB |
+| `PRISM2_INFER`, all 6,182 tiles | 30.7 s | 8.8 GB | 12.2 GB |
+| `COLLECT_RESULTS` | 1.4 s | n/a | 18 MB |
+
+Inside `TRIDENT_EMBED`: otsu segmentation 4.3 s, patch-coordinate generation 0.9 s, Virchow2
+class-token embedding 57.2 s. That is **108 tiles/s** on an A10G at batch size 32, and it is the
+only part of the pipeline that scales with slide size.
+
+Two results drive the cost model. First, PRISM2 is effectively **constant-cost in tile count**:
+its processor sets `num_img_tokens = 256`, so the Perceiver resampler compresses any number of
+tiles to 256 tokens before the Phi-3 decoder sees them. Running all 6,182 tiles was no more
+expensive than running 2,000 - the 1 m 13 s figure in the table is the larger only because it
+paid a cold read of the 17 GB checkpoint, and the extra 1.2 GB of VRAM is the Perceiver's
+cross-attention over 3x as many tiles. There is no reason to subsample, and `--max_tiles` should
+be treated as an out-of-memory guard rather than a cost lever. Second, the whole stack fits
+comfortably on a 24 GB card once the model is loaded in bf16, so **g5.2xlarge is the right
+instance and a larger GPU buys nothing**.
+
+Cost per slide decomposes into a fixed part and a per-tile part:
+
+```
+cost(slide) ~= $0.024  +  $0.0031 per 1,000 tiles
+```
+
+The fixed $0.024 is slide download, two model loads, PRISM2 inference and result collection
+(~72 s). The per-tile term is Virchow2 at 108 tiles/s. For CMU-1 that is 129 s and **$0.043 per
+slide** in steady state, or $0.082 with cold page cache and no weight reuse.
+
+Extrapolated to the 2,165-slide HTAN collection, on one on-demand g5.2xlarge:
+
+| Mean tiles/slide | Per slide | 2,165 slides | Wall time, 1 GPU |
+|---|---|---|---|
+| 6,182 (as CMU-1) | $0.043 | $94 | 78 h |
+| 20,000 | $0.086 | $186 | 154 h |
+| 50,000 | $0.179 | $387 | 320 h |
+
+These are small enough that GPU cost is not a constraint on the benchmark design. Even the
+pessimistic row is under $400 for a full pass, and the fan-out is embarrassingly parallel, so
+wall time is set by how many instances we run rather than by total spend. Spot g5.2xlarge is
+typically 55-65% cheaper again, though the on-demand figures are the ones measured here. The
+numbers above exclude S3 storage and egress, and assume one slide per GPU at a time; nothing in
+the run suggested the 8 vCPU host was the bottleneck (`TRIDENT_EMBED` ran at 108% CPU).
+
+Three caveats found while measuring, all recorded because they change results rather than only
+cost:
+
+* `transformers` must be pinned to exactly **4.51.3**. PRISM2's remote code calls
+  `Phi3Model._prepare_4d_causal_attention_mask_with_cache_position` with a `device` argument;
+  4.52 dropped that argument and 4.53 removed the helper entirely.
+* The model must be loaded as **bf16**, not with `torch_dtype="auto"`. The published
+  `config.json` declares `float32`, which loads 17 GB of weights and runs out of memory on a
+  24 GB card before the first forward pass.
+* Yes/no scores are **quantised by `autocast(bfloat16)`**. The CMU-1 logit came back as exactly
+  -4.25, a bf16 grid point, and was bit-identical for the 2,000-tile and 6,182-tile runs even
+  though their slide embeddings differed (cosine 0.9998). Near that magnitude the bf16 grid
+  spacing is 0.03125 in logit space, so scores carry roughly two significant figures. Before
+  computing AUC or calibration curves, the scoring head should be run in fp32, otherwise ties
+  are an artefact of the dtype rather than of the model.
+
 ## 6. Statistics and controls
 
 * Simple baselines are always included: `otsu` segmentation, `resnet50` tile embeddings, mean

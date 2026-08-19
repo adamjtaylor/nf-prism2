@@ -5,3 +5,7 @@ hf_cache/
 *.pyc
 __pycache__/
 .DS_Store
+
+# Archived benchmark artefacts are tracked deliberately, despite the results*/ rule above.
+!benchmark_results/**
+.DS_Store
