@@ -9,3 +9,6 @@ __pycache__/
 # Archived benchmark artefacts are tracked deliberately, despite the results*/ rule above.
 !benchmark_results/**
 .DS_Store
+
+# large inputs pulled for embedding visualisation
+analysis/data/

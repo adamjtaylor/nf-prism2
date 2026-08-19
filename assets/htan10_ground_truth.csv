@@ -1,0 +1,66 @@
+sample,participant,question_id,expected,evidence_field,evidence_value,label_level
+BU_lung_adenocarcinoma_svs,HTA3_80014,invasive_carcinoma,yes,PrimaryDiagnosis,Adenocarcinoma NOS,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,adenocarcinoma,yes,PrimaryDiagnosis,Adenocarcinoma NOS,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,squamous_cell_carcinoma,no,PrimaryDiagnosis,Adenocarcinoma NOS,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,melanoma,no,PrimaryDiagnosis,Adenocarcinoma NOS,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,lymphovascular_invasion,no,LymphaticInvasionPresent,no,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,high_grade,no,TumorGrade,G1,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,primary_site_mc,A,TissueorOrganofOrigin,Lung NOS,case
+BU_lung_adenocarcinoma_svs,HTA3_80014,histologic_type_mc,A,PrimaryDiagnosis,Adenocarcinoma NOS,case
+BU_lung_squamous_ndpi,HTA3_70153,invasive_carcinoma,yes,PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+BU_lung_squamous_ndpi,HTA3_70153,squamous_cell_carcinoma,yes,PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+BU_lung_squamous_ndpi,HTA3_70153,adenocarcinoma,no,PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+BU_lung_squamous_ndpi,HTA3_70153,melanoma,no,PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+BU_lung_squamous_ndpi,HTA3_70153,primary_site_mc,A,TissueorOrganofOrigin,Lung NOS (trachea),case
+BU_lung_squamous_ndpi,HTA3_70153,histologic_type_mc,B,PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+DUKE_breast_dcis_svs,HTA6_2411,invasive_carcinoma,no,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_svs,HTA6_2411,carcinoma_in_situ,yes,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_svs,HTA6_2411,melanoma,no,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_svs,HTA6_2411,high_grade,yes,TumorGrade,G3,case
+DUKE_breast_dcis_svs,HTA6_2411,primary_site_mc,B,TissueorOrganofOrigin,Breast NOS,case
+DUKE_breast_dcis_svs,HTA6_2411,histologic_type_mc,C,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_tiff,HTA6_1020,invasive_carcinoma,no,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_tiff,HTA6_1020,carcinoma_in_situ,yes,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_tiff,HTA6_1020,melanoma,no,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+DUKE_breast_dcis_tiff,HTA6_1020,high_grade,no,TumorGrade,Intermediate Grade,case
+DUKE_breast_dcis_tiff,HTA6_1020,primary_site_mc,B,TissueorOrganofOrigin,Breast NOS,case
+DUKE_breast_dcis_tiff,HTA6_1020,histologic_type_mc,C,PrimaryDiagnosis,Ductal carcinoma in situ NOS,case
+HMS_ovarian_hgserous_svs,HTA7_1258,invasive_carcinoma,yes,PrimaryDiagnosis,High-grade serous carcinoma,case
+HMS_ovarian_hgserous_svs,HTA7_1258,melanoma,no,PrimaryDiagnosis,High-grade serous carcinoma,case
+HMS_ovarian_hgserous_svs,HTA7_1258,high_grade,yes,PrimaryDiagnosis,High-grade serous carcinoma,case
+HMS_ovarian_hgserous_svs,HTA7_1258,primary_site_mc,F,TissueorOrganofOrigin,Fallopian tube,case
+HMS_ovarian_hgserous_svs,HTA7_1258,histologic_type_mc,F,PrimaryDiagnosis,High-grade serous carcinoma,case
+HMS_skin_melanoma_ometiff,HTA7_6,melanoma,yes,PrimaryDiagnosis,Malignant melanoma NOS,case
+HMS_skin_melanoma_ometiff,HTA7_6,adenocarcinoma,no,PrimaryDiagnosis,Malignant melanoma NOS,case
+HMS_skin_melanoma_ometiff,HTA7_6,squamous_cell_carcinoma,no,PrimaryDiagnosis,Malignant melanoma NOS,case
+HMS_skin_melanoma_ometiff,HTA7_6,lymphovascular_invasion,no,LymphaticInvasionPresent,no,case
+HMS_skin_melanoma_ometiff,HTA7_6,perineural_invasion,no,PerineuralInvasionPresent,no,case
+HMS_skin_melanoma_ometiff,HTA7_6,primary_site_mc,D,TissueorOrganofOrigin,Skin of scalp and neck,case
+HMS_skin_melanoma_ometiff,HTA7_6,histologic_type_mc,E,PrimaryDiagnosis,Malignant melanoma NOS,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,invasive_carcinoma,yes,PrimaryDiagnosis,Adenocarcinoma NOS,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,adenocarcinoma,yes,PrimaryDiagnosis,Adenocarcinoma NOS,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,melanoma,no,PrimaryDiagnosis,Adenocarcinoma NOS,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,lymphovascular_invasion,yes,LymphaticInvasionPresent,yes,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,perineural_invasion,yes,PerineuralInvasionPresent,yes,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,high_grade,no,TumorGrade,Low Grade,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,primary_site_mc,C,TissueorOrganofOrigin,Transverse colon,case
+HMS_colorectal_adenocarcinoma_ometiff,HTA7_989,histologic_type_mc,A,PrimaryDiagnosis,Adenocarcinoma NOS,case
+SRRS_lung_squamous_svs,HTA15_30001,invasive_carcinoma,yes,files.PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+SRRS_lung_squamous_svs,HTA15_30001,squamous_cell_carcinoma,yes,files.PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+SRRS_lung_squamous_svs,HTA15_30001,adenocarcinoma,no,files.PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+SRRS_lung_squamous_svs,HTA15_30001,melanoma,no,files.PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+SRRS_lung_squamous_svs,HTA15_30001,primary_site_mc,A,files.organType,Lung,case
+SRRS_lung_squamous_svs,HTA15_30001,histologic_type_mc,B,files.PrimaryDiagnosis,Squamous cell carcinoma NOS,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,invasive_carcinoma,yes,PrimaryDiagnosis,Pancreatobiliary-type carcinoma,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,melanoma,no,PrimaryDiagnosis,Pancreatobiliary-type carcinoma,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,squamous_cell_carcinoma,no,PrimaryDiagnosis,Pancreatobiliary-type carcinoma,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,lymphovascular_invasion,yes,LymphaticInvasionPresent,Yes,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,perineural_invasion,yes,PerineuralInvasionPresent,Yes,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,high_grade,no,TumorGrade,G1,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,primary_site_mc,E,TissueorOrganofOrigin,Pancreas NOS,case
+WUSTL_pancreas_pbcarcinoma_svs,HTA12_16,histologic_type_mc,G,PrimaryDiagnosis,Pancreatobiliary-type carcinoma,case
+HTAPP_breast_lobular_svs,HTA1_880,invasive_carcinoma,yes,PrimaryDiagnosis,Lobular carcinoma NOS,case
+HTAPP_breast_lobular_svs,HTA1_880,melanoma,no,PrimaryDiagnosis,Lobular carcinoma NOS,case
+HTAPP_breast_lobular_svs,HTA1_880,squamous_cell_carcinoma,no,PrimaryDiagnosis,Lobular carcinoma NOS,case
+HTAPP_breast_lobular_svs,HTA1_880,primary_site_mc,B,TissueorOrganofOrigin,Breast NOS,case
+HTAPP_breast_lobular_svs,HTA1_880,histologic_type_mc,D,PrimaryDiagnosis,Lobular carcinoma NOS,case

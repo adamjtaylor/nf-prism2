@@ -1,0 +1,80 @@
+# Question set for the HTAN 10-slide pilot, written against the clinical metadata that
+# actually exists for these ten cases (HTAN Release 7.0, portal `diagnosis` table).
+#
+# Expected answers are in assets/htan10_ground_truth.csv.
+#
+# IMPORTANT: those labels are CASE-level, not slide-level. A case diagnosed with DCIS may have
+# sections showing only benign tissue, and a case recorded as having lymphovascular invasion may
+# not show it in this particular section. Treat agreement as a plausibility screen and a way to
+# catch gross failures, not as accuracy. See BENCHMARK_PLAN.md section 5.3.
+
+yes_no:
+  # Invasive vs in situ. The two Duke slides are DCIS cases, the other eight are invasive,
+  # so this is the one question in the set with a real positive/negative split.
+  - id: invasive_carcinoma
+    question: "Is invasive carcinoma present?"
+  - id: carcinoma_in_situ
+    question: "Is carcinoma in situ present?"
+
+  # Histologic class. Each should fire on a different subset, so a model that says yes to
+  # everything is immediately visible.
+  - id: adenocarcinoma
+    question: "Is adenocarcinoma present?"
+  - id: squamous_cell_carcinoma
+    question: "Is squamous cell carcinoma present?"
+  - id: melanoma
+    question: "Is malignant melanoma present?"
+
+  # Invasion features, recorded for five of the ten cases.
+  - id: lymphovascular_invasion
+    question: "Is lymphovascular invasion present?"
+  - id: perineural_invasion
+    question: "Is perineural invasion present?"
+
+  # Grade, recorded for six cases but in two different vocabularies (G1/G2/G3 and
+  # Low/Intermediate/High), so the mapping is in the ground truth file.
+  - id: high_grade
+    question: "Is the tumor high grade?"
+
+  # No case-level label. Included to see whether the score behaves sensibly, reported as an
+  # observation only.
+  - id: necrosis
+    question: "Is tumor necrosis present?"
+
+open_ended:
+  - id: cancer_type
+    prompt: "What type of cancer is this?"
+  - id: primary_site
+    prompt: "What is the primary site or organ of origin?"
+  - id: tumor_grade
+    prompt: "What is the tumor grade?"
+  - id: invasion_summary
+    prompt: "Is there evidence of lymphovascular or perineural invasion?"
+
+multiple_choice:
+  # Six organs are represented, so a forced choice is scoreable for all ten slides.
+  - id: primary_site_mc
+    prompt: |
+      What is the primary site of this tumor?
+      Options:
+      A. Lung
+      B. Breast
+      C. Colon or rectum
+      D. Skin
+      E. Pancreas
+      F. Ovary or fallopian tube
+  - id: histologic_type_mc
+    prompt: |
+      What is the histologic type?
+      Options:
+      A. Invasive adenocarcinoma
+      B. Squamous cell carcinoma
+      C. Ductal carcinoma in situ
+      D. Invasive lobular carcinoma
+      E. Malignant melanoma
+      F. High-grade serous carcinoma
+      G. Pancreatobiliary-type carcinoma
+
+report:
+  prompt: "Write a report"
+  max_new_tokens: 300

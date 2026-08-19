@@ -81,13 +81,34 @@ def rasterise(coords, values, step, fill=np.nan):
     return grid
 
 
-def dense_point(xy, mask, bins=40):
+def leiden(graph, resolution, seed):
+    """Leiden on UMAP's fuzzy kNN graph — the same connectivities scanpy clusters
+    on, so the partition and the layout come from one neighbourhood structure."""
+    import igraph as ig
+    import leidenalg
+    from scipy.sparse import triu
+
+    g = triu(graph.tocoo(), k=1).tocoo()
+    G = ig.Graph(n=graph.shape[0], edges=list(zip(g.row.tolist(), g.col.tolist())))
+    G.es['weight'] = g.data.tolist()
+    part = leidenalg.find_partition(
+        G, leidenalg.RBConfigurationVertexPartition, weights='weight',
+        resolution_parameter=resolution, n_iterations=-1, seed=seed)
+    return np.asarray(part.membership), part.modularity
+
+
+def dense_point(xy, mask, bins=25):
     """Label anchor: the densest spot of a cluster, not its centroid — ring- or
-    crescent-shaped clusters put their centroid in empty space."""
+    crescent-shaped clusters put their centroid in empty space. Smooth first, or
+    a thin dense streak outvotes the diffuse main mass."""
+    from scipy.ndimage import gaussian_filter
     pts = xy[mask]
     h, xe, ye = np.histogram2d(pts[:, 0], pts[:, 1], bins=bins)
+    h = gaussian_filter(h, 1.5)
     i, j = np.unravel_index(np.argmax(h), h.shape)
-    return (xe[i] + xe[i + 1]) / 2, (ye[j] + ye[j + 1]) / 2
+    peak = np.array([(xe[i] + xe[i + 1]) / 2, (ye[j] + ye[j + 1]) / 2])
+    # snap to an actual member so the label never floats over empty space
+    return tuple(pts[np.argmin(((pts - peak) ** 2).sum(axis=1))])
 
 
 def spatial_extent(coords, step):
@@ -103,9 +124,16 @@ def main():
     ap.add_argument('--slide-npz')
     ap.add_argument('--thumb')
     ap.add_argument('--prism2-json')
+    ap.add_argument('--wsi', help='source slide; enables representative tile crops')
+    ap.add_argument('--tiles-per-cluster', type=int, default=8)
     ap.add_argument('--outdir', default='figures')
     ap.add_argument('--sample', default=None)
-    ap.add_argument('--k', type=int, default=6, help='morphology clusters')
+    ap.add_argument('--cluster', choices=['leiden', 'kmeans'], default='leiden')
+    ap.add_argument('--resolution', type=float, default=0.5,
+                    help='Leiden resolution; higher = more clusters')
+    ap.add_argument('--k', type=int, default=6, help='k-means clusters (--cluster kmeans)')
+    ap.add_argument('--max-legend', type=int, default=8,
+                    help='clusters shown individually; the rest fold into "Other"')
     ap.add_argument('--seed', type=int, default=42)
     args = ap.parse_args()
 
@@ -125,19 +153,38 @@ def main():
     print(f'PCA: PC1-10 explain {pca.explained_variance_ratio_[:10].sum():.1%}')
 
     import umap
-    emb = umap.UMAP(n_neighbors=30, min_dist=0.1, metric='cosine',
-                    random_state=args.seed).fit_transform(Xp)
+    reducer = umap.UMAP(n_neighbors=30, min_dist=0.1, metric='cosine',
+                        random_state=args.seed).fit(Xp)
+    emb = reducer.embedding_
 
-    km = KMeans(n_clusters=args.k, n_init=10, random_state=args.seed).fit(Xp)
-    lab = km.labels_
-    # order clusters by size so slot 1 is always the largest morphology
-    order = np.argsort(-np.bincount(lab, minlength=args.k))
-    remap = np.zeros(args.k, dtype=int); remap[order] = np.arange(args.k)
+    if args.cluster == 'leiden':
+        lab, modularity = leiden(reducer.graph_, args.resolution, args.seed)
+        method = f'Leiden (res {args.resolution:g}, modularity {modularity:.3f})'
+    else:
+        lab = KMeans(n_clusters=args.k, n_init=10, random_state=args.seed).fit_predict(Xp)
+        method = f'k-means (k={args.k})'
+
+    # order by size so slot 1 is always the largest morphology, then fold the
+    # tail into "Other" rather than inventing hues past the palette
+    k_raw = lab.max() + 1
+    order = np.argsort(-np.bincount(lab, minlength=k_raw))
+    remap = np.zeros(k_raw, dtype=int); remap[order] = np.arange(k_raw)
     lab = remap[lab]
+    n_other = max(0, k_raw - args.max_legend)
+    if n_other:
+        lab = np.minimum(lab, args.max_legend)
+    args.k = int(lab.max() + 1)
     counts = np.bincount(lab, minlength=args.k)
+    print(f'{method}: {k_raw} clusters'
+          + (f', smallest {n_other} folded into "Other"' if n_other else ''))
 
     extent = spatial_extent(coords, step)
     cluster_names = [f'Cluster {i + 1}' for i in range(args.k)]
+    if n_other:
+        cluster_names[-1] = f'Other ({n_other} small clusters)'
+        palette = list(SERIES[:args.k - 1]) + [MUTED]
+    else:
+        palette = list(SERIES[:args.k])
 
     # ---------------------------------------------------------------- fig 1
     # Where the tiles are, before any colour encoding. One series, no legend.
@@ -167,16 +214,16 @@ def main():
     # ---------------------------------------------------------------- fig 2
     # Clusters in both spaces. Categorical hues in fixed order + direct labels
     # at every centroid, so identity is never carried by colour alone.
-    cmap_k = ListedColormap(SERIES[:args.k])
+    cmap_k = ListedColormap(palette)
     fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.2))
     ax = axes[0]
-    ax.scatter(emb[:, 0], emb[:, 1], s=2.5, c=[SERIES[i] for i in lab],
+    ax.scatter(emb[:, 0], emb[:, 1], s=2.5, c=[palette[i] for i in lab],
                alpha=0.55, linewidths=0)
     for i in range(args.k):
         cx, cy = dense_point(emb, lab == i)
         ax.text(cx, cy, str(i + 1), ha='center', va='center', fontsize=11, weight='bold',
-                color=INK, bbox=dict(boxstyle='circle,pad=0.28', fc=SURFACE, ec=SERIES[i], lw=2))
-    ax.set_title('UMAP space'); ax.set_xlabel('UMAP 1'); ax.set_ylabel('UMAP 2')
+                color=INK, bbox=dict(boxstyle='circle,pad=0.28', fc=SURFACE, ec=palette[i], lw=2))
+    ax.set_title('UMAP space')
     bare(ax, keep_frame=True)
 
     ax = axes[1]
@@ -186,16 +233,17 @@ def main():
     for i in range(args.k):
         cx, cy = dense_point(centres, lab == i)
         ax.text(cx, cy, str(i + 1), ha='center', va='center', fontsize=11, weight='bold',
-                color=INK, bbox=dict(boxstyle='circle,pad=0.28', fc=SURFACE, ec=SERIES[i], lw=2))
+                color=INK, bbox=dict(boxstyle='circle,pad=0.28', fc=SURFACE, ec=palette[i], lw=2))
     ax.set_title('Slide space')
     bare(ax, keep_frame=True)
 
-    handles = [Line2D([], [], marker='s', ls='', ms=8, mfc=SERIES[i], mec=SERIES[i],
+    handles = [Line2D([], [], marker='s', ls='', ms=8, mfc=palette[i], mec=palette[i],
                       label=f'{cluster_names[i]}  ({counts[i]:,} tiles, {counts[i] / n:.0%})')
                for i in range(args.k)]
     fig.legend(handles=handles, loc='lower center', ncol=min(args.k, 3),
-               bbox_to_anchor=(0.5, -0.06), labelcolor=INK_2)
-    fig.suptitle(f'{sample} — {args.k} morphology clusters, same colours in both spaces',
+               bbox_to_anchor=(0.5, -0.10), labelcolor=INK_2)
+    fig.suptitle(f'{sample} — {args.k} morphology clusters, {method}, '
+                 f'same colours in both spaces',
                  x=0.055, ha='left', weight='semibold')
     fig.tight_layout(rect=(0, 0, 1, 0.94))
     fig.savefig(out / f'{sample}.02_clusters_umap_spatial.png', bbox_inches='tight')
@@ -299,6 +347,48 @@ def main():
         fig.savefig(out / f'{sample}.05_slide_embedding.png', bbox_inches='tight')
         plt.close(fig)
 
+    # ---------------------------------------------------------------- fig 6
+    # What each cluster actually looks like: the tiles closest to the cluster
+    # centroid in embedding space, cropped from the source WSI.
+    reps = {}
+    for i in range(args.k):
+        idx = np.flatnonzero(lab == i)
+        c = X[idx].mean(axis=0); c /= np.linalg.norm(c)
+        reps[i] = idx[np.argsort(-(X[idx] @ c))[:args.tiles_per_cluster]]
+
+    if args.wsi:
+        import openslide
+        slide = openslide.OpenSlide(args.wsi)
+        tiledir = out / f'{sample}.representative_tiles'
+        m = args.tiles_per_cluster
+        fig, axes = plt.subplots(args.k, m, figsize=(1.15 * m + 2.4, 1.15 * args.k),
+                                 gridspec_kw=dict(hspace=0.06, wspace=0.06,
+                                                  left=0.19, right=0.995,
+                                                  top=0.93, bottom=0.005))
+        axes = np.atleast_2d(axes)
+        for i in range(args.k):
+            cdir = tiledir / f'cluster_{i + 1:02d}'
+            cdir.mkdir(parents=True, exist_ok=True)
+            for r, t in enumerate(reps[i]):
+                x, y = int(coords[t, 0]), int(coords[t, 1])
+                img = slide.read_region((x, y), 0, (step, step)).convert('RGB')
+                img.save(cdir / f'{sample}_rank{r + 1:02d}_x{x}_y{y}.png')
+                ax = axes[i, r]
+                ax.imshow(np.asarray(img))
+                bare(ax, keep_frame=True)
+                for sp in ax.spines.values():
+                    sp.set_edgecolor(palette[i]); sp.set_linewidth(2)
+            axes[i, 0].text(-0.08, 0.5, f'{cluster_names[i]}\n{counts[i]:,} tiles',
+                            transform=axes[i, 0].transAxes, ha='right', va='center',
+                            fontsize=8.5, color=INK_2)
+        fig.suptitle(f'{sample} — {m} most representative tiles per cluster '
+                     f'({step} px @ {meta.get("target_magnification", 20):g}x, '
+                     f'nearest the cluster centroid)', x=0.01, ha='left', weight='semibold')
+        fig.savefig(out / f'{sample}.06_representative_tiles.png', bbox_inches='tight')
+        plt.close(fig)
+        slide.close()
+        print('wrote representative tile crops to', tiledir)
+
     # ---------------------------------------------------------------- data
     np.savez_compressed(
         out / f'{sample}.tile_projection.npz',
@@ -308,7 +398,11 @@ def main():
         'sample': sample, 'n_tiles': int(n), 'tile_dim': int(d),
         'encoder': meta['encoder'], 'patch_size_level0': step,
         'pc_variance_ratio': [float(v) for v in pca.explained_variance_ratio_[:10]],
+        'cluster_method': method,
         'clusters': {cluster_names[i]: int(counts[i]) for i in range(args.k)},
+        'representative_tiles': {
+            cluster_names[i]: [[int(coords[t, 0]), int(coords[t, 1])] for t in reps[i]]
+            for i in range(args.k)},
     }
     if args.prism2_json:
         summary['prism2'] = json.loads(Path(args.prism2_json).read_text())

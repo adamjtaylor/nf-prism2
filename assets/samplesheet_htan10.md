@@ -36,10 +36,41 @@ Total download about 4 GB. Six centres, six organs, eight diagnoses, four contai
   purpose: HTAN filenames do contain spaces and the pipeline has to survive them.
 * **`syn68629518` is 86016 x 204800 at 0.137 MPP**, about 17.6 gigapixels, which resamples to
   roughly 26,000 tiles at 20x. It is the throughput stress case.
-* **Nothing here has a validated ground-truth label yet.** The diagnosis column comes from HTAN
-  clinical metadata at the participant or specimen level, not from a per-slide expert read, so
-  these are for smoke-testing the pipeline and for eyeballing plausibility, not for computing
-  accuracy.
+## Clinical metadata available for probing
+
+Pulled from the portal `diagnosis` table (HTAN Release 7.0). This is what the question set in
+`questions_htan10.yaml` is written against, with expected answers in `htan10_ground_truth.csv`.
+
+| sample | Participant | Diagnosis | Site | Grade | Stage | LVI | PNI | Other |
+|---|---|---|---|---|---|---|---|---|
+| BU_lung_adenocarcinoma_svs | HTA3_80014 | Adenocarcinoma NOS | Lung, middle lobe | G1 | IA1 | no | | vascular invasion no |
+| BU_lung_squamous_ndpi | HTA3_70153 | Squamous cell carcinoma NOS | Lung, trachea | | | | | primary tumour |
+| DUKE_breast_dcis_svs | HTA6_2411 | Ductal carcinoma in situ | Breast | G3 | | | | |
+| DUKE_breast_dcis_tiff | HTA6_1020 | Ductal carcinoma in situ | Breast | Intermediate | | | | |
+| HMS_ovarian_hgserous_svs | HTA7_1258 | High-grade serous carcinoma | Fallopian tube | | IC | | | |
+| HMS_skin_melanoma_ometiff | HTA7_6 | Malignant melanoma NOS | Skin, scalp and neck | | | no | no | Breslow 1.2 mm |
+| HMS_colorectal_adenocarcinoma_ometiff | HTA7_989 | Adenocarcinoma NOS | Transverse colon | Low Grade | IVC | yes | yes | |
+| SRRS_lung_squamous_svs | HTA15_30001 | Squamous cell carcinoma NOS | Lung | | | | | file-level label only |
+| WUSTL_pancreas_pbcarcinoma_svs | HTA12_16 | Pancreatobiliary-type carcinoma | Pancreas | G1 | | yes | yes | vascular invasion yes |
+| HTAPP_breast_lobular_svs | HTA1_880 | Lobular carcinoma NOS | Breast | G2 | | | | |
+
+What this supports, and what it does not:
+
+* **Usable splits.** Invasive vs in situ is 8 yes / 2 no. Melanoma is 1 yes / 9 no, which is a
+  specificity check. Lymphovascular invasion is 2 yes / 2 no, perineural invasion 2 yes / 1 no,
+  high grade 2 yes / 4 no. Primary site and histologic type are scoreable on all ten.
+* **These are CASE-level labels, not slide-level.** A DCIS case can have sections showing only
+  benign tissue, and a case recorded with lymphovascular invasion may not show it in this
+  section. So a disagreement is not necessarily a model error.
+* **Two grade vocabularies.** Some cases use G1/G2/G3, others Low/Intermediate/High. The mapping
+  is recorded in the ground truth file rather than assumed.
+* **`HTA15_30001` has no record in either the portal `diagnosis` table or
+  `clinical_tier1_diagnosis_current`.** Its label comes from the file-level `PrimaryDiagnosis`
+  array only, so it is the weakest label in the set.
+* **Consequence for metrics.** Use these for plausibility screening and for catching gross
+  failures such as a model answering yes to everything. Do not publish an AUC from ten
+  case-level labels, and note that bf16 scoring quantisation makes ties likely at this scale
+  anyway (see `BENCHMARK_PLAN.md` 5.3).
 
 ## Deliberately excluded
 
