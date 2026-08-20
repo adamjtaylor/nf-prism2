@@ -24,8 +24,16 @@ LADDER = ["negative_for_tumor", "benign", "hyperplasia_metaplasia", "dysplasia",
 
 lab = {r["sample"]: r for r in csv.DictReader(open(os.path.join(REPO, "assets/samplesheet_progression_labels.csv")))}
 rec = {r["sample"]: r for r in json.load(open(os.path.join(HERE, "results.json")))}
-rows = [dict(lab[s], **{"rec": rec[s]}) for s in rec if s in lab]
-print(f"{len(rows)} slides scored, {len({r['pt'] for r in rows})} patients\n")
+rows_all = [dict(lab[s], **{"rec": rec[s]}) for s in rec if s in lab]
+# Arm A is the pre-registered primary endpoint: one centre, one organ, all six classes. Arm B is
+# a separate replication. Arm C is primary-only across organs and must never be pooled into the
+# progression statistics, because its "Primary" slides include Duke breast DCIS, which is a
+# primary specimen that is morphologically in situ.
+ARM = os.environ.get("ARM", "A")
+def _arm(r): return "A" if r["arm"].startswith("A") else r["arm"]
+rows = rows_all if ARM == "ALL" else [r for r in rows_all if _arm(r) == ARM]
+print(f"ARM {ARM}: {len(rows)} slides, {len({r['pt'] for r in rows})} patients "
+      f"(of {len(rows_all)} scored overall)\n")
 
 def yn(r, q):
     v = r["rec"].get("yes_no", {}).get(q, {}).get("score")

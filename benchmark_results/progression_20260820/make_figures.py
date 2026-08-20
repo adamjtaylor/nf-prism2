@@ -49,7 +49,11 @@ OFF = {"F", "G", "H"}
 
 lab = {r["sample"]: r for r in csv.DictReader(open(f"{REPO}/assets/samplesheet_progression_labels.csv"))}
 rec = {r["sample"]: r for r in json.load(open(f"{HERE}/results.json"))}
-rows = [dict(lab[s], rec=rec[s]) for s in rec if s in lab and lab[s]["ttt"] in RANK]
+rows_all = [dict(lab[s], rec=rec[s]) for s in rec if s in lab and lab[s]["ttt"] in RANK]
+def _arm(r): return "A" if r["arm"].startswith("A") else r["arm"]
+# Arm A only: the pre-registered primary endpoint, one centre and one organ. Pooling in Arm C
+# would mix in Duke breast DCIS, labelled Primary but morphologically in situ.
+rows = [r for r in rows_all if _arm(r) == "A"]
 def yn(r, q):
     v = r["rec"].get("yes_no", {}).get(q, {}).get("score")
     return float(v) if v is not None else np.nan
@@ -83,7 +87,8 @@ for ax in axes[-1]:
     ax.set_xticks(range(5), SHORT, fontsize=7.5)
 for ax in axes[:, 0]:
     ax.set_ylabel("PRISM2 yes/no score")
-fig.suptitle("Each question against the HTAN progression axis, 163 slides, 128 patients\n"
+fig.suptitle(f"Each question against the HTAN progression axis. Arm A only: "
+             f"{len(rows)} slides, {len({r['pt'] for r in rows})} patients, HTAN BU lung\n"
              "black line = class mean, orange ring = observed peak, dots = individual slides",
              fontsize=12.5, color=INK)
 fig.savefig(f"{FIG}/fig1_ladder.png", dpi=170); plt.close(fig)
@@ -135,7 +140,7 @@ h = [plt.Line2D([], [], marker="s", ls="", color=BLUE, ms=9, label="present in t
      plt.Line2D([], [], marker="s", ls="", color=ORANGE, ms=9, label="off-cohort distractor")]
 ax.legend(handles=h, frameon=False, fontsize=8.5, loc="lower right")
 ax.set_title("43% of answers are one option; 25% are impossible here", fontsize=9.5, color=INK)
-fig.suptitle("Forced choice using HTAN's own vocabulary: 21% exact against 12.5% chance",
+fig.suptitle(f"Forced choice using HTAN's own vocabulary, Arm A ({len(rows)} slides)",
              fontsize=12.5, color=INK)
 fig.savefig(f"{FIG}/fig2_stage_mc.png", dpi=170); plt.close(fig)
 
@@ -162,8 +167,45 @@ for ax, q in zip(axes, QS):
     ax.set_ylim(-0.05, 1.05)
     ax.grid(axis="y", color="#ecebe6", lw=0.7); ax.set_axisbelow(True)
 axes[0].set_ylabel("PRISM2 yes/no score")
-fig.suptitle("Normal versus invasive primary, the endpoint the 10-slide pilot could not compute\n"
+fig.suptitle("Normal versus invasive primary, Arm A only: one centre, one organ\n"
              "black bar = median; negative_for_tumor is expected to separate in the opposite direction",
              fontsize=12, color=INK)
 fig.savefig(f"{FIG}/fig3_normal_vs_primary.png", dpi=170); plt.close(fig)
 print("wrote", sorted(os.listdir(FIG)))
+
+
+# ------------------------------------------------------------------ fig 4
+QS4 = ["negative_for_tumor", "benign", "dysplasia", "carcinoma_in_situ", "invasive_carcinoma", "malignancy"]
+arms = [("A", "Arm A\nBU lung, 6 classes"), ("B", "Arm B\nVanderbilt colon, 4 classes"),
+        ("ALL", "pooled with Arm C\n(confounded)")]
+fig, axes = plt.subplots(1, 2, figsize=(12.4, 4.6), constrained_layout=True)
+for ax, (metric, title, ref) in zip(axes, [
+        ("rho", "Spearman against the ordinal axis", 0.0),
+        ("auc", "AUC, normal versus invasive primary", 0.5)]):
+    for ai, (a, aname) in enumerate(arms):
+        sub = rows_all if a == "ALL" else [r for r in rows_all if _arm(r) == a]
+        vals = []
+        for q in QS4:
+            x = np.array([RANK[r["ttt"]] for r in sub]); y = np.array([yn(r, q) for r in sub])
+            m = ~np.isnan(y)
+            if metric == "rho":
+                vals.append(spearmanr(x[m], y[m]).statistic)
+            else:
+                pos = [yn(r, q) for r in sub if r["ttt"] == "Primary"]
+                neg = [yn(r, q) for r in sub if r["ttt"] in ("Normal", "Normal adjacent")]
+                pos = [v for v in pos if not np.isnan(v)]; neg = [v for v in neg if not np.isnan(v)]
+                vals.append(auc(pos, neg) if pos and neg else np.nan)
+        off = (ai - 1) * 0.24
+        ax.scatter(vals, np.arange(len(QS4)) + off, s=70, color=[BLUE, ORANGE, INK3][ai],
+                   label=aname, zorder=3, linewidths=0)
+    ax.axvline(ref, color=INK3, lw=1.4, ls="--")
+    ax.set_yticks(range(len(QS4)), [q.replace("_", " ") for q in QS4], fontsize=9)
+    ax.invert_yaxis(); ax.grid(axis="x", color="#ecebe6", lw=0.7); ax.set_axisbelow(True)
+    ax.set_title(title, fontsize=10, color=INK)
+    ax.set_xlim(-1.05, 1.05) if metric == "rho" else ax.set_xlim(-0.03, 1.03)
+axes[1].legend(frameon=False, fontsize=8, loc="center left")
+fig.suptitle("Arm A is the endpoint. Pooling Arm C lowers the AUC because its Primary class\n"
+             "includes Duke breast DCIS: a primary specimen that is morphologically in situ.",
+             fontsize=11.5, color=INK)
+fig.savefig(f"{FIG}/fig4_by_arm.png", dpi=170); plt.close(fig)
+print("wrote fig4")
