@@ -1,0 +1,35 @@
+{
+  "n_tiles": 667537,
+  "n_slides": 163,
+  "n_slides_with_prism2": 163,
+  "slides_without_prism2": [],
+  "dim_raw": 1280,
+  "dim_pca": 128,
+  "duckdb_version": "1.5.5",
+  "chunk_rows": 25000,
+  "hnsw_persistence": "experimental (hnsw_enable_experimental_persistence=true required)",
+  "timings_s": {
+    "load_tiles_s": 172.2,
+    "build_hnsw_1280_s": 68.2,
+    "build_hnsw_pca128_s": 10.4,
+    "build_hnsw_slide_base_s": 0.0,
+    "build_hnsw_slide_diag_s": 0.0
+  },
+  "sizes_bytes": {
+    "db_after_load_bytes": 12729987072,
+    "db_after_hnsw_1280_bytes": 14780477440,
+    "db_after_hnsw_pca128_bytes": 15221665792,
+    "db_after_hnsw_slide_base_bytes": 15223500800,
+    "db_after_hnsw_slide_diag_bytes": 15225597952,
+    "bytes_per_tile_1280_float32": 5120,
+    "bytes_per_tile_pca128_float32": 512,
+    "hnsw_1280_index_bytes": 2050490368,
+    "hnsw_pca128_index_bytes": 441188352
+  },
+  "indexes": [
+    "hnsw_1280",
+    "hnsw_pca",
+    "hnsw_sl_base",
+    "hnsw_sl_diag"
+  ]
+}

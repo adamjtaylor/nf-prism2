@@ -141,6 +141,10 @@ C.dump(dict(per_slide=PER_SLIDE, k=K, pca_dim=NPC,
 
 # ------------------------------------------------------------------ figure
 names = list(next(iter(results.values()))["treatments"])
+# direct labels are staggered by hand: the four points sit close together on the precision axis,
+# so a single offset rule collides
+OFF = {"raw L2": (13, 7, "left"), "per-slide centering": (0, -22, "center"),
+       "per-slide standardise": (13, 11, "left"), "Harmony (slide as batch)": (-10, -22, "right")}
 fig, axes = plt.subplots(1, 2, figsize=(12.4, 4.9))
 for ax, (label, r) in zip(axes, results.items()):
     t = r["treatments"]
@@ -152,9 +156,10 @@ for ax, (label, r) in zip(axes, results.items()):
                     xerr=[[x - t[n]["mixing_ci"][0]], [t[n]["mixing_ci"][1] - x]],
                     yerr=[[y - t[n]["p_at_10_ci"][0]], [t[n]["p_at_10_ci"][1] - y]],
                     fmt="o", color=C.CAT[i], ms=11, mec=C.SURFACE, mew=1.6,
-                    ecolor=C.CAT[i], elinewidth=1.2, capsize=2.5, zorder=4)
-        ax.annotate(n, (x, y), textcoords="offset points", xytext=(13, 4), fontsize=8.4,
-                    color=C.INK2, zorder=5)
+                    ecolor=C.CAT[i], elinewidth=1.2, capsize=2.5, zorder=4, label=n)
+        dx, dy, ha = OFF[n]
+        ax.annotate(n, (x, y), textcoords="offset points", xytext=(dx, dy), fontsize=8.4,
+                    color=C.INK2, zorder=5, ha=ha)
     ref = t["raw L2"]
     ax.axvline(ref["mixing_ceiling"], color=C.INK3, lw=1.1, ls="--")
     ax.text(ref["mixing_ceiling"] - 0.012, 0.02, f"mixing ceiling {ref['mixing_ceiling']:.3f}",
@@ -169,6 +174,8 @@ for ax, (label, r) in zip(axes, results.items()):
     ax.grid(color=C.GRID, lw=0.8); ax.set_axisbelow(True)
     ax.set_title(f"{label}\n{r['n_tiles']:,} tiles, {r['n_slides']} slides, {r['n_patients']} patients",
                  fontsize=10, color=C.INK, loc="left")
+    ax.legend(fontsize=7.6, loc="lower left", labelcolor=C.INK2, handletextpad=0.3,
+              borderaxespad=0.8)
 
 fig.suptitle("Normalisation trade-off plane: mixing buys nothing if it costs retrieval",
              fontsize=12, color=C.INK, y=1.03)

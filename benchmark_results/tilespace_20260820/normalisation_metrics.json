@@ -1,0 +1,142 @@
+{
+  "per_slide": 300,
+  "k": 30,
+  "pca_dim": 50,
+  "note": "Harmony has no out-of-sample transform, so it cannot serve a growing index regardless of score",
+  "by_stratum": {
+    "Arm A  \u00b7  one centre, one organ": {
+      "n_tiles": 27256,
+      "n_slides": 103,
+      "n_patients": 68,
+      "treatments": {
+        "raw L2": {
+          "mixing": 0.5662,
+          "mixing_ci": [
+            0.5319,
+            0.5962
+          ],
+          "mixing_ceiling": 0.9896,
+          "p_at_10": 0.3742,
+          "p_at_10_ci": [
+            0.3413,
+            0.4122
+          ],
+          "p_at_10_chance": 0.1621,
+          "lift": 2.309
+        },
+        "per-slide centering": {
+          "mixing": 0.6759,
+          "mixing_ci": [
+            0.6514,
+            0.7006
+          ],
+          "mixing_ceiling": 0.9896,
+          "p_at_10": 0.3426,
+          "p_at_10_ci": [
+            0.3133,
+            0.3766
+          ],
+          "p_at_10_chance": 0.1621,
+          "lift": 2.113
+        },
+        "per-slide standardise": {
+          "mixing": 0.7216,
+          "mixing_ci": [
+            0.7018,
+            0.7421
+          ],
+          "mixing_ceiling": 0.9896,
+          "p_at_10": 0.3409,
+          "p_at_10_ci": [
+            0.3131,
+            0.3735
+          ],
+          "p_at_10_chance": 0.1621,
+          "lift": 2.103
+        },
+        "Harmony (slide as batch)": {
+          "mixing": 0.8964,
+          "mixing_ci": [
+            0.8842,
+            0.9074
+          ],
+          "mixing_ceiling": 0.9896,
+          "p_at_10": 0.3191,
+          "p_at_10_ci": [
+            0.2953,
+            0.3489
+          ],
+          "p_at_10_chance": 0.1621,
+          "lift": 1.968
+        }
+      }
+    },
+    "all arms  \u00b7  four centres": {
+      "n_tiles": 43000,
+      "n_slides": 163,
+      "n_patients": 128,
+      "treatments": {
+        "raw L2": {
+          "mixing": 0.5018,
+          "mixing_ci": [
+            0.4689,
+            0.5333
+          ],
+          "mixing_ceiling": 0.9934,
+          "p_at_10": 0.5413,
+          "p_at_10_ci": [
+            0.4914,
+            0.6041
+          ],
+          "p_at_10_chance": 0.2198,
+          "lift": 2.463
+        },
+        "per-slide centering": {
+          "mixing": 0.6358,
+          "mixing_ci": [
+            0.6108,
+            0.6589
+          ],
+          "mixing_ceiling": 0.9934,
+          "p_at_10": 0.4996,
+          "p_at_10_ci": [
+            0.4506,
+            0.5557
+          ],
+          "p_at_10_chance": 0.2198,
+          "lift": 2.273
+        },
+        "per-slide standardise": {
+          "mixing": 0.683,
+          "mixing_ci": [
+            0.6596,
+            0.7032
+          ],
+          "mixing_ceiling": 0.9934,
+          "p_at_10": 0.4979,
+          "p_at_10_ci": [
+            0.4496,
+            0.5527
+          ],
+          "p_at_10_chance": 0.2198,
+          "lift": 2.265
+        },
+        "Harmony (slide as batch)": {
+          "mixing": 0.8629,
+          "mixing_ci": [
+            0.8503,
+            0.8741
+          ],
+          "mixing_ceiling": 0.9934,
+          "p_at_10": 0.4505,
+          "p_at_10_ci": [
+            0.407,
+            0.4997
+          ],
+          "p_at_10_chance": 0.2198,
+          "lift": 2.05
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "min_tissue_proportion": 0.65,
+  "definition": "retention = tiles kept / (segmented tissue area / level-0 patch area)",
+  "n_slides_with_segmentation": 163,
+  "slides_without": [],
+  "arm_A_by_class": {
+    "Normal": {
+      "n_slides": 16,
+      "n_patients": 16,
+      "retention": 0.8795,
+      "retention_ci": [
+        0.8687,
+        0.8888
+      ],
+      "median_tiles": 346.0,
+      "median_tiles_ci": [
+        208.0,
+        609.0
+      ],
+      "median_tissue_mm2": 4.9,
+      "tiles_per_mm2": 70.4
+    },
+    "Normal adjacent": {
+      "n_slides": 16,
+      "n_patients": 16,
+      "retention": 0.8709,
+      "retention_ci": [
+        0.8445,
+        0.8892
+      ],
+      "median_tiles": 369.0,
+      "median_tiles_ci": [
+        292.9,
+        517.5
+      ],
+      "median_tissue_mm2": 5.3,
+      "tiles_per_mm2": 70.06
+    },
+    "Atypia - hyperplasia": {
+      "n_slides": 17,
+      "n_patients": 16,
+      "retention": 0.876,
+      "retention_ci": [
+        0.8403,
+        0.9064
+      ],
+      "median_tiles": 475.0,
+      "median_tiles_ci": [
+        183.0,
+        861.0
+      ],
+      "median_tissue_mm2": 6.7,
+      "tiles_per_mm2": 70.79
+    },
+    "Premalignant": {
+      "n_slides": 23,
+      "n_patients": 23,
+      "retention": 0.8712,
+      "retention_ci": [
+        0.8469,
+        0.8941
+      ],
+      "median_tiles": 386.0,
+      "median_tiles_ci": [
+        306.0,
+        612.0
+      ],
+      "median_tissue_mm2": 5.3,
+      "tiles_per_mm2": 69.68
+    },
+    "Premalignant - in situ": {
+      "n_slides": 16,
+      "n_patients": 15,
+      "retention": 0.9581,
+      "retention_ci": [
+        0.9268,
+        0.9832
+      ],
+      "median_tiles": 14776.5,
+      "median_tiles_ci": [
+        12311.0,
+        20625.0
+      ],
+      "median_tissue_mm2": 188.2,
+      "tiles_per_mm2": 77.84
+    },
+    "Primary": {
+      "n_slides": 15,
+      "n_patients": 15,
+      "retention": 0.9653,
+      "retention_ci": [
+        0.9257,
+        0.9876
+      ],
+      "median_tiles": 12933.0,
+      "median_tiles_ci": [
+        8660.0,
+        23137.0
+      ],
+      "median_tissue_mm2": 167.9,
+      "tiles_per_mm2": 78.39
+    }
+  },
+  "all_arms_by_organ": {
+    "Lung": {
+      "n_slides": 103,
+      "n_patients": 68,
+      "retention": 0.9004,
+      "retention_ci": [
+        0.8841,
+        0.9163
+      ],
+      "median_tiles": 516.0,
+      "median_tiles_ci": [
+        388.9,
+        861.0
+      ],
+      "median_tissue_mm2": 7.2,
+      "tiles_per_mm2": 71.37
+    },
+    "Fallopian tube": {
+      "n_slides": 1,
+      "n_patients": 1,
+      "retention": 0.9613,
+      "retention_ci": [
+        0.9613,
+        0.9613
+      ],
+      "median_tiles": 3888.0,
+      "median_tiles_ci": [
+        3888.0,
+        3888.0
+      ],
+      "median_tissue_mm2": 50.7,
+      "tiles_per_mm2": 76.63
+    },
+    "Breast": {
+      "n_slides": 22,
+      "n_patients": 22,
+      "retention": 0.9389,
+      "retention_ci": [
+        0.9253,
+        0.9502
+      ],
+      "median_tiles": 251.0,
+      "median_tiles_ci": [
+        171.0,
+        1909.0
+      ],
+      "median_tissue_mm2": 3.5,
+      "tiles_per_mm2": 75.38
+    },
+    "Colon": {
+      "n_slides": 26,
+      "n_patients": 26,
+      "retention": 0.9504,
+      "retention_ci": [
+        0.9335,
+        0.9653
+      ],
+      "median_tiles": 491.5,
+      "median_tiles_ci": [
+        310.0,
+        3756.0
+      ],
+      "median_tissue_mm2": 6.6,
+      "tiles_per_mm2": 76.48
+    },
+    "Pancreas": {
+      "n_slides": 11,
+      "n_patients": 11,
+      "retention": 0.9706,
+      "retention_ci": [
+        0.9635,
+        0.9765
+      ],
+      "median_tiles": 1951.0,
+      "median_tiles_ci": [
+        1232.0,
+        2391.0
+      ],
+      "median_tissue_mm2": 25.2,
+      "tiles_per_mm2": 77.78
+    }
+  },
+  "all_arms_by_centre": {
+    "HTAN HMS": {
+      "n_slides": 1,
+      "n_patients": 1,
+      "retention": 0.9613,
+      "retention_ci": [
+        0.9613,
+        0.9613
+      ],
+      "median_tiles": 3888.0,
+      "median_tiles_ci": [
+        3888.0,
+        3888.0
+      ],
+      "median_tissue_mm2": 50.7,
+      "tiles_per_mm2": 76.63
+    },
+    "HTAN WUSTL": {
+      "n_slides": 11,
+      "n_patients": 11,
+      "retention": 0.9706,
+      "retention_ci": [
+        0.9635,
+        0.9765
+      ],
+      "median_tiles": 1951.0,
+      "median_tiles_ci": [
+        1232.0,
+        2391.0
+      ],
+      "median_tissue_mm2": 25.2,
+      "tiles_per_mm2": 77.78
+    },
+    "HTAN Vanderbilt": {
+      "n_slides": 26,
+      "n_patients": 26,
+      "retention": 0.9504,
+      "retention_ci": [
+        0.9335,
+        0.9653
+      ],
+      "median_tiles": 491.5,
+      "median_tiles_ci": [
+        310.0,
+        3756.0
+      ],
+      "median_tissue_mm2": 6.6,
+      "tiles_per_mm2": 76.48
+    },
+    "HTAN BU": {
+      "n_slides": 103,
+      "n_patients": 68,
+      "retention": 0.9004,
+      "retention_ci": [
+        0.8841,
+        0.9163
+      ],
+      "median_tiles": 516.0,
+      "median_tiles_ci": [
+        388.9,
+        861.0
+      ],
+      "median_tissue_mm2": 7.2,
+      "tiles_per_mm2": 71.37
+    },
+    "HTAN Duke": {
+      "n_slides": 22,
+      "n_patients": 22,
+      "retention": 0.9389,
+      "retention_ci": [
+        0.9253,
+        0.9502
+      ],
+      "median_tiles": 251.0,
+      "median_tiles_ci": [
+        171.0,
+        1909.0
+      ],
+      "median_tissue_mm2": 3.5,
+      "tiles_per_mm2": 75.38
+    }
+  },
+  "arm_A_normal_vs_rest": {
+    "normal_retention": 0.8752,
+    "rest_retention": 0.9118,
+    "difference": -0.0366,
+    "difference_ci": [
+      -0.0611,
+      -0.0113
+    ],
+    "n_slides": [
+      32,
+      71
+    ],
+    "n_patients": [
+      31,
+      53
+    ]
+  }
+}

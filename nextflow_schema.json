@@ -110,8 +110,13 @@
                 },
                 "retry_max_workers": {
                     "type": "integer",
-                    "default": 0,
+                    "default": 1,
                     "description": "Workers to use on a retry. 0 removes DataLoader workers, which is the commonest exit-1 cause and is not fixed by more memory."
+                },
+                "shm_size": {
+                    "type": "string",
+                    "default": "32g",
+                    "description": "/dev/shm for the tile pass. DataLoader workers use it, and it does not scale with the memory request."
                 }
             }
         },

@@ -29,6 +29,7 @@ import common as C
 import matplotlib as mpl
 mpl.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as pe
 from matplotlib.lines import Line2D
 import pandas as pd
 C.rcparams()
@@ -138,8 +139,9 @@ gs = fig.add_gridspec(1, 3, width_ratios=[1.15, 1, 1], wspace=0.32)
 ax = fig.add_subplot(gs[0, 0])
 lim = [A["patches_in_mask"].min() * 0.6, A["patches_in_mask"].max() * 1.6]
 ax.plot(lim, lim, color=C.INK3, lw=1.1, ls="--", zorder=2)
-ax.text(lim[1], lim[1], " every patch in the mask kept", fontsize=7.2, color=C.INK3,
-        ha="right", va="bottom", rotation=32)
+ax.annotate("every patch in the mask kept", xy=(lim[1] * 0.35, lim[1] * 0.35),
+            xytext=(-8, -14), textcoords="offset points", fontsize=7.2, color=C.INK3,
+            ha="right", va="top")
 for c in CLS:
     d = A[A["ttt"] == c]
     ax.scatter(d["patches_in_mask"], d["n_tiles"], s=34, color=col[c], alpha=0.92,
@@ -148,11 +150,12 @@ ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlabel("patches that fit inside the tissue mask")
 ax.set_ylabel("tiles kept at min_tissue_proportion 0.65")
 ax.grid(color=C.GRID, lw=0.8); ax.set_axisbelow(True)
-ax.set_title("Arm A: kept against available", fontsize=10.5, color=C.INK, loc="left")
+ax.set_title("Arm A: kept against available\nevery slide sits close to the diagonal",
+             fontsize=10.5, color=C.INK, loc="left", linespacing=1.6)
 ax.legend(handles=[Line2D([], [], marker="o", ls="", ms=6, mfc=col[c], mec="none",
                           label=C.CLASS_SHORT.get(c, c)) for c in CLS],
-          fontsize=7, loc="upper left", ncol=2, handletextpad=0.3, columnspacing=0.7,
-          labelcolor=C.INK2)
+          fontsize=7, loc="lower right", ncol=1, handletextpad=0.3, columnspacing=0.7,
+          labelcolor=C.INK2, borderaxespad=0.9)
 
 ax = fig.add_subplot(gs[0, 1])
 y = np.arange(len(CLS))
@@ -166,28 +169,36 @@ for i, c in enumerate(CLS):
     d = A[A["ttt"] == c]
     ax.scatter(d["retention"], np.full(len(d), i) + np.random.default_rng(i).normal(0, 0.075, len(d)),
                s=13, color=C.INK3, alpha=0.75, linewidths=0, zorder=5)
-    ax.text(m[i] + 0.02, i, f"{m[i]:.2f}", va="center", fontsize=8.5, color=C.INK2)
+    ax.text(1.07, i, f"{m[i]:.2f}", va="center", fontsize=8.5, color=C.INK2)
 ax.set_yticks(y, [f"{C.CLASS_SHORT.get(c, c)}  (n={metrics['arm_A_by_class'][c]['n_slides']})"
                   for c in CLS], fontsize=8.5)
-ax.invert_yaxis(); ax.set_xlim(0, 1.05)
+ax.invert_yaxis(); ax.set_xlim(0, 1.20)
+ax.set_xticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
 ax.set_xlabel("retention  (tiles kept / patches available)")
 ax.grid(axis="x", color=C.GRID, lw=0.8); ax.set_axisbelow(True)
-ax.set_title("Retention by class, CI over patients", fontsize=10.5, color=C.INK, loc="left")
+ax.set_title("Retention by class, CI over patients\ngrey dots are individual slides",
+             fontsize=10.5, color=C.INK, loc="left", linespacing=1.6)
 
 ax = fig.add_subplot(gs[0, 2])
 data = [A[A["ttt"] == c]["n_tiles"].to_numpy() for c in CLS]
 for i, (c, v) in enumerate(zip(CLS, data)):
-    ax.scatter(np.full(len(v), i) + np.random.default_rng(i + 40).normal(0, 0.08, len(v)), v,
+    ax.scatter(np.full(len(v), i) + np.random.default_rng(i + 40).normal(0, 0.06, len(v)), v,
                s=22, color=col[c], alpha=0.9, linewidths=0.6, edgecolors=C.SURFACE, zorder=3)
     ax.plot([i - 0.22, i + 0.22], [np.median(v)] * 2, color=C.INK, lw=2.2, zorder=4)
-    ax.text(i, np.median(v) * 1.35, f"{int(np.median(v))}", ha="center", fontsize=8, color=C.INK2)
+    ax.text(i - 0.28, np.median(v), f"{int(np.median(v)):,}", ha="right", va="center",
+            fontsize=8, color=C.INK2, zorder=6,
+            path_effects=[pe.withStroke(linewidth=2.6, foreground=C.SURFACE)])
 ax.set_yscale("log")
 ax.set_xticks(range(len(CLS)), [C.CLASS_SHORT.get(c, c) for c in CLS], fontsize=8, rotation=28,
               ha="right")
 ax.set_ylabel("tiles per slide")
 ax.grid(axis="y", color=C.GRID, lw=0.8); ax.set_axisbelow(True)
-ax.set_title("The quantity that would confound: tiles per slide", fontsize=10.5, color=C.INK,
-             loc="left")
+fold = (np.median(A[A["ttt"] == "Premalignant - in situ"]["n_tiles"])
+        / np.median(A[A["ttt"] == "Premalignant"]["n_tiles"]))
+ax.set_xlim(-0.75, len(CLS) - 0.35)
+ax.set_title(f"The quantity that does differ: tiles per slide\nslide-balanced by design, "
+             f"but in situ carries {fold:.0f}× the tiles of premalignant",
+             fontsize=10.5, color=C.INK, loc="left", linespacing=1.6)
 
 d = metrics["arm_A_normal_vs_rest"]
 fig.suptitle(f"min_tissue_proportion = 0.65 and tile yield in Arm A  ·  normal minus the rest = "
