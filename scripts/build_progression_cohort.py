@@ -28,7 +28,13 @@ from collections import defaultdict
 PROJECT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 HTAN = os.path.join(PROJECT, ".venv", "bin", "htan")
 NULLS = ("", "Not Reported", "unknown", "Unknown", "Not Applicable", "NA", None)
+# A slide must be at least ~10x to be tiled at 20x without upsampling: 20x is about 0.5 um/px,
+# so anything coarser than ~1.0 um/px cannot supply 20x tiles. HTAN contains OME-TIFFs recorded
+# as NominalMagnification 20 whose actual PhysicalSizeX is 2.72 um/px, about 3.7x, and the
+# 8064 x 9417 dimensions are identical across ten slides from one deposit. Trusting the
+# magnification field would silently ingest low-resolution overviews as if they were 20x.
 MPP_MIN, MPP_MAX = 0.08, 1.2
+MPP_TILEABLE_MAX = 1.0
 ALLOWED_FMT = {"svs", "ndpi", "tif", "tiff", "ome-tiff", "scn", "mrxs", "qptiff"}
 IMAGE_READER_EXT = (".tif", ".tiff", ".qptiff")
 OME_EXT = (".ome.tif", ".ome.tiff")
@@ -93,6 +99,10 @@ def main():
             mpp = float(m.get("PhysicalSizeX"))
         except (TypeError, ValueError):
             mpp = None
+        # reject slides whose recorded pixel size is too coarse to tile at 20x, whatever
+        # NominalMagnification claims
+        if mpp is not None and mpp > MPP_TILEABLE_MAX:
+            continue
         d = dx.get(r["pt"], {})
         cand.append(dict(syn=r["syn"], pt=r["pt"], atlas=r["atlas"], ttt=r["ttt"],
                          organ=clean(r["organ"]), dx=clean(r["dx"]), fmt=fmt, gb=round(gb, 2),

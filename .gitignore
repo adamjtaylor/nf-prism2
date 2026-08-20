@@ -15,3 +15,8 @@ analysis/data/
 
 # tile feature h5 files are too big for the repo; keep the derived metrics instead
 benchmark_results/*/features/
+
+# `!benchmark_results/**` above re-includes everything under benchmark_results, including things
+# the earlier rules already excluded, so the exclusions have to be restated here
+benchmark_results/**/__pycache__/
+benchmark_results/**/.DS_Store

@@ -53,8 +53,17 @@ def vec(col, tile_id):
     return con.execute(f"SELECT {col} FROM tiles WHERE tile_id = ?", [tile_id]).fetchone()[0]
 
 def plan(sql, params):
-    txt = con.execute("EXPLAIN " + sql, params).fetchall()
-    return "\n".join(r[1] for r in txt)
+    """Query plan as text. The vector literal is stripped: EXPLAIN inlines all 1280 floats, which
+    would otherwise put a quarter of a megabyte of noise into the metrics JSON."""
+    txt = "\n".join(r[1] for r in con.execute("EXPLAIN " + sql, params).fetchall())
+    return re.sub(r"\[-?[0-9][^\]]{40,}\]", "[<query vector>]", txt)
+
+def plan_ops(sql, params):
+    """The operator names in the plan, which is all the metrics file needs."""
+    p = plan(sql, params)
+    ops = [o for o in ("HNSW_INDEX_SCAN", "TABLE_SCAN", "TOP_N", "ORDER_BY", "FILTER", "LIMIT")
+           if o in p]
+    return dict(hnsw_index_used="HNSW_INDEX_SCAN" in p, operators=ops)
 
 CONFIGS = [
     ("exact 1280",        "emb",     1280),
@@ -68,7 +77,7 @@ CONFIGS = [
 # expression the index cannot match.
 EXACT_PCA = "array_distance(t.emb_pca, ?::FLOAT[128]) + 0.0"
 
-topk, timings, plans = {}, {}, {}
+topk, timings, plans, plan_ops_cache = {}, {}, {}, {}
 for name, col, dim in CONFIGS:
     if name == "exact 128 (PCA)":
         sql = (f"SELECT t.row_id FROM tiles t ORDER BY {EXACT_PCA} LIMIT {KMAX}")
@@ -84,6 +93,7 @@ for name, col, dim in CONFIGS:
         res.append([x[0] for x in r])
         if i == 0:
             plans[name] = plan(sql, [v])
+            plan_ops_cache[name] = plan_ops(sql, [v])
     topk[name] = res
     timings[name] = lat
     idx = "HNSW_INDEX_SCAN" in plans[name]
@@ -199,7 +209,7 @@ out = dict(n_tiles=int(N), n_slides=int(NS), n_queries=len(qs), k=KS,
                 "truth for every recall figure",
            configs=rows, filtered_shapes=filtered_rows,
            build=build["timings_s"], sizes_bytes=build["sizes_bytes"],
-           plans={k: v for k, v in plans.items()})
+           plans={k: plan_ops_cache[k] for k in plan_ops_cache})
 C.dump(out, "duckdb_bench_metrics.json")
 
 # ---------------------------------------------------------------- benchmark table

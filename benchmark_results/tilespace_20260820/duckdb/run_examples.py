@@ -98,10 +98,10 @@ md = ["# Example query output",
       f"Every statement in `duckdb/queries.sql`, run against the {con.execute('SELECT count(*) FROM tiles').fetchone()[0]:,}-tile "
       f"prototype. Each statement is run twice and the second run timed, on a laptop, so read the timings as orders of magnitude.",
       "",
-      f"**Query slide** `{slide}` — Arm {meta[0]}, patient `{meta[1]}`, {meta[2]}, {meta[3]}, "
+      f"**Query slide** `{slide}`: Arm {meta[0]}, patient `{meta[1]}`, {meta[2]}, {meta[3]}, "
       f"{meta[4]}, {meta[5]:,} tiles. Chosen as the Arm A carcinoma in situ slide with the median "
       f"tile count.",
-      f"**Query tile** `{tile}` — the tile of that slide closest to the slide's own centroid.",
+      f"**Query tile** `{tile}`: the tile of that slide closest to the slide's own centroid.",
       ""]
 qvec = con.execute("SELECT emb_n FROM tiles WHERE tile_id = ?", [tile]).fetchone()[0]
 for title, note, stmt in blocks:

@@ -160,6 +160,30 @@ small top-up run of HMS colorectal and skin is the cheap fix.
    uniquely positioned to ask, since the precancer atlases supply the classes no other public
    collection has at this scale.
 
+## 5. Slides that could not be processed, and why
+
+175 of 188 slides produced results after one retry run. The 13 that did not have three distinct
+causes, none of which is a pipeline defect:
+
+* **Ten HMS OME-TIFFs are not 20x images.** Their OME-XML records `PhysicalSizeX = 2.7235 um`,
+  which at 8064 x 9417 pixels is a 22 x 26 mm field at roughly **3.7x**, a whole-slide overview.
+  Tiling at 224 px and 20x would need 5.4x upsampling. HTAN records `NominalMagnification: 20`
+  for all of them, and all ten share identical dimensions despite file sizes from 0.46 to
+  1.14 GB, so they are one deposit whose magnification field is wrong. No reader or mpp setting
+  could have recovered them. `scripts/build_progression_cohort.py` now rejects anything coarser
+  than 1.0 um/px, since 20x is about 0.5 um/px.
+* **One BU slide returned an empty tissue mask.** hest segmentation found no foreground, so no
+  coordinates and no features. Lowering `--seg_conf_thresh` or switching to otsu would likely
+  recover it.
+* **One Duke tif and one Vanderbilt OME-TIFF** failed on read and were not chased further.
+
+The loss falls almost entirely on Arm C, which is the arm least able to spare it, since Arm C
+exists to supply several centres per organ for the tile-level analysis. Arm A is unaffected and
+now has 17 to 19 patients in every class.
+
+Getting the true pixel size out of these files costs nothing: the OME-XML header is readable by
+byte range in under a megabyte, which is how the 2.72 um figure above was obtained.
+
 ## Caveats
 
 * 26 of 188 slides failed to process, 13 svs and 11 OME-TIFF, mostly segmentation OOM at 24 GB on

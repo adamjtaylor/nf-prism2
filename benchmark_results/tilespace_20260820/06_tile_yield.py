@@ -185,10 +185,13 @@ for i, (c, v) in enumerate(zip(CLS, data)):
     ax.scatter(np.full(len(v), i) + np.random.default_rng(i + 40).normal(0, 0.06, len(v)), v,
                s=22, color=col[c], alpha=0.9, linewidths=0.6, edgecolors=C.SURFACE, zorder=3)
     ax.plot([i - 0.22, i + 0.22], [np.median(v)] * 2, color=C.INK, lw=2.2, zorder=4)
-    ax.text(i - 0.28, np.median(v), f"{int(np.median(v)):,}", ha="right", va="center",
-            fontsize=8, color=C.INK2, zorder=6,
-            path_effects=[pe.withStroke(linewidth=2.6, foreground=C.SURFACE)])
+    # medians are labelled along the top of the axes rather than beside their own bar: the two
+    # resection classes are 38x the others, so an in-place label lands on someone else's points
+    ax.annotate(f"{int(np.median(v)):,}", (i, 0.975), xycoords=("data", "axes fraction"),
+                ha="center", va="top", fontsize=7.8, color=C.INK2)
 ax.set_yscale("log")
+# headroom above the tallest column so the median labels have somewhere to sit
+ax.set_ylim(top=float(A["n_tiles"].max()) * 4)
 ax.set_xticks(range(len(CLS)), [C.CLASS_SHORT.get(c, c) for c in CLS], fontsize=8, rotation=28,
               ha="right")
 ax.set_ylabel("tiles per slide")
@@ -197,7 +200,7 @@ fold = (np.median(A[A["ttt"] == "Premalignant - in situ"]["n_tiles"])
         / np.median(A[A["ttt"] == "Premalignant"]["n_tiles"]))
 ax.set_xlim(-0.75, len(CLS) - 0.35)
 ax.set_title(f"The quantity that does differ: tiles per slide\nslide-balanced by design, "
-             f"but in situ carries {fold:.0f}× the tiles of premalignant",
+             f"but in situ carries {fold:.0f}× the tiles of premalignant  (medians labelled)",
              fontsize=10.5, color=C.INK, loc="left", linespacing=1.6)
 
 d = metrics["arm_A_normal_vs_rest"]

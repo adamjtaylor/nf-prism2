@@ -2,8 +2,8 @@
 
 Every statement in `duckdb/queries.sql`, run against the 667,537-tile prototype. Each statement is run twice and the second run timed, on a laptop, so read the timings as orders of magnitude.
 
-**Query slide** `A_BU_insitu_06` — Arm A, patient `HTA3_50711`, HTAN BU, Premalignant - in situ, Lung, 15,583 tiles. Chosen as the Arm A carcinoma in situ slide with the median tile count.
-**Query tile** `A_BU_insitu_06:7949` — the tile of that slide closest to the slide's own centroid.
+**Query slide** `A_BU_insitu_06`: Arm A, patient `HTA3_50711`, HTAN BU, Premalignant - in situ, Lung, 15,583 tiles. Chosen as the Arm A carcinoma in situ slide with the median tile count.
+**Query tile** `A_BU_insitu_06:7949`: the tile of that slide closest to the slide's own centroid.
 
 ## Q0. The one shape the index serves correctly: unfiltered k-NN. ~3 ms, recall@10 0.90.
 
@@ -54,7 +54,7 @@ ORDER BY dist
 LIMIT 10
 ```
 
-`26 ms`, 10 rows
+`27 ms`, 10 rows
 
 | tile_id | sample | patient | ttt | x | y | cosine |
 |---|---|---|---|---|---|---|
@@ -87,7 +87,7 @@ ORDER BY dist
 LIMIT 10
 ```
 
-`25 ms`, 10 rows
+`21 ms`, 10 rows
 
 | tile_id | sample | patient | ttt | cosine |
 |---|---|---|---|---|
@@ -121,7 +121,7 @@ GROUP BY centre, sample, ttt
 ORDER BY hits_in_top50 DESC, best_cosine DESC
 ```
 
-`1439 ms`, 5 rows
+`694 ms`, 5 rows
 
 | centre | sample | ttt | hits_in_top50 | best_cosine |
 |---|---|---|---|---|
@@ -134,7 +134,7 @@ ORDER BY hits_in_top50 DESC, best_cosine DESC
 
 ## Q4. SLIDE-level search built from TILES: sample 10 of the query slide's tiles, find each one's
 
-nearest neighbours in other patients, and let the slides vote. Needs no slide encoder, and returns evidence -- which tiles matched -- rather than one number. The distance is computed once against every tile for each of 25 query tiles, which is a single scan rather than 25 index probes.
+nearest neighbours in other patients, and let the slides vote. Needs no slide encoder, and returns evidence -- which tiles matched -- rather than one number.
 
 ```sql
 WITH qs AS (SELECT tile_id, emb, patient FROM tiles
@@ -159,7 +159,7 @@ ORDER BY votes DESC, mean_cosine DESC
 LIMIT 10
 ```
 
-`20206 ms`, 10 rows
+`19660 ms`, 10 rows
 
 | sample | ttt | centre | organ | n_tiles | votes | mean_cosine |
 |---|---|---|---|---|---|---|
@@ -191,7 +191,7 @@ ORDER BY array_cosine_distance(e.base, q.v)
 LIMIT 10
 ```
 
-`4 ms`, 10 rows
+`3 ms`, 10 rows
 
 | sample | ttt | organ | centre | n_tiles | cosine |
 |---|---|---|---|---|---|
@@ -231,7 +231,7 @@ ORDER BY cos_base DESC
 LIMIT 10
 ```
 
-`6 ms`, 10 rows
+`5 ms`, 10 rows
 
 | sample | ttt | organ | centre | cos_base | rank_base | cos_diag | rank_diagnostic |
 |---|---|---|---|---|---|---|---|

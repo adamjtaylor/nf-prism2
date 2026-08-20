@@ -136,8 +136,8 @@ for j, lab in enumerate(LABELS):
     if j == 0:
         ax.legend(handles=[Line2D([], [], color=C.CAT[0], lw=7, label="observed"),
                            Line2D([], [], color=C.CAT[1], lw=2.6, label="chance, computed per query")],
-                  fontsize=7.8, loc="upper left", bbox_to_anchor=(0.0, -0.30), ncol=2,
-                  labelcolor=C.INK2, handletextpad=0.4, columnspacing=1.2)
+                  fontsize=7.8, loc="upper left", bbox_to_anchor=(0.0, -0.22), ncol=2,
+                  labelcolor=C.INK2, handletextpad=0.9, columnspacing=2.0)
 
 ax = fig.add_subplot(gs[0, 3])
 bins = np.arange(0, K + 2) - 0.5
