@@ -110,6 +110,39 @@ exposed the mismatch. Including off-cohort distractors was what made the failure
 them this reads as mediocre 21% accuracy rather than "a quarter of answers name a category that
 cannot occur here".
 
+## 3b. What Arm C was for, and the site question
+
+![site vs stage](figures/fig5_site_vs_stage.png)
+
+Arm C is primary-only across organs and contributes nothing to the progression axis. Its purpose
+is the organ and type questions, which cannot be asked of Arm A because Arm A is entirely lung,
+and several-centres-per-organ structure for the tile-level analysis.
+
+**The site question works: 0.91 correct in both arms** against 0.10 chance, 74 of 81 in Arm A and
+31 of 34 in Arm C. Set beside the 0.209 on progression stage, this is the strongest form of the
+vocabulary argument. Same model, same forced-choice format, same data model sourcing, same
+off-cohort distractors. Organ names are everyday language that appears in every report the model
+trained on; `Premalignant` and `Post therapy neoadjuvant` are curation categories that do not.
+
+**The seven wrong answers are not a perceptual failure.** All seven chose "Esophagus NOS", an
+off-cohort distractor. Their free-text descriptions are *verbatim identical* to those of 78 slides
+that answered Lung correctly: "This specimen was taken from the bronchial wall." So the model sees
+the same thing and then picks differently. The inconsistency is in the choosing, not the seeing,
+which is the same pattern as the pilot slide that answered "squamous cell carcinoma" on forced
+choice and "the specimen is negative for tumor" in its report.
+
+**A useful aside for the resource.** 83 of 103 Arm A slides were described as bronchial wall,
+which is anatomically right for an airway precancer atlas and **more specific than HTAN's own
+`TissueorOrganofOrigin`, which records only "Lung NOS"**. The field that would have captured it,
+`SiteofResectionorBiopsy`, is empty for all 103. So the generated text is finer-grained than the
+metadata here, which is an argument for using it to enrich rather than only to validate.
+
+**Arm C only partly delivered its second purpose.** As realised it is Duke breast (22), WUSTL
+pancreas (11) and one HMS fallopian tube: one centre per organ, not several. Ten of the 24 lost
+slides were Arm C, and the 1.5 GB size cap squeezed out the HMS colorectal and skin OME-TIFFs.
+The tile-locking analysis therefore still cannot fully separate slide identity from centre, and a
+small top-up run of HMS colorectal and skin is the cheap fix.
+
 ## 4. What this means for the resource
 
 1. **Ask in report language.** For any HTAN field to be probed, phrase the question the way a
@@ -117,10 +150,13 @@ cannot occur here".
    Do not put curation terms in the prompt.
 2. **Use the scores as ranks.** The separation is in the ordering, and the ladder profile carries
    more information than any single threshold.
-3. **Off-cohort distractors should be standard** in any forced-choice evaluation against a
+3. **Prefer open-ended answers where the vocabulary is unusual.** The free text was stable where
+   the forced choice was not, and in one case it was more specific than the HTAN field it would
+   have been scored against.
+4. **Off-cohort distractors should be standard** in any forced-choice evaluation against a
    controlled vocabulary. They cost nothing and they distinguish "somewhat accurate" from
    "not engaging with the options".
-4. **The progression axis is a usable endpoint for HTAN**, and it is the kind of question HTAN is
+5. **The progression axis is a usable endpoint for HTAN**, and it is the kind of question HTAN is
    uniquely positioned to ask, since the precancer atlases supply the classes no other public
    collection has at this scale.
 

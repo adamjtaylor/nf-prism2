@@ -209,3 +209,58 @@ fig.suptitle("Arm A is the endpoint. Pooling Arm C lowers the AUC because its Pr
              fontsize=11.5, color=INK)
 fig.savefig(f"{FIG}/fig4_by_arm.png", dpi=170); plt.close(fig)
 print("wrote fig4")
+
+# ------------------------------------------------------------------ fig 5
+# Two jobs: show that the free-text site description is stable while the forced choice slips,
+# and contrast forced-choice accuracy between an everyday vocabulary (organ) and HTAN's
+# curation vocabulary (progression stage).
+def _mcsite(r):
+    a = (r["rec"].get("multiple_choice", {}).get("primary_site_mc", {}).get("answer") or "").strip()
+    return {"B": "Lung", "J": "Esophagus"}.get(a[:1].upper(), "other")
+def _desc(r):
+    d = (r["rec"].get("open_ended", {}).get("specimen_site", {}).get("answer") or "").lower()
+    for k, v in [("bronch", "bronchial wall"), ("lung", "lung / parenchyma"), ("pleur", "pleura"),
+                 ("sinonasal", "sinonasal"), ("tonsil", "tonsil")]:
+        if k in d:
+            return v
+    return "other / unstated"
+
+fig, axes = plt.subplots(1, 2, figsize=(12.6, 4.6), constrained_layout=True,
+                         gridspec_kw={"width_ratios": [1.25, 1]})
+ax = axes[0]
+cats = ["bronchial wall", "lung / parenchyma", "pleura", "sinonasal", "tonsil", "other / unstated"]
+tab = {}
+for r in rows:
+    tab[(_desc(r), _mcsite(r))] = tab.get((_desc(r), _mcsite(r)), 0) + 1
+y = np.arange(len(cats))
+lung = [tab.get((c, "Lung"), 0) for c in cats]
+eso = [tab.get((c, "Esophagus"), 0) for c in cats]
+ax.barh(y, lung, height=0.58, color=BLUE, label="answered Lung (correct)")
+ax.barh(y, eso, left=lung, height=0.58, color=ORANGE, label="answered Esophagus (wrong)")
+for i, (l, e) in enumerate(zip(lung, eso)):
+    if l: ax.text(l / 2, i, str(l), ha="center", va="center", fontsize=8.5, color="#ffffff")
+    if e: ax.text(l + e + 1.2, i, str(e), va="center", fontsize=8.5, color=ORANGE)
+ax.set_yticks(y, cats, fontsize=9); ax.invert_yaxis()
+ax.set_xlabel("Arm A slides (HTAN records only 'Lung NOS', and no site at all)")
+ax.legend(frameon=False, fontsize=8.5, loc="lower right")
+ax.grid(axis="x", color="#ecebe6", lw=0.7); ax.set_axisbelow(True)
+ax.set_title("The free text is stable; the forced choice slips.\n"
+             "All 83 bronchial-wall descriptions are verbatim identical.", fontsize=9.5, color=INK)
+
+ax = axes[1]
+bars = [("primary site\nArm A", 74 / 81, 0.10), ("primary site\nArm C", 31 / 34, 0.10),
+        ("progression stage\nall arms", 0.209, 0.125)]
+x = np.arange(len(bars))
+ax.bar(x, [b[1] for b in bars], width=0.5, color=[BLUE, BLUE, ORANGE])
+for i, b in enumerate(bars):
+    ax.plot([i - .3, i + .3], [b[2]] * 2, color=INK, lw=2, ls="--")
+    ax.text(i, b[1] + 0.03, f"{b[1]:.2f}", ha="center", fontsize=10, color=INK2)
+ax.set_xticks(x, [b[0] for b in bars], fontsize=9)
+ax.set_ylim(0, 1.05); ax.set_ylabel("forced-choice accuracy")
+ax.grid(axis="y", color="#ecebe6", lw=0.7); ax.set_axisbelow(True)
+ax.text(0.02, 0.97, "dashed line = chance", transform=ax.transAxes, va="top", fontsize=8, color=INK2)
+ax.set_title("Same format, same distractors, different vocabulary", fontsize=9.5, color=INK)
+fig.suptitle("Organ names are everyday language; HTAN's progression terms are not",
+             fontsize=12, color=INK)
+fig.savefig(f"{FIG}/fig5_site_vs_stage.png", dpi=170); plt.close(fig)
+print("wrote fig5")
