@@ -1,0 +1,119 @@
+{
+  "k": 30,
+  "queries_per_slide": 200,
+  "space": "raw Virchow2 1280-d, cosine, exact",
+  "note": "chance is per query from that query's own candidate pool; CI bootstraps patients",
+  "by_arm": {
+    "A": {
+      "different slide": {
+        "observed": 0.3606,
+        "ci": [
+          0.3045,
+          0.4168
+        ],
+        "chance": 0.9895,
+        "ratio_to_chance": 0.3644
+      },
+      "different patient": {
+        "observed": 0.3305,
+        "ci": [
+          0.2831,
+          0.379
+        ],
+        "chance": 0.9836,
+        "ratio_to_chance": 0.336
+      },
+      "different class": {
+        "observed": 0.2327,
+        "ci": [
+          0.1926,
+          0.2737
+        ],
+        "chance": 0.8416,
+        "ratio_to_chance": 0.2765
+      },
+      "n_index_tiles": 551318,
+      "n_queries": 19103,
+      "n_slides": 103,
+      "n_patients": 68,
+      "n_centres": 1,
+      "pct_queries_with_no_cross_slide_neighbour": 21.9,
+      "pct_queries_with_no_cross_patient_neighbour": 23.8,
+      "median_cross_slide_neighbours_of_30": 10.0
+    },
+    "B": {
+      "different slide": {
+        "observed": 0.2082,
+        "ci": [
+          0.1549,
+          0.2602
+        ],
+        "chance": 0.9604,
+        "ratio_to_chance": 0.2168
+      },
+      "different patient": {
+        "observed": 0.2082,
+        "ci": [
+          0.1549,
+          0.2602
+        ],
+        "chance": 0.9604,
+        "ratio_to_chance": 0.2168
+      },
+      "different class": {
+        "observed": 0.0939,
+        "ci": [
+          0.0564,
+          0.1321
+        ],
+        "chance": 0.5783,
+        "ratio_to_chance": 0.1624
+      },
+      "n_index_tiles": 68427,
+      "n_queries": 5042,
+      "n_slides": 26,
+      "n_patients": 26,
+      "n_centres": 1,
+      "pct_queries_with_no_cross_slide_neighbour": 39.1,
+      "pct_queries_with_no_cross_patient_neighbour": 39.1,
+      "median_cross_slide_neighbours_of_30": 2.0
+    },
+    "C": {
+      "different slide": {
+        "observed": 0.1226,
+        "ci": [
+          0.0942,
+          0.1555
+        ],
+        "chance": 0.9685,
+        "ratio_to_chance": 0.1266
+      },
+      "different patient": {
+        "observed": 0.1226,
+        "ci": [
+          0.0942,
+          0.1555
+        ],
+        "chance": 0.9685,
+        "ratio_to_chance": 0.1266
+      },
+      "different class": {
+        "observed": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "chance": 0.0,
+        "ratio_to_chance": 0.0
+      },
+      "n_index_tiles": 47792,
+      "n_queries": 6292,
+      "n_slides": 34,
+      "n_patients": 34,
+      "n_centres": 3,
+      "pct_queries_with_no_cross_slide_neighbour": 52.1,
+      "pct_queries_with_no_cross_patient_neighbour": 52.1,
+      "median_cross_slide_neighbours_of_30": 0.0
+    }
+  }
+}

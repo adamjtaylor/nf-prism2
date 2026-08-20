@@ -1,0 +1,36 @@
+{
+  "n_tiles": 40629,
+  "per_slide": 300,
+  "patient_cap": 2,
+  "n_slides": 154,
+  "n_patients": 128,
+  "slide_panel_class": "Premalignant",
+  "slide_panel_slides": [
+    "A_BU_premal_13",
+    "A_BU_premal_04",
+    "A_BU_premal_11"
+  ],
+  "classes": [
+    "Normal",
+    "Normal adjacent",
+    "Atypia - hyperplasia",
+    "Premalignant",
+    "Premalignant - in situ",
+    "Primary"
+  ],
+  "centres": [
+    "HTAN BU",
+    "HTAN Duke",
+    "HTAN HMS",
+    "HTAN Vanderbilt",
+    "HTAN WUSTL"
+  ],
+  "organs": [
+    "Breast",
+    "Colon",
+    "Fallopian tube",
+    "Lung",
+    "Pancreas"
+  ],
+  "palette_note": "centre and organ are faceted, not hue-coded: the validated categorical palette clears the all-pairs CVD floors for three slots only, and a scatter puts every pair on screen at once"
+}

@@ -1,0 +1,685 @@
+{
+  "ks": [
+    1,
+    5,
+    10,
+    20,
+    50
+  ],
+  "queries_per_slide": 120,
+  "relevance": "same TumorTissueType AND different patient",
+  "space": "raw Virchow2 1280-d, cosine, exact",
+  "excluded_arm_C": "Primary-only, so same-class is degenerate; also one centre per organ",
+  "by_arm": {
+    "A": {
+      "n_index_tiles": 551318,
+      "n_queries": 11870,
+      "n_slides": 103,
+      "n_patients": 68,
+      "policies": {
+        "none": {
+          "precision_at_k": {
+            "1": {
+              "precision": 0.0201,
+              "ci": [
+                0.0157,
+                0.0251
+              ],
+              "chance": 0.1464,
+              "lift": 0.137
+            },
+            "5": {
+              "precision": 0.0542,
+              "ci": [
+                0.0455,
+                0.0641
+              ],
+              "chance": 0.1464,
+              "lift": 0.37
+            },
+            "10": {
+              "precision": 0.0785,
+              "ci": [
+                0.0662,
+                0.0919
+              ],
+              "chance": 0.1464,
+              "lift": 0.536
+            },
+            "20": {
+              "precision": 0.106,
+              "ci": [
+                0.0908,
+                0.1219
+              ],
+              "chance": 0.1464,
+              "lift": 0.724
+            },
+            "50": {
+              "precision": 0.1447,
+              "ci": [
+                0.1264,
+                0.1637
+              ],
+              "chance": 0.1464,
+              "lift": 0.988
+            }
+          },
+          "by_query_class": {
+            "Atypia - hyperplasia": {
+              "n_queries": 1894,
+              "precision_at_10": 0.0722,
+              "ci": [
+                0.05,
+                0.0965
+              ],
+              "chance": 0.0577,
+              "lift": 1.25,
+              "index_tile_share": 0.0616
+            },
+            "Normal": {
+              "n_queries": 1920,
+              "precision_at_10": 0.1538,
+              "ci": [
+                0.1111,
+                0.1989
+              ],
+              "chance": 0.0137,
+              "lift": 11.19,
+              "index_tile_share": 0.0147
+            },
+            "Normal adjacent": {
+              "n_queries": 1842,
+              "precision_at_10": 0.0613,
+              "ci": [
+                0.046,
+                0.0809
+              ],
+              "chance": 0.0114,
+              "lift": 5.37,
+              "index_tile_share": 0.0122
+            },
+            "Premalignant": {
+              "n_queries": 2539,
+              "precision_at_10": 0.1021,
+              "ci": [
+                0.0794,
+                0.1245
+              ],
+              "chance": 0.0197,
+              "lift": 5.17,
+              "index_tile_share": 0.0207
+            },
+            "Premalignant - in situ": {
+              "n_queries": 1875,
+              "precision_at_10": 0.0361,
+              "ci": [
+                0.0176,
+                0.0552
+              ],
+              "chance": 0.4339,
+              "lift": 0.08,
+              "index_tile_share": 0.4637
+            },
+            "Primary": {
+              "n_queries": 1800,
+              "precision_at_10": 0.0334,
+              "ci": [
+                0.0234,
+                0.0434
+              ],
+              "chance": 0.3987,
+              "lift": 0.08,
+              "index_tile_share": 0.4271
+            }
+          },
+          "frac_top10_same_slide": 0.7625,
+          "frac_top10_same_patient": 0.7921,
+          "mean_pool_size": 551317
+        },
+        "exclude same slide": {
+          "precision_at_k": {
+            "1": {
+              "precision": 0.3593,
+              "ci": [
+                0.3137,
+                0.4035
+              ],
+              "chance": 0.1503,
+              "lift": 2.391
+            },
+            "5": {
+              "precision": 0.3549,
+              "ci": [
+                0.3118,
+                0.3966
+              ],
+              "chance": 0.1503,
+              "lift": 2.362
+            },
+            "10": {
+              "precision": 0.3546,
+              "ci": [
+                0.3135,
+                0.3954
+              ],
+              "chance": 0.1503,
+              "lift": 2.36
+            },
+            "20": {
+              "precision": 0.354,
+              "ci": [
+                0.3153,
+                0.393
+              ],
+              "chance": 0.1503,
+              "lift": 2.356
+            },
+            "50": {
+              "precision": 0.3514,
+              "ci": [
+                0.3158,
+                0.3877
+              ],
+              "chance": 0.1503,
+              "lift": 2.339
+            }
+          },
+          "by_query_class": {
+            "Atypia - hyperplasia": {
+              "n_queries": 1894,
+              "precision_at_10": 0.2155,
+              "ci": [
+                0.1515,
+                0.2829
+              ],
+              "chance": 0.0578,
+              "lift": 3.73,
+              "index_tile_share": 0.0616
+            },
+            "Normal": {
+              "n_queries": 1920,
+              "precision_at_10": 0.5487,
+              "ci": [
+                0.4476,
+                0.6251
+              ],
+              "chance": 0.0138,
+              "lift": 39.88,
+              "index_tile_share": 0.0147
+            },
+            "Normal adjacent": {
+              "n_queries": 1842,
+              "precision_at_10": 0.1993,
+              "ci": [
+                0.1593,
+                0.2482
+              ],
+              "chance": 0.0114,
+              "lift": 17.46,
+              "index_tile_share": 0.0122
+            },
+            "Premalignant": {
+              "n_queries": 2539,
+              "precision_at_10": 0.3276,
+              "ci": [
+                0.2887,
+                0.371
+              ],
+              "chance": 0.0198,
+              "lift": 16.59,
+              "index_tile_share": 0.0207
+            },
+            "Premalignant - in situ": {
+              "n_queries": 1875,
+              "precision_at_10": 0.3507,
+              "ci": [
+                0.2158,
+                0.482
+              ],
+              "chance": 0.4471,
+              "lift": 0.78,
+              "index_tile_share": 0.4637
+            },
+            "Primary": {
+              "n_queries": 1800,
+              "precision_at_10": 0.4951,
+              "ci": [
+                0.3936,
+                0.6021
+              ],
+              "chance": 0.4102,
+              "lift": 1.21,
+              "index_tile_share": 0.4271
+            }
+          },
+          "frac_top10_same_slide": 0.0,
+          "frac_top10_same_patient": 0.0826,
+          "mean_pool_size": 545746
+        },
+        "exclude same patient": {
+          "precision_at_k": {
+            "1": {
+              "precision": 0.3901,
+              "ci": [
+                0.3525,
+                0.4286
+              ],
+              "chance": 0.1526,
+              "lift": 2.556
+            },
+            "5": {
+              "precision": 0.3832,
+              "ci": [
+                0.3472,
+                0.4203
+              ],
+              "chance": 0.1526,
+              "lift": 2.512
+            },
+            "10": {
+              "precision": 0.3814,
+              "ci": [
+                0.346,
+                0.4177
+              ],
+              "chance": 0.1526,
+              "lift": 2.499
+            },
+            "20": {
+              "precision": 0.3793,
+              "ci": [
+                0.3456,
+                0.4151
+              ],
+              "chance": 0.1526,
+              "lift": 2.486
+            },
+            "50": {
+              "precision": 0.3743,
+              "ci": [
+                0.3422,
+                0.408
+              ],
+              "chance": 0.1526,
+              "lift": 2.453
+            }
+          },
+          "by_query_class": {
+            "Atypia - hyperplasia": {
+              "n_queries": 1894,
+              "precision_at_10": 0.2536,
+              "ci": [
+                0.1947,
+                0.3054
+              ],
+              "chance": 0.0579,
+              "lift": 4.38,
+              "index_tile_share": 0.0616
+            },
+            "Normal": {
+              "n_queries": 1920,
+              "precision_at_10": 0.5566,
+              "ci": [
+                0.4525,
+                0.6304
+              ],
+              "chance": 0.0138,
+              "lift": 40.44,
+              "index_tile_share": 0.0147
+            },
+            "Normal adjacent": {
+              "n_queries": 1842,
+              "precision_at_10": 0.2178,
+              "ci": [
+                0.1762,
+                0.2649
+              ],
+              "chance": 0.0114,
+              "lift": 19.05,
+              "index_tile_share": 0.0122
+            },
+            "Premalignant": {
+              "n_queries": 2539,
+              "precision_at_10": 0.3488,
+              "ci": [
+                0.3025,
+                0.3992
+              ],
+              "chance": 0.0198,
+              "lift": 17.64,
+              "index_tile_share": 0.0207
+            },
+            "Premalignant - in situ": {
+              "n_queries": 1875,
+              "precision_at_10": 0.3969,
+              "ci": [
+                0.2462,
+                0.5278
+              ],
+              "chance": 0.454,
+              "lift": 0.87,
+              "index_tile_share": 0.4637
+            },
+            "Primary": {
+              "n_queries": 1800,
+              "precision_at_10": 0.526,
+              "ci": [
+                0.4435,
+                0.6186
+              ],
+              "chance": 0.4181,
+              "lift": 1.26,
+              "index_tile_share": 0.4271
+            }
+          },
+          "frac_top10_same_slide": 0.0,
+          "frac_top10_same_patient": 0.0,
+          "mean_pool_size": 542554
+        }
+      }
+    },
+    "B": {
+      "n_index_tiles": 68427,
+      "n_queries": 3042,
+      "n_slides": 26,
+      "n_patients": 26,
+      "policies": {
+        "none": {
+          "precision_at_k": {
+            "1": {
+              "precision": 0.0243,
+              "ci": [
+                0.0145,
+                0.0364
+              ],
+              "chance": 0.3801,
+              "lift": 0.064
+            },
+            "5": {
+              "precision": 0.0474,
+              "ci": [
+                0.0332,
+                0.0647
+              ],
+              "chance": 0.3801,
+              "lift": 0.125
+            },
+            "10": {
+              "precision": 0.069,
+              "ci": [
+                0.0493,
+                0.0909
+              ],
+              "chance": 0.3801,
+              "lift": 0.181
+            },
+            "20": {
+              "precision": 0.0968,
+              "ci": [
+                0.0707,
+                0.1255
+              ],
+              "chance": 0.3801,
+              "lift": 0.255
+            },
+            "50": {
+              "precision": 0.1417,
+              "ci": [
+                0.1061,
+                0.1798
+              ],
+              "chance": 0.3801,
+              "lift": 0.373
+            }
+          },
+          "by_query_class": {
+            "Atypia - hyperplasia": {
+              "n_queries": 642,
+              "precision_at_10": 0.0745,
+              "ci": [
+                0.054,
+                0.1012
+              ],
+              "chance": 0.0164,
+              "lift": 4.54,
+              "index_tile_share": 0.0201
+            },
+            "Normal": {
+              "n_queries": 240,
+              "precision_at_10": 0.0021,
+              "ci": [
+                0.0,
+                0.0042
+              ],
+              "chance": 0.0044,
+              "lift": 0.48,
+              "index_tile_share": 0.0087
+            },
+            "Premalignant": {
+              "n_queries": 840,
+              "precision_at_10": 0.1063,
+              "ci": [
+                0.0593,
+                0.1629
+              ],
+              "chance": 0.0371,
+              "lift": 2.87,
+              "index_tile_share": 0.0432
+            },
+            "Primary": {
+              "n_queries": 1320,
+              "precision_at_10": 0.0547,
+              "ci": [
+                0.0365,
+                0.0757
+              ],
+              "chance": 0.8436,
+              "lift": 0.06,
+              "index_tile_share": 0.928
+            }
+          },
+          "frac_top10_same_slide": 0.8779,
+          "frac_top10_same_patient": 0.8779,
+          "mean_pool_size": 68426
+        },
+        "exclude same slide": {
+          "precision_at_k": {
+            "1": {
+              "precision": 0.6588,
+              "ci": [
+                0.5268,
+                0.7824
+              ],
+              "chance": 0.4138,
+              "lift": 1.592
+            },
+            "5": {
+              "precision": 0.6565,
+              "ci": [
+                0.524,
+                0.7813
+              ],
+              "chance": 0.4138,
+              "lift": 1.586
+            },
+            "10": {
+              "precision": 0.6552,
+              "ci": [
+                0.5237,
+                0.7801
+              ],
+              "chance": 0.4138,
+              "lift": 1.583
+            },
+            "20": {
+              "precision": 0.6514,
+              "ci": [
+                0.5197,
+                0.7774
+              ],
+              "chance": 0.4138,
+              "lift": 1.574
+            },
+            "50": {
+              "precision": 0.6426,
+              "ci": [
+                0.5086,
+                0.7725
+              ],
+              "chance": 0.4138,
+              "lift": 1.553
+            }
+          },
+          "by_query_class": {
+            "Atypia - hyperplasia": {
+              "n_queries": 642,
+              "precision_at_10": 0.335,
+              "ci": [
+                0.275,
+                0.3995
+              ],
+              "chance": 0.0165,
+              "lift": 20.34,
+              "index_tile_share": 0.0201
+            },
+            "Normal": {
+              "n_queries": 240,
+              "precision_at_10": 0.0067,
+              "ci": [
+                0.0,
+                0.0133
+              ],
+              "chance": 0.0044,
+              "lift": 1.52,
+              "index_tile_share": 0.0087
+            },
+            "Premalignant": {
+              "n_queries": 840,
+              "precision_at_10": 0.5481,
+              "ci": [
+                0.4493,
+                0.6761
+              ],
+              "chance": 0.0373,
+              "lift": 14.7,
+              "index_tile_share": 0.0432
+            },
+            "Primary": {
+              "n_queries": 1320,
+              "precision_at_10": 0.997,
+              "ci": [
+                0.9935,
+                0.9995
+              ],
+              "chance": 0.9211,
+              "lift": 1.08,
+              "index_tile_share": 0.928
+            }
+          },
+          "frac_top10_same_slide": 0.0,
+          "frac_top10_same_patient": 0.0,
+          "mean_pool_size": 65728
+        },
+        "exclude same patient": {
+          "precision_at_k": {
+            "1": {
+              "precision": 0.6588,
+              "ci": [
+                0.5268,
+                0.7824
+              ],
+              "chance": 0.4138,
+              "lift": 1.592
+            },
+            "5": {
+              "precision": 0.6565,
+              "ci": [
+                0.524,
+                0.7813
+              ],
+              "chance": 0.4138,
+              "lift": 1.586
+            },
+            "10": {
+              "precision": 0.6552,
+              "ci": [
+                0.5237,
+                0.7801
+              ],
+              "chance": 0.4138,
+              "lift": 1.583
+            },
+            "20": {
+              "precision": 0.6514,
+              "ci": [
+                0.5197,
+                0.7774
+              ],
+              "chance": 0.4138,
+              "lift": 1.574
+            },
+            "50": {
+              "precision": 0.6426,
+              "ci": [
+                0.5086,
+                0.7725
+              ],
+              "chance": 0.4138,
+              "lift": 1.553
+            }
+          },
+          "by_query_class": {
+            "Atypia - hyperplasia": {
+              "n_queries": 642,
+              "precision_at_10": 0.335,
+              "ci": [
+                0.275,
+                0.3995
+              ],
+              "chance": 0.0165,
+              "lift": 20.34,
+              "index_tile_share": 0.0201
+            },
+            "Normal": {
+              "n_queries": 240,
+              "precision_at_10": 0.0067,
+              "ci": [
+                0.0,
+                0.0133
+              ],
+              "chance": 0.0044,
+              "lift": 1.52,
+              "index_tile_share": 0.0087
+            },
+            "Premalignant": {
+              "n_queries": 840,
+              "precision_at_10": 0.5481,
+              "ci": [
+                0.4493,
+                0.6761
+              ],
+              "chance": 0.0373,
+              "lift": 14.7,
+              "index_tile_share": 0.0432
+            },
+            "Primary": {
+              "n_queries": 1320,
+              "precision_at_10": 0.997,
+              "ci": [
+                0.9935,
+                0.9995
+              ],
+              "chance": 0.9211,
+              "lift": 1.08,
+              "index_tile_share": 0.928
+            }
+          },
+          "frac_top10_same_slide": 0.0,
+          "frac_top10_same_patient": 0.0,
+          "mean_pool_size": 65728
+        }
+      }
+    }
+  }
+}

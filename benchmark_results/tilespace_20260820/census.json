@@ -1,0 +1,1428 @@
+{
+  "n_slides": 163,
+  "n_patients": 128,
+  "n_tiles": 667537,
+  "tiles_per_slide": {
+    "median": 643,
+    "min": 18,
+    "max": 36399,
+    "mean": 4095.3
+  },
+  "patients_with_multiple_slides": 26,
+  "pca_dim": 128,
+  "pca_explained_variance": 0.7916,
+  "pca_fit_tiles": 53885,
+  "pca_fit_per_slide": 400,
+  "by_arm": {
+    "A": {
+      "slides": 103,
+      "patients": 68,
+      "tiles": 551318
+    },
+    "B": {
+      "slides": 26,
+      "patients": 26,
+      "tiles": 68427
+    },
+    "C": {
+      "slides": 34,
+      "patients": 34,
+      "tiles": 47792
+    }
+  },
+  "by_class": {
+    "Atypia - hyperplasia": {
+      "slides": 23,
+      "patients": 22,
+      "tiles": 35359
+    },
+    "Normal": {
+      "slides": 18,
+      "patients": 18,
+      "tiles": 8682
+    },
+    "Normal adjacent": {
+      "slides": 16,
+      "patients": 16,
+      "tiles": 6727
+    },
+    "Premalignant": {
+      "slides": 30,
+      "patients": 30,
+      "tiles": 14373
+    },
+    "Premalignant - in situ": {
+      "slides": 16,
+      "patients": 15,
+      "tiles": 255623
+    },
+    "Primary": {
+      "slides": 60,
+      "patients": 60,
+      "tiles": 346773
+    }
+  },
+  "by_centre": {
+    "HTAN BU": {
+      "slides": 103,
+      "patients": 68,
+      "tiles": 551318
+    },
+    "HTAN Duke": {
+      "slides": 22,
+      "patients": 22,
+      "tiles": 21872
+    },
+    "HTAN HMS": {
+      "slides": 1,
+      "patients": 1,
+      "tiles": 3888
+    },
+    "HTAN Vanderbilt": {
+      "slides": 26,
+      "patients": 26,
+      "tiles": 68427
+    },
+    "HTAN WUSTL": {
+      "slides": 11,
+      "patients": 11,
+      "tiles": 22032
+    }
+  },
+  "by_organ": {
+    "Breast": {
+      "slides": 22,
+      "patients": 22,
+      "tiles": 21872
+    },
+    "Colon": {
+      "slides": 26,
+      "patients": 26,
+      "tiles": 68427
+    },
+    "Fallopian tube": {
+      "slides": 1,
+      "patients": 1,
+      "tiles": 3888
+    },
+    "Lung": {
+      "slides": 103,
+      "patients": 68,
+      "tiles": 551318
+    },
+    "Pancreas": {
+      "slides": 11,
+      "patients": 11,
+      "tiles": 22032
+    }
+  },
+  "organ_imputed_slides": 48,
+  "per_slide_tiles": {
+    "AP_BU_atypia_01": 180,
+    "AP_BU_insitu_01": 75,
+    "AP_BU_premal_01": 336,
+    "AP_BU_premal_02": 293,
+    "AP_BU_premal_03": 329,
+    "AP_BU_premal_05": 90,
+    "AP_BU_premal_06": 306,
+    "A_BU_atypia_01": 1674,
+    "A_BU_atypia_02": 183,
+    "A_BU_atypia_03": 1450,
+    "A_BU_atypia_04": 33,
+    "A_BU_atypia_05": 334,
+    "A_BU_atypia_06": 182,
+    "A_BU_atypia_07": 475,
+    "A_BU_atypia_08": 61,
+    "A_BU_atypia_09": 338,
+    "A_BU_atypia_10": 376,
+    "A_BU_atypia_11": 791,
+    "A_BU_atypia_12": 861,
+    "A_BU_atypia_13": 1407,
+    "A_BU_atypia_14": 700,
+    "A_BU_atypia_15": 516,
+    "A_BU_atypia_18": 24423,
+    "A_BU_insitu_02": 23255,
+    "A_BU_insitu_04": 475,
+    "A_BU_insitu_05": 12739,
+    "A_BU_insitu_06": 15583,
+    "A_BU_insitu_07": 13970,
+    "A_BU_insitu_08": 22150,
+    "A_BU_insitu_09": 30045,
+    "A_BU_insitu_10": 8143,
+    "A_BU_insitu_11": 18876,
+    "A_BU_insitu_12": 12773,
+    "A_BU_insitu_13": 20625,
+    "A_BU_insitu_14": 15899,
+    "A_BU_insitu_15": 12767,
+    "A_BU_insitu_17": 11849,
+    "A_BU_insitu_18": 36399,
+    "A_BU_normadj_01": 429,
+    "A_BU_normadj_02": 110,
+    "A_BU_normadj_03": 447,
+    "A_BU_normadj_04": 345,
+    "A_BU_normadj_05": 403,
+    "A_BU_normadj_07": 839,
+    "A_BU_normadj_08": 233,
+    "A_BU_normadj_09": 632,
+    "A_BU_normadj_10": 329,
+    "A_BU_normadj_11": 385,
+    "A_BU_normadj_12": 947,
+    "A_BU_normadj_13": 353,
+    "A_BU_normadj_15": 756,
+    "A_BU_normadj_16": 339,
+    "A_BU_normadj_17": 128,
+    "A_BU_normadj_18": 52,
+    "A_BU_normal_01": 208,
+    "A_BU_normal_02": 882,
+    "A_BU_normal_03": 445,
+    "A_BU_normal_04": 300,
+    "A_BU_normal_06": 169,
+    "A_BU_normal_07": 285,
+    "A_BU_normal_08": 392,
+    "A_BU_normal_09": 129,
+    "A_BU_normal_10": 1225,
+    "A_BU_normal_11": 411,
+    "A_BU_normal_12": 182,
+    "A_BU_normal_13": 279,
+    "A_BU_normal_14": 1652,
+    "A_BU_normal_15": 194,
+    "A_BU_normal_16": 414,
+    "A_BU_normal_18": 918,
+    "A_BU_premal_01": 802,
+    "A_BU_premal_02": 643,
+    "A_BU_premal_03": 400,
+    "A_BU_premal_04": 850,
+    "A_BU_premal_05": 347,
+    "A_BU_premal_06": 31,
+    "A_BU_premal_07": 568,
+    "A_BU_premal_08": 181,
+    "A_BU_premal_09": 18,
+    "A_BU_premal_10": 185,
+    "A_BU_premal_11": 838,
+    "A_BU_premal_12": 429,
+    "A_BU_premal_13": 2408,
+    "A_BU_premal_14": 386,
+    "A_BU_premal_15": 255,
+    "A_BU_premal_16": 612,
+    "A_BU_premal_17": 386,
+    "A_BU_premal_18": 722,
+    "A_BU_primary_01": 120,
+    "A_BU_primary_03": 8901,
+    "A_BU_primary_04": 12933,
+    "A_BU_primary_05": 12315,
+    "A_BU_primary_07": 20770,
+    "A_BU_primary_08": 16925,
+    "A_BU_primary_09": 8660,
+    "A_BU_primary_10": 8475,
+    "A_BU_primary_11": 3620,
+    "A_BU_primary_12": 26715,
+    "A_BU_primary_13": 31387,
+    "A_BU_primary_14": 24005,
+    "A_BU_primary_15": 23137,
+    "A_BU_primary_16": 28106,
+    "A_BU_primary_17": 9415,
+    "B_Vanderbilt_atypia_01": 386,
+    "B_Vanderbilt_atypia_02": 235,
+    "B_Vanderbilt_atypia_03": 42,
+    "B_Vanderbilt_atypia_04": 210,
+    "B_Vanderbilt_atypia_05": 205,
+    "B_Vanderbilt_atypia_06": 297,
+    "B_Vanderbilt_normal_01": 287,
+    "B_Vanderbilt_normal_02": 310,
+    "B_Vanderbilt_premal_01": 424,
+    "B_Vanderbilt_premal_02": 218,
+    "B_Vanderbilt_premal_03": 554,
+    "B_Vanderbilt_premal_04": 419,
+    "B_Vanderbilt_premal_05": 258,
+    "B_Vanderbilt_premal_06": 429,
+    "B_Vanderbilt_premal_07": 656,
+    "B_Vanderbilt_primary_02": 3989,
+    "B_Vanderbilt_primary_03": 3897,
+    "B_Vanderbilt_primary_04": 3756,
+    "B_Vanderbilt_primary_05": 7042,
+    "B_Vanderbilt_primary_06": 2379,
+    "B_Vanderbilt_primary_07": 9458,
+    "B_Vanderbilt_primary_08": 5478,
+    "B_Vanderbilt_primary_09": 7499,
+    "B_Vanderbilt_primary_10": 3945,
+    "B_Vanderbilt_primary_11": 13232,
+    "B_Vanderbilt_primary_12": 2822,
+    "C_Duke_primary_01": 186,
+    "C_Duke_primary_02": 2181,
+    "C_Duke_primary_03": 143,
+    "C_Duke_primary_04": 1424,
+    "C_Duke_primary_05": 143,
+    "C_Duke_primary_06": 2700,
+    "C_Duke_primary_07": 152,
+    "C_Duke_primary_08": 308,
+    "C_Duke_primary_09": 111,
+    "C_Duke_primary_10": 2216,
+    "C_Duke_primary_11": 159,
+    "C_Duke_primary_12": 1968,
+    "C_Duke_primary_13": 141,
+    "C_Duke_primary_14": 2022,
+    "C_Duke_primary_15": 191,
+    "C_Duke_primary_16": 1909,
+    "C_Duke_primary_17": 82,
+    "C_Duke_primary_18": 1021,
+    "C_Duke_primary_19": 194,
+    "C_Duke_primary_20": 2571,
+    "C_Duke_primary_22": 1860,
+    "C_Duke_primary_23": 190,
+    "C_HMS_primary_02": 3888,
+    "C_WUSTL_primary_01": 1951,
+    "C_WUSTL_primary_02": 2391,
+    "C_WUSTL_primary_03": 727,
+    "C_WUSTL_primary_04": 3361,
+    "C_WUSTL_primary_05": 1563,
+    "C_WUSTL_primary_06": 4149,
+    "C_WUSTL_primary_07": 1961,
+    "C_WUSTL_primary_08": 1232,
+    "C_WUSTL_primary_09": 1938,
+    "C_WUSTL_primary_10": 738,
+    "C_WUSTL_primary_11": 2021
+  },
+  "geometry": {
+    "AP_BU_atypia_01": {
+      "w": 79680,
+      "h": 18299,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10404_1001847_deid"
+    },
+    "AP_BU_insitu_01": {
+      "w": 5975,
+      "h": 6965,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0014-011-19323-90017BX_deid"
+    },
+    "AP_BU_premal_01": {
+      "w": 13943,
+      "h": 11708,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0001-029-20126-01119BX_deid"
+    },
+    "AP_BU_premal_02": {
+      "w": 31871,
+      "h": 16794,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0003-061-24282-00694BX_deid"
+    },
+    "AP_BU_premal_03": {
+      "w": 77688,
+      "h": 24205,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0006-037-20238-00776BX_deid"
+    },
+    "AP_BU_premal_05": {
+      "w": 7967,
+      "h": 6406,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0009-053-23126-00557BX_deid"
+    },
+    "AP_BU_premal_06": {
+      "w": 21911,
+      "h": 9159,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0010-048-19599-90011BX_deid"
+    },
+    "A_BU_atypia_01": {
+      "w": 93624,
+      "h": 19674,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10044_1001592_deid"
+    },
+    "A_BU_atypia_02": {
+      "w": 63744,
+      "h": 10019,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10204_1001619_deid"
+    },
+    "A_BU_atypia_03": {
+      "w": 91632,
+      "h": 16140,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10401_1001817_deid"
+    },
+    "A_BU_atypia_04": {
+      "w": 77688,
+      "h": 13295,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10402_1001712_deid"
+    },
+    "A_BU_atypia_05": {
+      "w": 61752,
+      "h": 15972,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10403_1001766_deid"
+    },
+    "A_BU_atypia_06": {
+      "w": 81672,
+      "h": 19605,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10404_1001846_deid"
+    },
+    "A_BU_atypia_07": {
+      "w": 91632,
+      "h": 14167,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10406_1001826_deid"
+    },
+    "A_BU_atypia_08": {
+      "w": 93624,
+      "h": 12261,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10413_1001970_deid"
+    },
+    "A_BU_atypia_09": {
+      "w": 85656,
+      "h": 31918,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10414_1001759_deid"
+    },
+    "A_BU_atypia_10": {
+      "w": 79680,
+      "h": 19039,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10415_1001690_deid"
+    },
+    "A_BU_atypia_11": {
+      "w": 91632,
+      "h": 13679,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10420_1001723_deid"
+    },
+    "A_BU_atypia_12": {
+      "w": 69720,
+      "h": 24475,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10301_1001457_deid"
+    },
+    "A_BU_atypia_13": {
+      "w": 45816,
+      "h": 19384,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10302_1001082_deid"
+    },
+    "A_BU_atypia_14": {
+      "w": 67728,
+      "h": 15837,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10303_1001424_deid"
+    },
+    "A_BU_atypia_15": {
+      "w": 61752,
+      "h": 39280,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10304_1001429_deid"
+    },
+    "A_BU_atypia_18": {
+      "w": 61752,
+      "h": 44290,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50802_A4_deid"
+    },
+    "A_BU_insitu_02": {
+      "w": 61752,
+      "h": 36803,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50803_B2_deid"
+    },
+    "A_BU_insitu_04": {
+      "w": 13943,
+      "h": 15799,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0014-010-20660-00748BX_deid"
+    },
+    "A_BU_insitu_05": {
+      "w": 39840,
+      "h": 35661,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50710_C1_deid"
+    },
+    "A_BU_insitu_06": {
+      "w": 55776,
+      "h": 38737,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50711_A4_deid"
+    },
+    "A_BU_insitu_07": {
+      "w": 45816,
+      "h": 41791,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50713_B5_deid"
+    },
+    "A_BU_insitu_08": {
+      "w": 61752,
+      "h": 38939,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50716_E3_deid"
+    },
+    "A_BU_insitu_09": {
+      "w": 61752,
+      "h": 42484,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50717_A13_deid"
+    },
+    "A_BU_insitu_10": {
+      "w": 47808,
+      "h": 26699,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50720_A1_deid"
+    },
+    "A_BU_insitu_11": {
+      "w": 55776,
+      "h": 46976,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50721_D5_deid"
+    },
+    "A_BU_insitu_12": {
+      "w": 61752,
+      "h": 42977,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50728_E9_deid"
+    },
+    "A_BU_insitu_13": {
+      "w": 49800,
+      "h": 43731,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50729_G4_deid"
+    },
+    "A_BU_insitu_14": {
+      "w": 65736,
+      "h": 41385,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50730_H3_deid"
+    },
+    "A_BU_insitu_15": {
+      "w": 39840,
+      "h": 37556,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50732_L4_deid"
+    },
+    "A_BU_insitu_17": {
+      "w": 45816,
+      "h": 32473,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50734_A1_deid"
+    },
+    "A_BU_insitu_18": {
+      "w": 85656,
+      "h": 43446,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50735_H4_deid"
+    },
+    "A_BU_normadj_01": {
+      "w": 67728,
+      "h": 17651,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10203_1001613_deid"
+    },
+    "A_BU_normadj_02": {
+      "w": 57768,
+      "h": 12127,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10401_1005162_deid"
+    },
+    "A_BU_normadj_03": {
+      "w": 63744,
+      "h": 17598,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10403_1001901_deid"
+    },
+    "A_BU_normadj_04": {
+      "w": 93624,
+      "h": 10698,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10404_1001601_deid"
+    },
+    "A_BU_normadj_05": {
+      "w": 79680,
+      "h": 12290,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10405_1001778_deid"
+    },
+    "A_BU_normadj_07": {
+      "w": 71712,
+      "h": 22403,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10408_1001632_deid"
+    },
+    "A_BU_normadj_08": {
+      "w": 89640,
+      "h": 11711,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10411_1001658_deid"
+    },
+    "A_BU_normadj_09": {
+      "w": 85656,
+      "h": 11412,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10413_1001664_deid"
+    },
+    "A_BU_normadj_10": {
+      "w": 59760,
+      "h": 11956,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10414_1002153_deid"
+    },
+    "A_BU_normadj_11": {
+      "w": 79680,
+      "h": 19039,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10415_1001689_deid"
+    },
+    "A_BU_normadj_12": {
+      "w": 93624,
+      "h": 20327,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10416_1002114_deid"
+    },
+    "A_BU_normadj_13": {
+      "w": 83664,
+      "h": 9126,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10417_1002833_deid"
+    },
+    "A_BU_normadj_15": {
+      "w": 85656,
+      "h": 13221,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10420_1002536_deid"
+    },
+    "A_BU_normadj_16": {
+      "w": 81672,
+      "h": 8895,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10422_1002296_deid"
+    },
+    "A_BU_normadj_17": {
+      "w": 91632,
+      "h": 21413,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10306_1001448_deid"
+    },
+    "A_BU_normadj_18": {
+      "w": 61752,
+      "h": 12588,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10311_1001494_deid"
+    },
+    "A_BU_normal_01": {
+      "w": 91632,
+      "h": 11292,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10404_1004414_deid"
+    },
+    "A_BU_normal_02": {
+      "w": 81672,
+      "h": 18690,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0001-037-19300-00589BX_deid"
+    },
+    "A_BU_normal_03": {
+      "w": 71712,
+      "h": 26512,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0003-089-24730-00947BX_deid"
+    },
+    "A_BU_normal_04": {
+      "w": 33863,
+      "h": 7023,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0006-037-21015-01279BX_deid"
+    },
+    "A_BU_normal_06": {
+      "w": 51792,
+      "h": 22658,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0009-061-23497-00845BX_deid"
+    },
+    "A_BU_normal_07": {
+      "w": 9959,
+      "h": 9056,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0010-094-19900-00701BX_deid"
+    },
+    "A_BU_normal_08": {
+      "w": 35855,
+      "h": 14239,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0012-050-21836-01253BX_deid"
+    },
+    "A_BU_normal_09": {
+      "w": 9959,
+      "h": 14266,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0014-053-20660-00745BX_deid"
+    },
+    "A_BU_normal_10": {
+      "w": 95616,
+      "h": 25921,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0017-052-20422-00850BX_deid"
+    },
+    "A_BU_normal_11": {
+      "w": 93624,
+      "h": 23702,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0018-050-21990-00651BX_deid"
+    },
+    "A_BU_normal_12": {
+      "w": 9959,
+      "h": 11221,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0020-048-23497-00370BX_deid"
+    },
+    "A_BU_normal_13": {
+      "w": 95616,
+      "h": 25264,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0021-010-19826-00723BX_deid"
+    },
+    "A_BU_normal_14": {
+      "w": 75696,
+      "h": 27662,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0022-089-21996-01170BX_deid"
+    },
+    "A_BU_normal_15": {
+      "w": 9959,
+      "h": 8015,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0025-050-20772-00541BX_deid"
+    },
+    "A_BU_normal_16": {
+      "w": 71712,
+      "h": 18696,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0027-089-19515-00639BX_deid"
+    },
+    "A_BU_normal_18": {
+      "w": 41831,
+      "h": 19621,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0033-048-20864-01248BX_deid"
+    },
+    "A_BU_premal_01": {
+      "w": 71712,
+      "h": 21329,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0042-010-23680-00906BX_cleaned"
+    },
+    "A_BU_premal_02": {
+      "w": 89640,
+      "h": 12948,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10044_1001836_deid"
+    },
+    "A_BU_premal_03": {
+      "w": 93624,
+      "h": 27904,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10312_1001787_deid"
+    },
+    "A_BU_premal_04": {
+      "w": 89640,
+      "h": 17319,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10313_1001803_deid"
+    },
+    "A_BU_premal_05": {
+      "w": 81672,
+      "h": 18285,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10401_1001815_deid"
+    },
+    "A_BU_premal_06": {
+      "w": 77688,
+      "h": 13295,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10402_1001711_deid"
+    },
+    "A_BU_premal_07": {
+      "w": 59760,
+      "h": 11614,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10403_1001768_deid"
+    },
+    "A_BU_premal_08": {
+      "w": 89640,
+      "h": 12953,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10404_1001849_deid"
+    },
+    "A_BU_premal_09": {
+      "w": 63744,
+      "h": 17193,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10407_1001732_deid"
+    },
+    "A_BU_premal_10": {
+      "w": 37848,
+      "h": 25379,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10408_1001461_deid"
+    },
+    "A_BU_premal_11": {
+      "w": 93624,
+      "h": 21325,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10410_1001945_deid"
+    },
+    "A_BU_premal_12": {
+      "w": 67728,
+      "h": 14438,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10411_1001660_deid"
+    },
+    "A_BU_premal_13": {
+      "w": 71712,
+      "h": 23384,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10414_1001177_deid"
+    },
+    "A_BU_premal_14": {
+      "w": 65736,
+      "h": 10591,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10415_1001688_deid"
+    },
+    "A_BU_premal_15": {
+      "w": 89640,
+      "h": 11884,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10417_1002832_deid"
+    },
+    "A_BU_premal_16": {
+      "w": 81672,
+      "h": 17372,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10418_1002728_deid"
+    },
+    "A_BU_premal_17": {
+      "w": 93624,
+      "h": 22467,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10420_1003420_deid"
+    },
+    "A_BU_premal_18": {
+      "w": 87648,
+      "h": 12959,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10421_1002283_deid"
+    },
+    "A_BU_primary_01": {
+      "w": 97608,
+      "h": 15609,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10206_1001595_deid"
+    },
+    "A_BU_primary_03": {
+      "w": 47808,
+      "h": 38726,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50802_A1_deid"
+    },
+    "A_BU_primary_04": {
+      "w": 55776,
+      "h": 34959,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50803_A1_deid"
+    },
+    "A_BU_primary_05": {
+      "w": 79680,
+      "h": 26618,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50804_B1_deid"
+    },
+    "A_BU_primary_07": {
+      "w": 73704,
+      "h": 41484,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50710_B1_deid"
+    },
+    "A_BU_primary_08": {
+      "w": 49800,
+      "h": 36641,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50711_A5_deid"
+    },
+    "A_BU_primary_09": {
+      "w": 31872,
+      "h": 29878,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50712_B3_deid"
+    },
+    "A_BU_primary_10": {
+      "w": 49800,
+      "h": 32609,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50713_B3_deid"
+    },
+    "A_BU_primary_11": {
+      "w": 23904,
+      "h": 26881,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50714_F1_deid"
+    },
+    "A_BU_primary_12": {
+      "w": 55776,
+      "h": 46730,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50715_E2_deid"
+    },
+    "A_BU_primary_13": {
+      "w": 63744,
+      "h": 44357,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50716_E2_deid"
+    },
+    "A_BU_primary_14": {
+      "w": 61752,
+      "h": 46513,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50717_A4_deid"
+    },
+    "A_BU_primary_15": {
+      "w": 55776,
+      "h": 45905,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50718_A2_deid"
+    },
+    "A_BU_primary_16": {
+      "w": 49800,
+      "h": 43983,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50719_E4_deid"
+    },
+    "A_BU_primary_17": {
+      "w": 43824,
+      "h": 26074,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50720_A2_deid"
+    },
+    "B_Vanderbilt_atypia_01": {
+      "w": 32811,
+      "h": 28405,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_83_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_atypia_02": {
+      "w": 32811,
+      "h": 36493,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_2112_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_atypia_03": {
+      "w": 8350,
+      "h": 16241,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_4255_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_atypia_04": {
+      "w": 24657,
+      "h": 24394,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_5216_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_atypia_05": {
+      "w": 16438,
+      "h": 24328,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_6134_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_atypia_06": {
+      "w": 16438,
+      "h": 20317,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_6147_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_normal_01": {
+      "w": 13888,
+      "h": 13888,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_377_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_normal_02": {
+      "w": 16504,
+      "h": 20317,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_4814_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_01": {
+      "w": 32876,
+      "h": 24394,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_546_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_02": {
+      "w": 12361,
+      "h": 20317,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_696_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_03": {
+      "w": 24657,
+      "h": 32416,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_866_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_04": {
+      "w": 32811,
+      "h": 28339,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_1391_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_05": {
+      "w": 32876,
+      "h": 32416,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_2235_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_06": {
+      "w": 20515,
+      "h": 20317,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_5212_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_premal_07": {
+      "w": 20580,
+      "h": 24328,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "HTA11_5363_20000010116110030010000009999"
+    },
+    "B_Vanderbilt_primary_02": {
+      "w": 30789,
+      "h": 42318,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S012"
+    },
+    "B_Vanderbilt_primary_03": {
+      "w": 27067,
+      "h": 48324,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S026"
+    },
+    "B_Vanderbilt_primary_04": {
+      "w": 30789,
+      "h": 42318,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S040"
+    },
+    "B_Vanderbilt_primary_05": {
+      "w": 41016,
+      "h": 53530,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S043"
+    },
+    "B_Vanderbilt_primary_06": {
+      "w": 25364,
+      "h": 32455,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S053"
+    },
+    "B_Vanderbilt_primary_07": {
+      "w": 51209,
+      "h": 51209,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S058"
+    },
+    "B_Vanderbilt_primary_08": {
+      "w": 38182,
+      "h": 51410,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S060"
+    },
+    "B_Vanderbilt_primary_09": {
+      "w": 37554,
+      "h": 68589,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S062"
+    },
+    "B_Vanderbilt_primary_10": {
+      "w": 42939,
+      "h": 36136,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S074"
+    },
+    "B_Vanderbilt_primary_11": {
+      "w": 63680,
+      "h": 62984,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S078"
+    },
+    "B_Vanderbilt_primary_12": {
+      "w": 34292,
+      "h": 42065,
+      "ps0": 448.0,
+      "mag": 20.0,
+      "trident_name": "S091"
+    },
+    "C_Duke_primary_01": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_10_4_15_999_67"
+    },
+    "C_Duke_primary_02": {
+      "w": 51792,
+      "h": 42907,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43089A0000_cleaned"
+    },
+    "C_Duke_primary_03": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_10_1_15_999_70"
+    },
+    "C_Duke_primary_04": {
+      "w": 75696,
+      "h": 35207,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43116A0000_cleaned"
+    },
+    "C_Duke_primary_05": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_10_5_15_999_66"
+    },
+    "C_Duke_primary_06": {
+      "w": 51792,
+      "h": 46559,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43122A0000_cleaned"
+    },
+    "C_Duke_primary_07": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_10_2_15_999_69"
+    },
+    "C_Duke_primary_08": {
+      "w": 81672,
+      "h": 40297,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43266A0000_cleaned"
+    },
+    "C_Duke_primary_09": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_10_7_15_999_64"
+    },
+    "C_Duke_primary_10": {
+      "w": 87648,
+      "h": 38701,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43630A0000_cleaned"
+    },
+    "C_Duke_primary_11": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_11_1_15_999_77"
+    },
+    "C_Duke_primary_12": {
+      "w": 47808,
+      "h": 41549,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43905A0000_cleaned"
+    },
+    "C_Duke_primary_13": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_10_6_15_999_65"
+    },
+    "C_Duke_primary_14": {
+      "w": 53784,
+      "h": 38237,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43932A0000_cleaned"
+    },
+    "C_Duke_primary_15": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_11_2_15_999_76"
+    },
+    "C_Duke_primary_16": {
+      "w": 45816,
+      "h": 46614,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43938A0000_cleaned"
+    },
+    "C_Duke_primary_17": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_11_4_15_999_74"
+    },
+    "C_Duke_primary_18": {
+      "w": 55776,
+      "h": 30982,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "43985A0000_cleaned"
+    },
+    "C_Duke_primary_19": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_11_6_15_999_72"
+    },
+    "C_Duke_primary_20": {
+      "w": 53784,
+      "h": 46557,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "44030A0000_cleaned"
+    },
+    "C_Duke_primary_22": {
+      "w": 73704,
+      "h": 35064,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "44242A0000_cleaned"
+    },
+    "C_Duke_primary_23": {
+      "w": 11264,
+      "h": 11264,
+      "ps0": 672.0,
+      "mag": 20.0,
+      "trident_name": "01_500_11_3_15_999_75"
+    },
+    "C_HMS_primary_02": {
+      "w": 86016,
+      "h": 204800,
+      "ps0": 896.0,
+      "mag": 20.0,
+      "trident_name": "Case_7"
+    },
+    "C_WUSTL_primary_01": {
+      "w": 17928,
+      "h": 26806,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT 168 P1 S1H3 Vp1 L1 L4 U10"
+    },
+    "C_WUSTL_primary_02": {
+      "w": 13944,
+      "h": 26014,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT 166 P1 S1H6 Vp1 U3"
+    },
+    "C_WUSTL_primary_03": {
+      "w": 15936,
+      "h": 19247,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT 123 P1 S1H1 1"
+    },
+    "C_WUSTL_primary_04": {
+      "w": 25896,
+      "h": 36680,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT071A H5 "
+    },
+    "C_WUSTL_primary_05": {
+      "w": 27888,
+      "h": 32742,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT56P1 A"
+    },
+    "C_WUSTL_primary_06": {
+      "w": 39840,
+      "h": 34607,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT60P1 REMAINS"
+    },
+    "C_WUSTL_primary_07": {
+      "w": 21912,
+      "h": 27994,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT115P1 H5"
+    },
+    "C_WUSTL_primary_08": {
+      "w": 17928,
+      "h": 21991,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT 138P1 H3"
+    },
+    "C_WUSTL_primary_09": {
+      "w": 21912,
+      "h": 30507,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT200P1 H2"
+    },
+    "C_WUSTL_primary_10": {
+      "w": 13944,
+      "h": 19821,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT085P1 H4"
+    },
+    "C_WUSTL_primary_11": {
+      "w": 23904,
+      "h": 31156,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "HT61P A"
+    }
+  }
+}

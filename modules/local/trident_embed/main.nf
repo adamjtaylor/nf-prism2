@@ -43,16 +43,28 @@ process TRIDENT_EMBED {
     //      OpenSlide-unreadable TIFF fails hard even though ImageWSI would have opened it.
     //      Escalating on retry self-heals that whole class without curating a column for
     //      thousands of files. It cannot fix a missing MPP, which has no value to infer.
-    // Escalate the reader ONLY for containers whose extension makes TRIDENT's extension-based
-    // choice unreliable. Exit 1 has more than one cause: a host-RAM OOM during segmentation also
-    // surfaces as exit 1 (the DataLoader worker takes SIGKILL and the parent raises), and forcing
-    // ImageWSI on a 3-gigapixel svs would load far more into memory and make that worse. OpenSlide
-    // reads svs, ndpi, scn, mrxs and OME-TIFF reliably, so those retry unchanged and simply get
-    // the escalated memory.
-    def fragile = slide_name.toLowerCase() ==~ /.*\.(tif|tiff|qptiff)$/ ||
-                  !(slide_name.toLowerCase() ==~ /.*\.(svs|ndpi|scn|mrxs|ome\.tif|ome\.tiff|dcm|czi|sdpc)$/)
+    // Retry escalation, learned the hard way. Exit 1 from the tile pass has three causes and
+    // they need different levers:
+    //   * wrong reader, for containers whose extension misleads TRIDENT's extension-based choice
+    //   * a DataLoader worker dying, which is NOT memory: it recurred at 48, 96 and 144 GB
+    //   * a genuinely unreadable file, which nothing fixes
+    // So attempt 2 drops to --max_workers 0 (TRIDENT runs in the main process, no workers to
+    // die) and only then, for genuinely fragile containers, forces a different reader.
+    //
+    // OME-TIFF must be excluded from "fragile" BEFORE the generic tif test, because
+    // `.*\.(tif|tiff)$` matches "x.ome.tif" and the earlier version escalated OME-TIFF to
+    // ImageWSI, which then failed on `Missing required argument mpp` since TRIDENT does not
+    // forward the samplesheet mpp to that reader. That turned a working format into a failure.
+    def lower = slide_name.toLowerCase()
+    def is_ome = lower.endsWith('.ome.tif') || lower.endsWith('.ome.tiff')
+    def is_native = is_ome || lower ==~ /.*\.(svs|ndpi|scn|mrxs|dcm|czi|sdpc)$/
+    def fragile = !is_native
     def reader_type = meta.reader ?: params.reader_type ?:
                       ((task.attempt > 1 && fragile) ? params.retry_reader : null)
+    // workers: TRIDENT's default on the first attempt, main process on any retry
+    def workers = (task.attempt > 1 && params.retry_max_workers != null)
+                  ? "--max_workers ${params.retry_max_workers}"
+                  : (params.max_workers != null ? "--max_workers ${params.max_workers}" : '')
     def reader    = reader_type             ? "--reader_type ${reader_type}" : ''
     """
     export HF_TOKEN="\${${params.hf_token_secret}:-}"
@@ -78,7 +90,7 @@ process TRIDENT_EMBED {
         --seg_conf_thresh ${params.seg_conf_thresh} \\
         --min_tissue_proportion ${params.min_tissue_proportion} \\
         --batch_size ${params.tile_batch_size} \\
-        --gpus 0 ${artifacts} ${penmarks} ${holes} ${reader}
+        --gpus 0 ${artifacts} ${penmarks} ${holes} ${reader} ${workers}
 
     # Locate the feature file without hard-coding TRIDENT's directory naming
     FEAT=\$(find trident -path '*features_*' -name '*.h5' -print -quit)
