@@ -1,10 +1,13 @@
 # HTAN progression cohort: results
 
 Run `nf-prism2-progression-188-resume` (`20zEYRdNeMfjuM`), 20 Aug 2026, `nf-prism2` at `160fb4b`,
-spot `p4d.24xlarge`. **163 slides scored, 128 patients.** Scoring follows
+spot `p4d.24xlarge`, plus 12 slides recovered by `nf-prism2-progression-retry25c`.
+**175 slides scored, 137 patients**, merged in `results_merged.json`. Both runs used the same
+question set, the same bf16 scoring and the same pinned model revision, so they are directly
+comparable; the merge changed no conclusion and tightened several. Scoring follows
 `assets/questions_htan_progression.md`, fixed before the run.
 
-**Read Arm A for the progression endpoint.** Arm A is HTAN BU lung, 103 slides and 68 patients
+**Read Arm A for the progression endpoint.** Arm A is HTAN BU lung, 115 slides and 74 patients
 with all six classes, one centre and one organ, which is what removes the scanner and stain
 confound. Arm B is a separate replication. Arm C is primary-only across organs and is never
 pooled into the progression statistics, for a reason given in section 2b.
@@ -23,15 +26,15 @@ contribute more than one specimen, so slide-level resampling would overstate pre
 
 | Question | rho | 95% CI | Observed peak | Predicted |
 |---|---|---|---|---|
-| `benign` | **-0.63** | -0.75 to -0.49 | normal adjacent | falls, yes |
-| `negative_for_tumor` | **-0.62** | -0.73 to -0.46 | atypia | falls, yes |
-| `carcinoma_in_situ` | +0.63 | 0.51 to 0.73 | **in situ** | peaks at in situ, **yes** |
-| `dysplasia` | +0.63 | 0.50 to 0.74 | in situ | peaks mid, yes |
-| `invasive_carcinoma` | +0.62 | 0.46 to 0.73 | primary | rises, yes |
-| `malignancy` | +0.62 | 0.47 to 0.74 | primary | rises, yes |
-| `atypia` | +0.52 | 0.39 to 0.65 | primary | peaks early, no |
-| `hyperplasia_metaplasia` | +0.28 | 0.14 to 0.42 | in situ | peaks early, no |
-| `precancerous_lesion` | +0.27 | 0.13 to 0.39 | in situ | peaks mid, weakly |
+| `benign` | **-0.65** | -0.76 to -0.52 | normal adjacent | falls, yes |
+| `negative_for_tumor` | **-0.64** | -0.75 to -0.50 | atypia | falls, yes |
+| `carcinoma_in_situ` | +0.64 | 0.54 to 0.72 | **in situ** | peaks at in situ, **yes** |
+| `dysplasia` | +0.64 | 0.52 to 0.73 | in situ | peaks mid, yes |
+| `invasive_carcinoma` | +0.65 | 0.52 to 0.75 | primary | rises, yes |
+| `malignancy` | +0.65 | 0.53 to 0.75 | primary | rises, yes |
+| `atypia` | +0.52 | 0.39 to 0.64 | primary | peaks early, no |
+| `hyperplasia_metaplasia` | +0.29 | 0.15 to 0.43 | in situ | peaks early, no |
+| `precancerous_lesion` | +0.27 | 0.15 to 0.39 | in situ | peaks mid, weakly |
 
 Six of nine behaved as pre-registered. The one that matters most is `carcinoma_in_situ`: it rises
 through the precancer classes, **peaks at carcinoma in situ, then falls again for invasive
@@ -47,14 +50,14 @@ being replaced by it, so a monotone reading is not obviously wrong.
 ![normal vs primary](figures/fig3_normal_vs_primary.png)
 
 The endpoint the 10-slide pilot could not compute, having had 6 positives and 1 negative and
-returned AUC 0.50. **Arm A**, n+ = 15 invasive primaries against n- = 32 normal and normal
+returned AUC 0.50. **Arm A**, n+ = 18 invasive primaries against n- = 35 normal and normal
 adjacent, all HTAN BU lung:
 
 | Question | AUC | Tied pairs |
 |---|---|---|
 | `invasive_carcinoma` | **0.998** | 0.0% |
-| `malignancy` | **0.997** | 0.2% |
-| `carcinoma_in_situ` | 0.965 | 0.8% |
+| `malignancy` | **0.998** | 0.2% |
+| `carcinoma_in_situ` | 0.970 | 1.0% |
 | `negative_for_tumor` | 0.002, that is **0.998** in its own direction | 0.0% |
 
 Separation within a single centre and organ is essentially complete.
@@ -162,7 +165,7 @@ small top-up run of HMS colorectal and skin is the cheap fix.
 
 ## 5. Slides that could not be processed, and why
 
-175 of 188 slides produced results after one retry run. The 13 that did not have three distinct
+175 of 188 slides produced results after one retry run, and all 12 recovered slides are Arm A. The 13 that did not have three distinct
 causes, none of which is a pipeline defect:
 
 * **Ten HMS OME-TIFFs are not 20x images.** Their OME-XML records `PhysicalSizeX = 2.7235 um`,
@@ -178,8 +181,8 @@ causes, none of which is a pipeline defect:
 * **One Duke tif and one Vanderbilt OME-TIFF** failed on read and were not chased further.
 
 The loss falls almost entirely on Arm C, which is the arm least able to spare it, since Arm C
-exists to supply several centres per organ for the tile-level analysis. Arm A is unaffected and
-now has 17 to 19 patients in every class.
+exists to supply several centres per organ for the tile-level analysis. Arm A is unaffected and now has 17 to 19
+patients in every class.
 
 Getting the true pixel size out of these files costs nothing: the OME-XML header is readable by
 byte range in under a megabyte, which is how the 2.72 um figure above was obtained.

@@ -48,7 +48,7 @@ STAGE_LETTER = {"A": "Normal", "B": "Atypia -\nhyperplasia", "C": "Premalignant"
 OFF = {"F", "G", "H"}
 
 lab = {r["sample"]: r for r in csv.DictReader(open(f"{REPO}/assets/samplesheet_progression_labels.csv"))}
-rec = {r["sample"]: r for r in json.load(open(f"{HERE}/results.json"))}
+rec = {r["sample"]: r for r in json.load(open(f"{HERE}/results_merged.json" if os.path.exists(f"{HERE}/results_merged.json") else f"{HERE}/results.json"))}
 rows_all = [dict(lab[s], rec=rec[s]) for s in rec if s in lab and lab[s]["ttt"] in RANK]
 def _arm(r): return "A" if r["arm"].startswith("A") else r["arm"]
 # Arm A only: the pre-registered primary endpoint, one centre and one organ. Pooling in Arm C

@@ -23,7 +23,7 @@ LADDER = ["negative_for_tumor", "benign", "hyperplasia_metaplasia", "dysplasia",
           "precancerous_lesion", "carcinoma_in_situ", "invasive_carcinoma", "malignancy"]
 
 lab = {r["sample"]: r for r in csv.DictReader(open(os.path.join(REPO, "assets/samplesheet_progression_labels.csv")))}
-rec = {r["sample"]: r for r in json.load(open(os.path.join(HERE, "results.json")))}
+rec = {r["sample"]: r for r in json.load(open(os.path.join(HERE, "results_merged.json" if os.path.exists(os.path.join(HERE, "results_merged.json")) else "results.json")))}
 rows_all = [dict(lab[s], **{"rec": rec[s]}) for s in rec if s in lab]
 # Arm A is the pre-registered primary endpoint: one centre, one organ, all six classes. Arm B is
 # a separate replication. Arm C is primary-only across organs and must never be pooled into the
