@@ -93,28 +93,47 @@ The yes/no ladder is designed so each question has a predicted **profile** acros
 is a stronger test than any single binary split: `benign` should fall, `invasive_carcinoma` should
 rise, and `carcinoma_in_situ` should peak in the middle. Where each score peaks is the result.
 
-## 6. The launched run
+## 6. The runs, as executed
 
-| | |
-|---|---|
-| Run name | `nf-prism2-progression-188` |
-| Workflow ID | `5lCnAYecYQbYmt` |
-| Workspace | `Sage-Bionetworks/mc2-project` (108678154374910) |
-| Compute env | `manual-shared-ce-prod-project-ondemand-v13`, `p4d.24xlarge`, 8 x A100 40 GB |
-| Pipeline | `github.com/adamjtaylor/nf-prism2` at `d246871` |
-| Output | `s3://mc2-project-tower-scratch/nf-prism2-progression` |
+Four launches, three of which were needed only because of failures diagnosed along the way.
 
-Parameters: `scoring_dtype=fp32`, `min_tissue_proportion=0.65`, `publish_tile_features=true`,
-`model_store=s3://mc2-project-tower-scratch/nf-prism2-models`, `hf_token_secret=AJT_HF_TOKEN`.
-Secrets `AJT_HF_TOKEN` and `SYNAPSE_AUTH_TOKEN` attached via `workspaceSecrets`.
+| Run | ID | Outcome |
+|---|---|---|
+| `nf-prism2-progression-188` | `5lCnAYecYQbYmt` | on-demand p4d, never placed a task in 25 minutes, cancelled |
+| `nf-prism2-progression-188-spot` | `5D8jAR0CBnVYa4` | spot p4d, cancelled after every PRISM2 task failed on fp32 |
+| `nf-prism2-progression-188-resume` | `20zEYRdNeMfjuM` | **SUCCEEDED, 163 slides**, resumed the above so 137 tile passes were reused |
+| `nf-prism2-progression-retry25c` | `3HPLGdUhIgYACz` | **SUCCEEDED, 12 more slides recovered** |
 
-Guardrails: `maxForks = 16` on the GPU labels, capping the fan-out at two p4d instances, because
-188 tasks would otherwise let Batch scale to many at $32.77 an hour each. Expect roughly 3 to 5
-hours and $150 to $250. fp32 memory scales to 48 GB per task, since 17.6 GB of weights load
-through host RAM before reaching the GPU.
+Final state: **175 of 188 slides, 137 patients**, merged into
+`benchmark_results/progression_20260820/results_merged.json`.
 
-**This is the first fp32 run.** Every yes/no number in the pilot was bf16-quantised, so this is
-the first time the scores are off that grid.
+Settled parameters: `scoring_dtype=bf16`, `min_tissue_proportion=0.65`,
+`publish_tile_features=true`, `shm_size=32g`,
+`model_store=s3://mc2-project-tower-scratch/nf-prism2-models`, `hf_token_secret=AJT_HF_TOKEN`,
+`maxForks=16`. Outputs under `s3://mc2-project-tower-scratch/nf-prism2-progression-spot/` and
+`-retry-c/`, including 165 published tile-feature files totalling 3.5 GB.
+
+### What the runs taught us, which the plan had wrong
+
+* **fp32 scoring is not available for this model.** PRISM2's released code casts the Perceiver to
+  bf16 whatever `torch_dtype` says, and flash attention supports only fp16 and bf16. Every
+  `PRISM2_INFER` task failed with `expected mat1 and mat2 to have the same dtype` after burning
+  about 33 minutes of GPU each. The score grid is a property of the released model, not a setting.
+  At this cohort size it costs under 2.5% tied pairs, so it no longer threatens the conclusions.
+* **Spot beat on-demand for p4d capacity**, placing in minutes where on-demand never placed at
+  all, at roughly a third of the price. Racing the two and cancelling the loser cost nothing.
+* **Staging was never the bottleneck.** The nf-synapse plugin staged 16 slides in 40 seconds.
+  GPU capacity was.
+* **`/dev/shm` does not scale with the memory request.** It was pinned at 8 GB, so escalating the
+  cgroup limit to 48, then 96, then 144 GB could not fix DataLoader workers dying. Raising shm to
+  32 GB recovered 10 of 12 slides in one go. A failure recurring *unchanged* across a swept
+  parameter is evidence that parameter is not the cause.
+* **TRIDENT's `--max_workers 0` is invalid** despite its help text, since it reaches
+  `ThreadPoolExecutor(max_workers=0)`. The retry floor is 1.
+* **Ten HMS OME-TIFFs are 3.7x overviews**, not 20x slides: `PhysicalSizeX = 2.72 um` at
+  8064 x 9417, identical across all ten, while HTAN records `NominalMagnification: 20`. No reader
+  or mpp setting could recover them, and the cohort builder now rejects anything coarser than
+  1.0 um/px.
 
 ## 7. Downstream analysis
 
@@ -130,9 +149,18 @@ the first time the scores are off that grid.
 | `.../make_slide_reports.py` | per-slide report with streamed tiles | generalise from `htan10_clinical.csv` to `samplesheet_progression_labels.csv` |
 | `.../make_figures.py` | embedding similarity, score matrix, discrimination dot plot | relabel for the progression axis |
 
+### Done
+
+* **Progression scoring** and its figures: `benchmark_results/progression_20260820/`, with
+  `score_progression.py`, `make_figures.py`, five figures and `ANALYSIS.md`. Arm A is reported
+  separately from Arms B and C throughout, after a first pass wrongly pooled them.
+* **Secondary agreement** for site and histologic type, including the finding that the site
+  question scores 0.91 while the progression-stage question scores 0.21 with the same format and
+  the same distractors.
+
 ### Needs writing
 
-1. **Progression scoring** (the primary endpoint). Join `results.tsv` to
+1. ~~Progression scoring~~ **done**, see above. What remains of the original item: Join `results.tsv` to
    `samplesheet_progression_labels.csv` on `sample`, then:
    * confusion matrix for `progression_stage_mc`, overall accuracy, and accuracy within one
      ordinal step, since an adjacent-class error differs in kind from calling normal tissue
@@ -147,7 +175,8 @@ the first time the scores are off that grid.
 2. **Secondary agreement**: `primary_site_mc`, `histologic_type_mc`, `tumor_grade_mc` against their
    fields, with the grade vocabulary mapping applied; open-ended answers as agreement categories
    with disagreements listed rather than summarised.
-3. **Tile-level re-analysis at scale.** The pilot's slide-locking result is the one that most
+3. **Tile-level re-analysis at scale.** Specified in full in `GOAL_tile_embeddings_duckdb.md`
+   alongside a DuckDB vector-search prototype. The pilot's slide-locking result is the one that most
    needs this cohort: Arm A gives many slides within one centre and organ, so
    "slides separate even at fixed centre, organ and stage" becomes testable, and Arm C gives
    several centres per organ. Re-run mixing, Leiden dominance and cross-slide p@k with
