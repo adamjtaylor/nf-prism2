@@ -155,8 +155,18 @@ Settled parameters: `scoring_dtype=bf16`, `min_tissue_proportion=0.65`,
   `score_progression.py`, `make_figures.py`, five figures and `ANALYSIS.md`. Arm A is reported
   separately from Arms B and C throughout, after a first pass wrongly pooled them.
 * **Secondary agreement** for site and histologic type, including the finding that the site
-  question scores 0.91 while the progression-stage question scores 0.21 with the same format and
-  the same distractors.
+  question scores 0.93 in Arm A while the progression-stage question scores 0.21 with the same
+  format and the same distractors. `tumor_grade_mc` is still not scored; see "Needs writing".
+* **The retry merge.** `nf-prism2-progression-retry25c` recovered 12 of the 25 slides lost on the
+  first pass, all of them Arm A, taking the cohort to 175 slides / 134 patients and Arm A to
+  115 slides / 74 patients with 17 to 24 slides in every class. `merge_retry.py` writes
+  `results_merged.json`, which both scoring scripts prefer automatically, with per-slide
+  provenance under `_run`. No conclusion changed and every ladder rho moved by 0.03 or less.
+* **Tile-level re-analysis at scale and the DuckDB vector-search prototype**:
+  `benchmark_results/tilespace_20260820/`, 175 slides and 859,342 tiles, eight figures,
+  `ANALYSIS.md`, and a working `vss` prototype with schema, benchmark and example queries. The
+  headline is that the pilot's slide-locking result does not replicate: it was a slide-count
+  artefact, not the between-centre stain confound it was taken for.
 
 ### Needs writing
 
@@ -169,24 +179,40 @@ Settled parameters: `scoring_dtype=bf16`, `min_tissue_proportion=0.65`,
    * Spearman rho of each ladder score against ordinal rank, 95% CI bootstrapped **over patients**
    * peak location per ladder question against its predicted profile
    * normal versus primary AUC for `invasive_carcinoma` and `malignancy`, with CIs
-   * the **paired within-patient** analysis over the 32 spanning patients, alongside the
-     all-specimens analysis with patient as a random effect
+   * the **paired within-patient** analysis over the spanning patients (32 by design, 31 of them
+     in the 175 slides actually scored), alongside the all-specimens analysis with patient as a
+     random effect
    * Arm B replication reported separately, never pooled with Arm A
 2. **Secondary agreement**: `primary_site_mc`, `histologic_type_mc`, `tumor_grade_mc` against their
    fields, with the grade vocabulary mapping applied; open-ended answers as agreement categories
    with disagreements listed rather than summarised.
-3. **Tile-level re-analysis at scale.** Specified in full in `GOAL_tile_embeddings_duckdb.md`
-   alongside a DuckDB vector-search prototype. The pilot's slide-locking result is the one that most
-   needs this cohort: Arm A gives many slides within one centre and organ, so
-   "slides separate even at fixed centre, organ and stage" becomes testable, and Arm C gives
-   several centres per organ. Re-run mixing, Leiden dominance and cross-slide p@k with
-   **patient-level** exclusion, not just slide-level.
-4. **fp32 versus bf16 comparison.** Optional but cheap and directly useful: re-run a subset in
-   bf16 and quantify how much AUC moves. That converts the quantisation finding from "the grid
-   exists" to "here is what it costs you".
+3. ~~Tile-level re-analysis at scale~~ **done**, see above. Arm C did *not* deliver the
+   several-centres-per-organ structure it was sampled for, so "same organ, different centre" still
+   cannot be asked; see the top-up run below.
+4. ~~fp32 versus bf16 comparison~~ **not possible, and that is the finding.** PRISM2's released
+   code casts the Perceiver to bf16 whatever `torch_dtype` says, and flash attention, which the
+   Perceiver requires, supports only fp16 and bf16. The grid is a property of the released model,
+   not a setting we failed to flip, so there is no fp32 arm to compare against. At this cohort size
+   it costs under 2.5% tied pairs and threatens nothing.
+5. **The paired within-patient analysis.** Pre-registered in item 1 and still not run. **31
+   patients contribute specimens at more than one class**, and in the merged cohort every
+   multi-slide patient spans classes, so this is a fully powered paired design sitting unused. It
+   removes patient as a confounder outright, which no analysis here currently does.
+6. **`tumor_grade_mc`** against `TumorGrade`, with the two-vocabulary mapping applied. The last
+   pre-registered secondary endpoint not yet scored.
+7. **Regress log tissue area out before reading the slide-embedding axis.** Within Arm A, PC1 of
+   the slide embeddings carries 58 to 66% of the variance and correlates +0.67 with progression
+   stage — and +0.67 to +0.72 with log tile count, which for the diagnostic and mean-pooled
+   representations is the stronger of the two. Specimen size and stage are confounded by
+   construction (rho +0.57), because the precancer classes are small biopsies and the in situ and
+   primary classes are large resections. Until that is removed, PC1 cannot be called a progression
+   axis and should not be used as a feature.
 
 ### Not in scope for this run, flagged deliberately
 
+* **A top-up run for the missing Arm C slides.** 13 of 188 slides are still unprocessed after the
+  retry and **11 of them are Arm C, 10 of those HMS**, so Arm C remains one centre per organ rather
+  than several. That is the single largest hole left in the design, and it is the cheapest to fill.
 * **H-Optimus-0 as a second tile encoder.** Apache-2.0 and the same 224 px at 20x geometry, so it
   reuses this run's segmentation and coordinates and only the feature step re-runs. It is the
   cheapest comparator available and the natural next arm. PRISM2 cannot consume its features, so
