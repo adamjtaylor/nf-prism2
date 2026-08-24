@@ -90,6 +90,77 @@ PRISM2's released code casts the Perceiver to bf16 whatever `torch_dtype` says, 
 attention, which the Perceiver requires, supports only fp16 and bf16. So the grid is a property
 of the released model, not a setting we failed to flip.
 
+### 2c. The paired within-patient analysis
+
+![paired](figures/fig6_paired_within_patient.png)
+
+Pre-registered in the study plan and not run until now. Every other number in this document
+compares slides from **different** patients, so a score that tracked something patient-level rather
+than lesion-level, one visit's staining or one person's tissue, would look exactly like a working
+progression endpoint. This is the analysis that can tell those apart.
+
+**31 patients contribute more than one specimen and every one of them spans more than one
+progression class.** All 31 are Arm A, so a within-patient contrast holds patient, centre, organ
+and scanner constant at once and leaves the lesion varying. They yield **51 slide pairs of
+differing ordinal rank**, 30 of them one step apart.
+
+Two corrections were needed before the numbers meant anything, and both were large enough to flip
+the reading.
+
+**The contrast mix.** Within-patient pairs are not a random sample of the axis. **36 of the 51 stop
+at premalignant**, because a patient who has a resection usually has one, while repeat biopsies
+cluster at the low end. The unrestricted between-patient comparison, by contrast, is full of
+normal-versus-invasive pairs that any of these questions separates trivially. Comparing the two
+raw would compare two different questions and blame the difference on the patient. The comparator
+here is therefore **directly standardised to the within-patient contrast mix**.
+
+**The scoring direction.** Four of the nine questions are pre-registered to *peak* mid-axis, so for
+a pair sitting above the peak the predicted direction is down. Scoring them monotonically penalises
+them for behaving as predicted, and it does so heavily: `carcinoma_in_situ` scores 0.471 read
+monotonically and **0.653** read against its own profile. Pairs that straddle a peak carry no
+prediction and are dropped, which is why n varies from 33 to 51.
+
+With both fixed, concordance against the pre-registered profile:
+
+| Question | within patient | 95% CI | between, matched mix | between, raw | n pairs |
+|---|---|---|---|---|---|
+| `invasive_carcinoma` | **0.696** | 0.53 to 0.83 | 0.557 | 0.772 | 51 |
+| `carcinoma_in_situ` | **0.653** | 0.50 to 0.80 | 0.597 | 0.759 | 49 |
+| `malignancy` | **0.637** | 0.50 to 0.75 | 0.563 | 0.776 | 51 |
+| `negative_for_tumor` | **0.627** | 0.48 to 0.76 | 0.562 | 0.769 | 51 |
+| `precancerous_lesion` | 0.576 | 0.42 to 0.72 | 0.558 | 0.605 | 46 |
+| `benign` | 0.549 | 0.40 to 0.68 | 0.589 | 0.779 | 51 |
+| `hyperplasia_metaplasia` | 0.545 | 0.37 to 0.75 | 0.539 | 0.618 | 33 |
+| `dysplasia` | 0.543 | 0.42 to 0.66 | 0.506 | 0.765 | 46 |
+| `atypia` | 0.318 | 0.16 to 0.52 | 0.374 | 0.722 | 33 |
+
+**The endpoint is not carried by the patient.** Within-patient concordance equals or exceeds the
+composition-matched between-patient figure for seven of nine questions, and for the four strongest
+it exceeds it by 0.06 to 0.14. Holding the patient constant costs nothing. The mixed model agrees
+from the other direction: `score ~ rank + (1|patient)` returns slopes indistinguishable from the
+pooled OLS slopes, and the intraclass correlation is **0.000 for `invasive_carcinoma` and
+`malignancy`**: patient identity explains none of their residual variance. Tellingly, the two
+questions where patient identity *does* matter, ICC 0.24 and 0.25, are `precancerous_lesion` and
+`hyperplasia_metaplasia`, the two weakest on the axis.
+
+**What the paired design does expose is where the ladder has no resolution.** On the contrasts
+patients can actually supply, mostly normal to atypia to premalignant, the matched between-patient
+concordance is 0.51 to 0.60. Nobody orders the low end of the axis, within patient or between. The
+strong Spearman values in section 1 are earned almost entirely on the tumour-bearing versus
+tumour-free contrast, which section 2 measures directly at AUC 0.998. **So the honest statement of
+the endpoint is that PRISM2 separates tumour-bearing from tumour-free tissue and orders in situ
+against invasive, and it does not resolve the precancer classes among themselves.** That is a
+narrower claim than "tracks the progression axis" and it is the one the data supports.
+
+`atypia` is the one question that is worse within patient than between, and worse than chance
+against its profile, 0.318 against a matched 0.374. Both are below 0.5, so this is not a patient
+effect: it is the same failure section 1 records, that `atypia` peaks at primary rather than early
+as pre-registered. The paired analysis simply prices it.
+
+**Caveat.** 51 pairs from 31 patients is a small paired design and the intervals are correspondingly
+wide, roughly ±0.15. It can distinguish "the endpoint survives patient matching" from "it does
+not"; it cannot rank the nine questions against each other.
+
 ## 3. The forced-choice stage question fails, and the distractors proved it
 
 ![stage mc](figures/fig2_stage_mc.png)

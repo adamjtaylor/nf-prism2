@@ -194,10 +194,10 @@ Settled parameters: `scoring_dtype=bf16`, `min_tissue_proportion=0.65`,
    Perceiver requires, supports only fp16 and bf16. The grid is a property of the released model,
    not a setting we failed to flip, so there is no fp32 arm to compare against. At this cohort size
    it costs under 2.5% tied pairs and threatens nothing.
-5. **The paired within-patient analysis.** Pre-registered in item 1 and still not run. **31
-   patients contribute specimens at more than one class**, and in the merged cohort every
-   multi-slide patient spans classes, so this is a fully powered paired design sitting unused. It
-   removes patient as a confounder outright, which no analysis here currently does.
+5. ~~The paired within-patient analysis~~ **done**: `paired_within_patient.py`, section 2c of the
+   progression ANALYSIS. 31 patients, 51 rank-discordant pairs, all Arm A. The endpoint survives
+   patient matching, ICC 0.000 for `invasive_carcinoma` and `malignancy`, but the design also
+   shows the ladder has no resolution on the precancer classes among themselves.
 6. **`tumor_grade_mc`** against `TumorGrade`, with the two-vocabulary mapping applied. The last
    pre-registered secondary endpoint not yet scored.
 7. **Regress log tissue area out before reading the slide-embedding axis.** Within Arm A, PC1 of
