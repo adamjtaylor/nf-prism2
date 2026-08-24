@@ -1,14 +1,14 @@
 {
-  "n_tiles": 40629,
+  "n_tiles": 43929,
   "per_slide": 300,
   "patient_cap": 2,
-  "n_slides": 154,
-  "n_patients": 128,
+  "n_slides": 165,
+  "n_patients": 134,
   "slide_panel_class": "Premalignant",
   "slide_panel_slides": [
+    "AP_BU_premal_04",
     "A_BU_premal_13",
-    "A_BU_premal_04",
-    "A_BU_premal_11"
+    "A_BU_premal_04"
   ],
   "classes": [
     "Normal",

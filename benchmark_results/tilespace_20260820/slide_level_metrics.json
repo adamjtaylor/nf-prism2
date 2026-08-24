@@ -1,217 +1,217 @@
 {
-  "n_slides": 163,
-  "n_patients": 128,
-  "n_cross_patient_pairs": 13156,
+  "n_slides": 175,
+  "n_patients": 134,
+  "n_cross_patient_pairs": 15171,
   "cosine_range": {
     "PRISM2 base\n2560-d": {
       "min": -0.2485,
-      "p5": -0.0652,
-      "median": 0.1762,
-      "p95": 0.9358,
+      "p5": -0.0631,
+      "median": 0.1805,
+      "p95": 0.9321,
       "max": 0.9907,
-      "span_5_95": 1.001
+      "span_5_95": 0.9952
     },
     "PRISM2 diagnostic\n3072-d": {
       "min": 0.7366,
-      "p5": 0.8068,
-      "median": 0.8652,
-      "p95": 0.9888,
+      "p5": 0.8062,
+      "median": 0.8643,
+      "p95": 0.9886,
       "max": 0.9981,
-      "span_5_95": 0.182
+      "span_5_95": 0.1823
     },
     "mean-pooled tiles\n1280-d": {
       "min": -0.062,
-      "p5": 0.0406,
-      "median": 0.1791,
-      "p95": 0.8103,
+      "p5": 0.0424,
+      "median": 0.182,
+      "p95": 0.8048,
       "max": 0.9583,
-      "span_5_95": 0.7697
+      "span_5_95": 0.7624
     }
   },
   "retrieval": {
     "same progression class, Arm A": {
       "PRISM2 base\n2560-d": {
         "1": {
-          "precision": 0.3883,
+          "precision": 0.4,
           "ci": [
-            0.303,
-            0.4757
+            0.3163,
+            0.4793
           ],
-          "chance": 0.1637,
-          "lift": 2.372
+          "chance": 0.1628,
+          "lift": 2.458
         },
         "5": {
-          "precision": 0.3612,
+          "precision": 0.3722,
           "ci": [
-            0.3149,
-            0.4102
+            0.3248,
+            0.4161
           ],
-          "chance": 0.1637,
-          "lift": 2.206
+          "chance": 0.1628,
+          "lift": 2.287
         },
         "10": {
-          "precision": 0.3515,
+          "precision": 0.3539,
           "ci": [
-            0.3171,
-            0.388
+            0.3216,
+            0.3866
           ],
-          "chance": 0.1637,
-          "lift": 2.147
+          "chance": 0.1628,
+          "lift": 2.174
         }
       },
       "PRISM2 diagnostic\n3072-d": {
         "1": {
-          "precision": 0.3786,
+          "precision": 0.4,
           "ci": [
-            0.2903,
-            0.4712
+            0.3109,
+            0.4863
           ],
-          "chance": 0.1637,
-          "lift": 2.313
+          "chance": 0.1628,
+          "lift": 2.458
         },
         "5": {
-          "precision": 0.3573,
+          "precision": 0.3861,
           "ci": [
-            0.3054,
-            0.4082
+            0.3317,
+            0.4354
           ],
-          "chance": 0.1637,
-          "lift": 2.183
+          "chance": 0.1628,
+          "lift": 2.372
         },
         "10": {
-          "precision": 0.334,
+          "precision": 0.3426,
           "ci": [
-            0.291,
-            0.376
+            0.3037,
+            0.38
           ],
-          "chance": 0.1637,
-          "lift": 2.04
+          "chance": 0.1628,
+          "lift": 2.105
         }
       },
       "mean-pooled tiles\n1280-d": {
         "1": {
-          "precision": 0.4078,
+          "precision": 0.3913,
           "ci": [
-            0.3069,
-            0.5107
+            0.2929,
+            0.4911
           ],
-          "chance": 0.1637,
-          "lift": 2.491
+          "chance": 0.1628,
+          "lift": 2.404
         },
         "5": {
-          "precision": 0.3825,
+          "precision": 0.3861,
           "ci": [
-            0.3383,
-            0.4306
+            0.3416,
+            0.4322
           ],
-          "chance": 0.1637,
-          "lift": 2.337
+          "chance": 0.1628,
+          "lift": 2.372
         },
         "10": {
-          "precision": 0.3816,
+          "precision": 0.3852,
           "ci": [
-            0.3481,
-            0.4177
+            0.3521,
+            0.4179
           ],
-          "chance": 0.1637,
-          "lift": 2.331
+          "chance": 0.1628,
+          "lift": 2.367
         }
       }
     },
     "same organ, all arms": {
       "PRISM2 base\n2560-d": {
         "1": {
-          "precision": 0.9939,
+          "precision": 0.9943,
           "ci": [
-            0.9799,
+            0.9812,
             1.0
           ],
-          "chance": 0.4428,
-          "lift": 2.244
+          "chance": 0.4694,
+          "lift": 2.118
         },
         "5": {
-          "precision": 0.989,
+          "precision": 0.9874,
           "ci": [
-            0.973,
-            0.9988
+            0.9719,
+            0.9978
           ],
-          "chance": 0.4428,
-          "lift": 2.233
+          "chance": 0.4694,
+          "lift": 2.103
         },
         "10": {
-          "precision": 0.9761,
+          "precision": 0.9771,
           "ci": [
-            0.9582,
-            0.9903
+            0.9594,
+            0.9907
           ],
-          "chance": 0.4428,
-          "lift": 2.204
+          "chance": 0.4694,
+          "lift": 2.082
         }
       },
       "PRISM2 diagnostic\n3072-d": {
         "1": {
-          "precision": 0.9939,
+          "precision": 0.9943,
           "ci": [
-            0.9799,
+            0.9812,
             1.0
           ],
-          "chance": 0.4428,
-          "lift": 2.244
+          "chance": 0.4694,
+          "lift": 2.118
         },
         "5": {
-          "precision": 0.9816,
+          "precision": 0.9817,
           "ci": [
-            0.9615,
-            0.9974
+            0.963,
+            0.9956
           ],
-          "chance": 0.4428,
-          "lift": 2.217
+          "chance": 0.4694,
+          "lift": 2.091
         },
         "10": {
-          "precision": 0.973,
+          "precision": 0.9731,
           "ci": [
-            0.9506,
-            0.9904
+            0.9521,
+            0.9896
           ],
-          "chance": 0.4428,
-          "lift": 2.197
+          "chance": 0.4694,
+          "lift": 2.073
         }
       },
       "mean-pooled tiles\n1280-d": {
         "1": {
-          "precision": 0.9939,
+          "precision": 0.9943,
           "ci": [
-            0.9799,
+            0.9812,
             1.0
           ],
-          "chance": 0.4428,
-          "lift": 2.244
+          "chance": 0.4694,
+          "lift": 2.118
         },
         "5": {
-          "precision": 0.9939,
+          "precision": 0.9943,
           "ci": [
-            0.9799,
+            0.9812,
             1.0
           ],
-          "chance": 0.4428,
-          "lift": 2.244
+          "chance": 0.4694,
+          "lift": 2.118
         },
         "10": {
-          "precision": 0.989,
+          "precision": 0.9897,
           "ci": [
-            0.9735,
-            0.9982
+            0.9744,
+            0.9983
           ],
-          "chance": 0.4428,
-          "lift": 2.233
+          "chance": 0.4694,
+          "lift": 2.108
         }
       }
     }
   },
   "pair_rank_agreement_spearman": {
-    "PRISM2 base vs PRISM2 diagnostic": 0.6928,
-    "PRISM2 base vs mean-pooled tiles": 0.6582,
-    "PRISM2 diagnostic vs mean-pooled tiles": 0.6403
+    "PRISM2 base vs PRISM2 diagnostic": 0.6963,
+    "PRISM2 base vs mean-pooled tiles": 0.6586,
+    "PRISM2 diagnostic vs mean-pooled tiles": 0.6265
   },
   "tile_level_comparison": "figure 4, Arm A, exclude same patient: p@10 0.381, chance 0.153, lift 2.50"
 }

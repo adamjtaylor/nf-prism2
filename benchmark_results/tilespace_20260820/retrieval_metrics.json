@@ -12,370 +12,370 @@
   "excluded_arm_C": "Primary-only, so same-class is degenerate; also one centre per organ",
   "by_arm": {
     "A": {
-      "n_index_tiles": 551318,
-      "n_queries": 11870,
-      "n_slides": 103,
-      "n_patients": 68,
+      "n_index_tiles": 743123,
+      "n_queries": 13310,
+      "n_slides": 115,
+      "n_patients": 74,
       "policies": {
         "none": {
           "precision_at_k": {
             "1": {
-              "precision": 0.0201,
+              "precision": 0.0231,
               "ci": [
-                0.0157,
-                0.0251
+                0.0184,
+                0.0287
               ],
-              "chance": 0.1464,
-              "lift": 0.137
+              "chance": 0.1562,
+              "lift": 0.148
             },
             "5": {
-              "precision": 0.0542,
+              "precision": 0.055,
               "ci": [
-                0.0455,
-                0.0641
+                0.0457,
+                0.0646
               ],
-              "chance": 0.1464,
-              "lift": 0.37
+              "chance": 0.1562,
+              "lift": 0.352
             },
             "10": {
-              "precision": 0.0785,
+              "precision": 0.0779,
               "ci": [
-                0.0662,
-                0.0919
+                0.0648,
+                0.091
               ],
-              "chance": 0.1464,
-              "lift": 0.536
+              "chance": 0.1562,
+              "lift": 0.499
             },
             "20": {
-              "precision": 0.106,
+              "precision": 0.1054,
               "ci": [
-                0.0908,
-                0.1219
+                0.0893,
+                0.1217
               ],
-              "chance": 0.1464,
-              "lift": 0.724
+              "chance": 0.1562,
+              "lift": 0.675
             },
             "50": {
-              "precision": 0.1447,
+              "precision": 0.1431,
               "ci": [
-                0.1264,
-                0.1637
+                0.1235,
+                0.1633
               ],
-              "chance": 0.1464,
-              "lift": 0.988
+              "chance": 0.1562,
+              "lift": 0.917
             }
           },
           "by_query_class": {
             "Atypia - hyperplasia": {
-              "n_queries": 1894,
-              "precision_at_10": 0.0722,
+              "n_queries": 2134,
+              "precision_at_10": 0.0714,
               "ci": [
-                0.05,
-                0.0965
+                0.049,
+                0.0958
               ],
-              "chance": 0.0577,
-              "lift": 1.25,
-              "index_tile_share": 0.0616
+              "chance": 0.0838,
+              "lift": 0.85,
+              "index_tile_share": 0.0888
             },
             "Normal": {
-              "n_queries": 1920,
-              "precision_at_10": 0.1538,
+              "n_queries": 2160,
+              "precision_at_10": 0.1629,
               "ci": [
-                0.1111,
-                0.1989
+                0.1261,
+                0.1996
               ],
-              "chance": 0.0137,
-              "lift": 11.19,
-              "index_tile_share": 0.0147
+              "chance": 0.0135,
+              "lift": 12.08,
+              "index_tile_share": 0.0143
             },
             "Normal adjacent": {
-              "n_queries": 1842,
-              "precision_at_10": 0.0613,
+              "n_queries": 1962,
+              "precision_at_10": 0.0577,
               "ci": [
-                0.046,
-                0.0809
+                0.0406,
+                0.0783
               ],
-              "chance": 0.0114,
-              "lift": 5.37,
-              "index_tile_share": 0.0122
+              "chance": 0.0127,
+              "lift": 4.55,
+              "index_tile_share": 0.0135
             },
             "Premalignant": {
-              "n_queries": 2539,
-              "precision_at_10": 0.1021,
+              "n_queries": 2659,
+              "precision_at_10": 0.0989,
               "ci": [
-                0.0794,
-                0.1245
+                0.0776,
+                0.12
               ],
-              "chance": 0.0197,
-              "lift": 5.17,
-              "index_tile_share": 0.0207
+              "chance": 0.0188,
+              "lift": 5.25,
+              "index_tile_share": 0.0197
             },
             "Premalignant - in situ": {
-              "n_queries": 1875,
-              "precision_at_10": 0.0361,
+              "n_queries": 2235,
+              "precision_at_10": 0.0414,
               "ci": [
-                0.0176,
-                0.0552
+                0.0249,
+                0.062
               ],
-              "chance": 0.4339,
-              "lift": 0.08,
-              "index_tile_share": 0.4637
+              "chance": 0.427,
+              "lift": 0.1,
+              "index_tile_share": 0.4513
             },
             "Primary": {
-              "n_queries": 1800,
-              "precision_at_10": 0.0334,
+              "n_queries": 2160,
+              "precision_at_10": 0.0296,
               "ci": [
-                0.0234,
-                0.0434
+                0.0194,
+                0.0407
               ],
-              "chance": 0.3987,
+              "chance": 0.3895,
               "lift": 0.08,
-              "index_tile_share": 0.4271
+              "index_tile_share": 0.4124
             }
           },
-          "frac_top10_same_slide": 0.7625,
-          "frac_top10_same_patient": 0.7921,
-          "mean_pool_size": 551317
+          "frac_top10_same_slide": 0.7635,
+          "frac_top10_same_patient": 0.7996,
+          "mean_pool_size": 743122
         },
         "exclude same slide": {
           "precision_at_k": {
             "1": {
-              "precision": 0.3593,
+              "precision": 0.3431,
               "ci": [
-                0.3137,
-                0.4035
+                0.2995,
+                0.3898
               ],
-              "chance": 0.1503,
-              "lift": 2.391
+              "chance": 0.1595,
+              "lift": 2.151
             },
             "5": {
-              "precision": 0.3549,
+              "precision": 0.3423,
               "ci": [
-                0.3118,
-                0.3966
+                0.3011,
+                0.3875
               ],
-              "chance": 0.1503,
-              "lift": 2.362
+              "chance": 0.1595,
+              "lift": 2.147
             },
             "10": {
-              "precision": 0.3546,
+              "precision": 0.3426,
               "ci": [
-                0.3135,
-                0.3954
+                0.3026,
+                0.3849
               ],
-              "chance": 0.1503,
-              "lift": 2.36
+              "chance": 0.1595,
+              "lift": 2.148
             },
             "20": {
-              "precision": 0.354,
+              "precision": 0.3416,
               "ci": [
-                0.3153,
-                0.393
+                0.3042,
+                0.3815
               ],
-              "chance": 0.1503,
-              "lift": 2.356
+              "chance": 0.1595,
+              "lift": 2.142
             },
             "50": {
-              "precision": 0.3514,
+              "precision": 0.3377,
               "ci": [
-                0.3158,
-                0.3877
+                0.3029,
+                0.3749
               ],
-              "chance": 0.1503,
-              "lift": 2.339
+              "chance": 0.1595,
+              "lift": 2.118
             }
           },
           "by_query_class": {
             "Atypia - hyperplasia": {
-              "n_queries": 1894,
-              "precision_at_10": 0.2155,
+              "n_queries": 2134,
+              "precision_at_10": 0.2456,
               "ci": [
-                0.1515,
-                0.2829
+                0.178,
+                0.3125
               ],
-              "chance": 0.0578,
-              "lift": 3.73,
-              "index_tile_share": 0.0616
+              "chance": 0.0841,
+              "lift": 2.92,
+              "index_tile_share": 0.0888
             },
             "Normal": {
-              "n_queries": 1920,
-              "precision_at_10": 0.5487,
+              "n_queries": 2160,
+              "precision_at_10": 0.5781,
               "ci": [
-                0.4476,
-                0.6251
+                0.4881,
+                0.6477
               ],
-              "chance": 0.0138,
-              "lift": 39.88,
-              "index_tile_share": 0.0147
+              "chance": 0.0135,
+              "lift": 42.84,
+              "index_tile_share": 0.0143
             },
             "Normal adjacent": {
-              "n_queries": 1842,
-              "precision_at_10": 0.1993,
+              "n_queries": 1962,
+              "precision_at_10": 0.1826,
               "ci": [
-                0.1593,
-                0.2482
+                0.1409,
+                0.2229
               ],
-              "chance": 0.0114,
-              "lift": 17.46,
-              "index_tile_share": 0.0122
+              "chance": 0.0127,
+              "lift": 14.38,
+              "index_tile_share": 0.0135
             },
             "Premalignant": {
-              "n_queries": 2539,
-              "precision_at_10": 0.3276,
+              "n_queries": 2659,
+              "precision_at_10": 0.3201,
               "ci": [
-                0.2887,
-                0.371
+                0.2777,
+                0.365
               ],
-              "chance": 0.0198,
-              "lift": 16.59,
-              "index_tile_share": 0.0207
+              "chance": 0.0189,
+              "lift": 16.97,
+              "index_tile_share": 0.0197
             },
             "Premalignant - in situ": {
-              "n_queries": 1875,
-              "precision_at_10": 0.3507,
+              "n_queries": 2235,
+              "precision_at_10": 0.3031,
               "ci": [
-                0.2158,
-                0.482
+                0.2075,
+                0.4079
               ],
-              "chance": 0.4471,
-              "lift": 0.78,
-              "index_tile_share": 0.4637
+              "chance": 0.4375,
+              "lift": 0.69,
+              "index_tile_share": 0.4513
             },
             "Primary": {
-              "n_queries": 1800,
-              "precision_at_10": 0.4951,
+              "n_queries": 2160,
+              "precision_at_10": 0.4166,
               "ci": [
-                0.3936,
-                0.6021
+                0.311,
+                0.5291
               ],
-              "chance": 0.4102,
-              "lift": 1.21,
-              "index_tile_share": 0.4271
+              "chance": 0.3985,
+              "lift": 1.05,
+              "index_tile_share": 0.4124
             }
           },
           "frac_top10_same_slide": 0.0,
-          "frac_top10_same_patient": 0.0826,
-          "mean_pool_size": 545746
+          "frac_top10_same_patient": 0.119,
+          "mean_pool_size": 736424
         },
         "exclude same patient": {
           "precision_at_k": {
             "1": {
-              "precision": 0.3901,
+              "precision": 0.3914,
               "ci": [
-                0.3525,
-                0.4286
+                0.3536,
+                0.4299
               ],
-              "chance": 0.1526,
-              "lift": 2.556
+              "chance": 0.1621,
+              "lift": 2.415
             },
             "5": {
-              "precision": 0.3832,
+              "precision": 0.387,
               "ci": [
-                0.3472,
-                0.4203
+                0.3502,
+                0.4235
               ],
-              "chance": 0.1526,
-              "lift": 2.512
+              "chance": 0.1621,
+              "lift": 2.388
             },
             "10": {
-              "precision": 0.3814,
+              "precision": 0.3849,
               "ci": [
-                0.346,
-                0.4177
+                0.3478,
+                0.4207
               ],
-              "chance": 0.1526,
-              "lift": 2.499
+              "chance": 0.1621,
+              "lift": 2.375
             },
             "20": {
-              "precision": 0.3793,
+              "precision": 0.3819,
               "ci": [
-                0.3456,
-                0.4151
+                0.3471,
+                0.4176
               ],
-              "chance": 0.1526,
-              "lift": 2.486
+              "chance": 0.1621,
+              "lift": 2.356
             },
             "50": {
               "precision": 0.3743,
               "ci": [
-                0.3422,
-                0.408
+                0.3419,
+                0.4084
               ],
-              "chance": 0.1526,
-              "lift": 2.453
+              "chance": 0.1621,
+              "lift": 2.31
             }
           },
           "by_query_class": {
             "Atypia - hyperplasia": {
-              "n_queries": 1894,
-              "precision_at_10": 0.2536,
+              "n_queries": 2134,
+              "precision_at_10": 0.2825,
               "ci": [
-                0.1947,
-                0.3054
+                0.2209,
+                0.3407
               ],
-              "chance": 0.0579,
-              "lift": 4.38,
-              "index_tile_share": 0.0616
+              "chance": 0.0845,
+              "lift": 3.34,
+              "index_tile_share": 0.0888
             },
             "Normal": {
-              "n_queries": 1920,
-              "precision_at_10": 0.5566,
+              "n_queries": 2160,
+              "precision_at_10": 0.5997,
               "ci": [
-                0.4525,
-                0.6304
+                0.5128,
+                0.6677
               ],
-              "chance": 0.0138,
-              "lift": 40.44,
-              "index_tile_share": 0.0147
+              "chance": 0.0135,
+              "lift": 44.41,
+              "index_tile_share": 0.0143
             },
             "Normal adjacent": {
-              "n_queries": 1842,
-              "precision_at_10": 0.2178,
+              "n_queries": 1962,
+              "precision_at_10": 0.1997,
               "ci": [
-                0.1762,
-                0.2649
+                0.1536,
+                0.2423
               ],
-              "chance": 0.0114,
-              "lift": 19.05,
-              "index_tile_share": 0.0122
+              "chance": 0.0127,
+              "lift": 15.71,
+              "index_tile_share": 0.0135
             },
             "Premalignant": {
-              "n_queries": 2539,
-              "precision_at_10": 0.3488,
+              "n_queries": 2659,
+              "precision_at_10": 0.345,
               "ci": [
-                0.3025,
-                0.3992
+                0.3029,
+                0.3897
               ],
-              "chance": 0.0198,
-              "lift": 17.64,
-              "index_tile_share": 0.0207
+              "chance": 0.0189,
+              "lift": 18.28,
+              "index_tile_share": 0.0197
             },
             "Premalignant - in situ": {
-              "n_queries": 1875,
-              "precision_at_10": 0.3969,
+              "n_queries": 2235,
+              "precision_at_10": 0.4065,
               "ci": [
-                0.2462,
-                0.5278
+                0.2942,
+                0.5204
               ],
-              "chance": 0.454,
-              "lift": 0.87,
-              "index_tile_share": 0.4637
+              "chance": 0.4451,
+              "lift": 0.91,
+              "index_tile_share": 0.4513
             },
             "Primary": {
-              "n_queries": 1800,
-              "precision_at_10": 0.526,
+              "n_queries": 2160,
+              "precision_at_10": 0.4665,
               "ci": [
-                0.4435,
-                0.6186
+                0.3729,
+                0.5576
               ],
-              "chance": 0.4181,
-              "lift": 1.26,
-              "index_tile_share": 0.4271
+              "chance": 0.4065,
+              "lift": 1.15,
+              "index_tile_share": 0.4124
             }
           },
           "frac_top10_same_slide": 0.0,
           "frac_top10_same_patient": 0.0,
-          "mean_pool_size": 542554
+          "mean_pool_size": 731217
         }
       }
     },

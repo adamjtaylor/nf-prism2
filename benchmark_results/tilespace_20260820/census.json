@@ -1,23 +1,23 @@
 {
-  "n_slides": 163,
-  "n_patients": 128,
-  "n_tiles": 667537,
+  "n_slides": 175,
+  "n_patients": 134,
+  "n_tiles": 859342,
   "tiles_per_slide": {
-    "median": 643,
+    "median": 756,
     "min": 18,
     "max": 36399,
-    "mean": 4095.3
+    "mean": 4910.5
   },
-  "patients_with_multiple_slides": 26,
+  "patients_with_multiple_slides": 31,
   "pca_dim": 128,
-  "pca_explained_variance": 0.7916,
-  "pca_fit_tiles": 53885,
+  "pca_explained_variance": 0.7895,
+  "pca_fit_tiles": 58685,
   "pca_fit_per_slide": 400,
   "by_arm": {
     "A": {
-      "slides": 103,
-      "patients": 68,
-      "tiles": 551318
+      "slides": 115,
+      "patients": 74,
+      "tiles": 743123
     },
     "B": {
       "slides": 26,
@@ -32,41 +32,41 @@
   },
   "by_class": {
     "Atypia - hyperplasia": {
-      "slides": 23,
-      "patients": 22,
-      "tiles": 35359
+      "slides": 25,
+      "patients": 24,
+      "tiles": 67391
     },
     "Normal": {
-      "slides": 18,
-      "patients": 18,
-      "tiles": 8682
+      "slides": 20,
+      "patients": 20,
+      "tiles": 11208
     },
     "Normal adjacent": {
-      "slides": 16,
-      "patients": 16,
-      "tiles": 6727
+      "slides": 17,
+      "patients": 17,
+      "tiles": 10042
     },
     "Premalignant": {
-      "slides": 30,
-      "patients": 30,
-      "tiles": 14373
+      "slides": 31,
+      "patients": 31,
+      "tiles": 17624
     },
     "Premalignant - in situ": {
-      "slides": 16,
-      "patients": 15,
-      "tiles": 255623
+      "slides": 19,
+      "patients": 18,
+      "tiles": 335340
     },
     "Primary": {
-      "slides": 60,
-      "patients": 60,
-      "tiles": 346773
+      "slides": 63,
+      "patients": 63,
+      "tiles": 417737
     }
   },
   "by_centre": {
     "HTAN BU": {
-      "slides": 103,
-      "patients": 68,
-      "tiles": 551318
+      "slides": 115,
+      "patients": 74,
+      "tiles": 743123
     },
     "HTAN Duke": {
       "slides": 22,
@@ -106,9 +106,9 @@
       "tiles": 3888
     },
     "Lung": {
-      "slides": 103,
-      "patients": 68,
-      "tiles": 551318
+      "slides": 115,
+      "patients": 74,
+      "tiles": 743123
     },
     "Pancreas": {
       "slides": 11,
@@ -116,13 +116,14 @@
       "tiles": 22032
     }
   },
-  "organ_imputed_slides": 48,
+  "organ_imputed_slides": 52,
   "per_slide_tiles": {
     "AP_BU_atypia_01": 180,
     "AP_BU_insitu_01": 75,
     "AP_BU_premal_01": 336,
     "AP_BU_premal_02": 293,
     "AP_BU_premal_03": 329,
+    "AP_BU_premal_04": 3251,
     "AP_BU_premal_05": 90,
     "AP_BU_premal_06": 306,
     "A_BU_atypia_01": 1674,
@@ -140,8 +141,12 @@
     "A_BU_atypia_13": 1407,
     "A_BU_atypia_14": 700,
     "A_BU_atypia_15": 516,
+    "A_BU_atypia_16": 3030,
+    "A_BU_atypia_17": 29002,
     "A_BU_atypia_18": 24423,
+    "A_BU_insitu_01": 26449,
     "A_BU_insitu_02": 23255,
+    "A_BU_insitu_03": 26121,
     "A_BU_insitu_04": 475,
     "A_BU_insitu_05": 12739,
     "A_BU_insitu_06": 15583,
@@ -154,6 +159,7 @@
     "A_BU_insitu_13": 20625,
     "A_BU_insitu_14": 15899,
     "A_BU_insitu_15": 12767,
+    "A_BU_insitu_16": 27147,
     "A_BU_insitu_17": 11849,
     "A_BU_insitu_18": 36399,
     "A_BU_normadj_01": 429,
@@ -168,6 +174,7 @@
     "A_BU_normadj_11": 385,
     "A_BU_normadj_12": 947,
     "A_BU_normadj_13": 353,
+    "A_BU_normadj_14": 3315,
     "A_BU_normadj_15": 756,
     "A_BU_normadj_16": 339,
     "A_BU_normadj_17": 128,
@@ -176,6 +183,7 @@
     "A_BU_normal_02": 882,
     "A_BU_normal_03": 445,
     "A_BU_normal_04": 300,
+    "A_BU_normal_05": 1526,
     "A_BU_normal_06": 169,
     "A_BU_normal_07": 285,
     "A_BU_normal_08": 392,
@@ -187,6 +195,7 @@
     "A_BU_normal_14": 1652,
     "A_BU_normal_15": 194,
     "A_BU_normal_16": 414,
+    "A_BU_normal_17": 1000,
     "A_BU_normal_18": 918,
     "A_BU_premal_01": 802,
     "A_BU_premal_02": 643,
@@ -207,9 +216,11 @@
     "A_BU_premal_17": 386,
     "A_BU_premal_18": 722,
     "A_BU_primary_01": 120,
+    "A_BU_primary_02": 27116,
     "A_BU_primary_03": 8901,
     "A_BU_primary_04": 12933,
     "A_BU_primary_05": 12315,
+    "A_BU_primary_06": 25498,
     "A_BU_primary_07": 20770,
     "A_BU_primary_08": 16925,
     "A_BU_primary_09": 8660,
@@ -221,6 +232,7 @@
     "A_BU_primary_15": 23137,
     "A_BU_primary_16": 28106,
     "A_BU_primary_17": 9415,
+    "A_BU_primary_18": 18350,
     "B_Vanderbilt_atypia_01": 386,
     "B_Vanderbilt_atypia_02": 235,
     "B_Vanderbilt_atypia_03": 42,
@@ -317,6 +329,13 @@
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "PCGA-01-0006-037-20238-00776BX_deid"
+    },
+    "AP_BU_premal_04": {
+      "w": 77688,
+      "h": 44197,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0007-050-18033-00456BX_deid"
     },
     "AP_BU_premal_05": {
       "w": 7967,
@@ -437,6 +456,20 @@
       "mag": 20.0,
       "trident_name": "PCGA02_10304_1001429_deid"
     },
+    "A_BU_atypia_16": {
+      "w": 67728,
+      "h": 42354,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10306_1001384_deid"
+    },
+    "A_BU_atypia_17": {
+      "w": 75696,
+      "h": 46993,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50801_D7_deid"
+    },
     "A_BU_atypia_18": {
       "w": 61752,
       "h": 44290,
@@ -444,12 +477,26 @@
       "mag": 20.0,
       "trident_name": "50802_A4_deid"
     },
+    "A_BU_insitu_01": {
+      "w": 85656,
+      "h": 42875,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50801_A13_AN_deid"
+    },
     "A_BU_insitu_02": {
       "w": 61752,
       "h": 36803,
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "50803_B2_deid"
+    },
+    "A_BU_insitu_03": {
+      "w": 71712,
+      "h": 47341,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50805_B3_deid"
     },
     "A_BU_insitu_04": {
       "w": 13943,
@@ -534,6 +581,13 @@
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "50732_L4_deid"
+    },
+    "A_BU_insitu_16": {
+      "w": 63744,
+      "h": 46908,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50733_A2_deid"
     },
     "A_BU_insitu_17": {
       "w": 45816,
@@ -633,6 +687,13 @@
       "mag": 20.0,
       "trident_name": "PCGA02_10417_1002833_deid"
     },
+    "A_BU_normadj_14": {
+      "w": 69720,
+      "h": 42997,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA02_10419_1002525_deid"
+    },
     "A_BU_normadj_15": {
       "w": 85656,
       "h": 13221,
@@ -688,6 +749,13 @@
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "PCGA-01-0006-037-21015-01279BX_deid"
+    },
+    "A_BU_normal_05": {
+      "w": 75696,
+      "h": 41730,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0007-048-18033-00455BX_deid"
     },
     "A_BU_normal_06": {
       "w": 51792,
@@ -765,6 +833,13 @@
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "PCGA-01-0027-089-19515-00639BX_deid"
+    },
+    "A_BU_normal_17": {
+      "w": 99600,
+      "h": 28964,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "PCGA-01-0028-041-23527-00757BX_deid"
     },
     "A_BU_normal_18": {
       "w": 41831,
@@ -906,6 +981,13 @@
       "mag": 20.0,
       "trident_name": "PCGA02_10206_1001595_deid"
     },
+    "A_BU_primary_02": {
+      "w": 83664,
+      "h": 46168,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50801_A13_deid"
+    },
     "A_BU_primary_03": {
       "w": 47808,
       "h": 38726,
@@ -926,6 +1008,13 @@
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "50804_B1_deid"
+    },
+    "A_BU_primary_06": {
+      "w": 67728,
+      "h": 43840,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50805_B4_deid"
     },
     "A_BU_primary_07": {
       "w": 73704,
@@ -1003,6 +1092,13 @@
       "ps0": 224.0,
       "mag": 20.0,
       "trident_name": "50720_A2_deid"
+    },
+    "A_BU_primary_18": {
+      "w": 63744,
+      "h": 46089,
+      "ps0": 224.0,
+      "mag": 20.0,
+      "trident_name": "50721_D3_deid"
     },
     "B_Vanderbilt_atypia_01": {
       "w": 32811,

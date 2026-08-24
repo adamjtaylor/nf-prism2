@@ -6,39 +6,39 @@
   "by_arm": {
     "A": {
       "different slide": {
-        "observed": 0.3606,
+        "observed": 0.3561,
         "ci": [
-          0.3045,
-          0.4168
+          0.3054,
+          0.4036
         ],
-        "chance": 0.9895,
-        "ratio_to_chance": 0.3644
+        "chance": 0.9907,
+        "ratio_to_chance": 0.3595
       },
       "different patient": {
-        "observed": 0.3305,
+        "observed": 0.3188,
         "ci": [
-          0.2831,
-          0.379
+          0.2755,
+          0.3637
         ],
-        "chance": 0.9836,
-        "ratio_to_chance": 0.336
+        "chance": 0.9835,
+        "ratio_to_chance": 0.3242
       },
       "different class": {
-        "observed": 0.2327,
+        "observed": 0.2307,
         "ci": [
-          0.1926,
-          0.2737
+          0.1961,
+          0.2663
         ],
-        "chance": 0.8416,
-        "ratio_to_chance": 0.2765
+        "chance": 0.833,
+        "ratio_to_chance": 0.277
       },
-      "n_index_tiles": 551318,
-      "n_queries": 19103,
-      "n_slides": 103,
-      "n_patients": 68,
+      "n_index_tiles": 743123,
+      "n_queries": 21503,
+      "n_slides": 115,
+      "n_patients": 74,
       "n_centres": 1,
-      "pct_queries_with_no_cross_slide_neighbour": 21.9,
-      "pct_queries_with_no_cross_patient_neighbour": 23.8,
+      "pct_queries_with_no_cross_slide_neighbour": 22.2,
+      "pct_queries_with_no_cross_patient_neighbour": 26.2,
       "median_cross_slide_neighbours_of_30": 10.0
     },
     "B": {

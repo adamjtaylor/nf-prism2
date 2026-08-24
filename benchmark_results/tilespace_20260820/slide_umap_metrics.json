@@ -1,181 +1,181 @@
 {
-  "n_slides": 163,
-  "n_patients": 128,
+  "n_slides": 175,
+  "n_patients": 134,
   "k": 5,
   "umap_n_neighbors": 15,
   "pca_explained_variance": {
     "PRISM2 base | all": [
-      0.3204,
-      0.1418
+      0.3206,
+      0.1525
     ],
     "PRISM2 diagnostic | all": [
-      0.3156,
-      0.1948
+      0.3251,
+      0.1984
     ],
     "mean-pooled tiles | all": [
-      0.2415,
-      0.1105
+      0.2402,
+      0.1165
     ],
     "PRISM2 base | armA": [
-      0.5711,
-      0.0772
+      0.5787,
+      0.0686
     ],
     "PRISM2 diagnostic | armA": [
-      0.6524,
-      0.0773
+      0.6558,
+      0.071
     ],
     "mean-pooled tiles | armA": [
-      0.3967,
-      0.0853
+      0.4016,
+      0.0803
     ]
   },
   "knn_purity_at_5": {
     "PRISM2 base | original | organ": {
-      "purity": 0.989,
+      "purity": 0.9874,
       "ci": [
-        0.9733,
-        0.9988
+        0.9721,
+        0.9978
       ]
     },
     "PRISM2 base | UMAP 2-D | organ": {
-      "purity": 0.9902,
+      "purity": 0.992,
       "ci": [
-        0.975,
-        0.9988
+        0.9784,
+        1.0
       ]
     },
     "PRISM2 base | PCA 2-D | organ": {
-      "purity": 0.8699,
+      "purity": 0.8549,
       "ci": [
-        0.8224,
-        0.9115
+        0.8078,
+        0.8934
       ]
     },
     "PRISM2 base | original | class": {
-      "purity": 0.3612,
+      "purity": 0.3722,
       "ci": [
-        0.3105,
-        0.4085
+        0.3268,
+        0.4173
       ]
     },
     "PRISM2 base | UMAP 2-D | class": {
-      "purity": 0.3709,
+      "purity": 0.3461,
       "ci": [
-        0.3327,
-        0.4097
+        0.2992,
+        0.3929
       ]
     },
     "PRISM2 base | PCA 2-D | class": {
-      "purity": 0.299,
+      "purity": 0.2887,
       "ci": [
-        0.2579,
-        0.3417
+        0.2567,
+        0.3208
       ]
     },
     "PRISM2 diagnostic | original | organ": {
-      "purity": 0.9816,
+      "purity": 0.9817,
       "ci": [
-        0.9612,
-        0.9965
+        0.9631,
+        0.9957
       ]
     },
     "PRISM2 diagnostic | UMAP 2-D | organ": {
-      "purity": 0.9779,
+      "purity": 0.976,
       "ci": [
-        0.9557,
-        0.9949
+        0.9543,
+        0.993
       ]
     },
     "PRISM2 diagnostic | PCA 2-D | organ": {
-      "purity": 0.9448,
+      "purity": 0.9486,
       "ci": [
-        0.9096,
-        0.9727
+        0.9181,
+        0.9749
       ]
     },
     "PRISM2 diagnostic | original | class": {
-      "purity": 0.3573,
+      "purity": 0.3861,
       "ci": [
-        0.3054,
-        0.4082
+        0.3339,
+        0.4342
       ]
     },
     "PRISM2 diagnostic | UMAP 2-D | class": {
-      "purity": 0.3748,
+      "purity": 0.3704,
       "ci": [
-        0.3264,
-        0.4237
+        0.3232,
+        0.4176
       ]
     },
     "PRISM2 diagnostic | PCA 2-D | class": {
-      "purity": 0.2893,
+      "purity": 0.3078,
       "ci": [
-        0.244,
-        0.3341
+        0.2651,
+        0.3522
       ]
     },
     "mean-pooled tiles | original | organ": {
-      "purity": 0.9939,
+      "purity": 0.9943,
       "ci": [
-        0.9808,
+        0.982,
         1.0
       ]
     },
     "mean-pooled tiles | UMAP 2-D | organ": {
-      "purity": 0.9902,
+      "purity": 0.992,
       "ci": [
-        0.9759,
-        0.9989
+        0.9786,
+        1.0
       ]
     },
     "mean-pooled tiles | PCA 2-D | organ": {
-      "purity": 0.9644,
+      "purity": 0.9577,
       "ci": [
-        0.9362,
-        0.9861
+        0.9297,
+        0.9799
       ]
     },
     "mean-pooled tiles | original | class": {
-      "purity": 0.3825,
+      "purity": 0.3861,
       "ci": [
-        0.3389,
-        0.4291
+        0.3418,
+        0.4333
       ]
     },
     "mean-pooled tiles | UMAP 2-D | class": {
-      "purity": 0.3748,
+      "purity": 0.3896,
       "ci": [
-        0.3247,
-        0.4283
+        0.3459,
+        0.4396
       ]
     },
     "mean-pooled tiles | PCA 2-D | class": {
-      "purity": 0.4117,
+      "purity": 0.3878,
       "ci": [
-        0.3678,
-        0.4585
+        0.3448,
+        0.4309
       ]
     }
   },
   "note": "purity is the mean fraction of a slide's 5 nearest neighbours sharing its label, query patient excluded; CI over patients. Comparing 'original' with the 2-D rows says how much of the neighbourhood the projection kept.",
   "arm_A_pc1": {
     "PRISM2 base\n2560-d": {
-      "spearman_vs_ordinal_class": 0.6524,
-      "spearman_vs_log_tiles": 0.6289,
-      "spearman_class_vs_log_tiles": 0.551,
-      "variance_explained": 0.5711
+      "spearman_vs_ordinal_class": 0.6676,
+      "spearman_vs_log_tiles": 0.6748,
+      "spearman_class_vs_log_tiles": 0.5661,
+      "variance_explained": 0.5787
     },
     "PRISM2 diagnostic\n3072-d": {
-      "spearman_vs_ordinal_class": 0.6443,
-      "spearman_vs_log_tiles": 0.6656,
-      "spearman_class_vs_log_tiles": 0.551,
-      "variance_explained": 0.6524
+      "spearman_vs_ordinal_class": 0.668,
+      "spearman_vs_log_tiles": 0.7115,
+      "spearman_class_vs_log_tiles": 0.5661,
+      "variance_explained": 0.6558
     },
     "mean-pooled tiles\n1280-d": {
-      "spearman_vs_ordinal_class": 0.6539,
-      "spearman_vs_log_tiles": 0.6518,
-      "spearman_class_vs_log_tiles": 0.551,
-      "variance_explained": 0.3967
+      "spearman_vs_ordinal_class": 0.6646,
+      "spearman_vs_log_tiles": 0.7201,
+      "spearman_class_vs_log_tiles": 0.5661,
+      "variance_explained": 0.4016
     }
   },
   "encoding": "hue = ordinal progression class on the blue ramp; marker shape = organ"
