@@ -112,7 +112,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "AP_BU_insitu_01",
@@ -227,7 +227,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "AP_BU_premal_01",
@@ -342,7 +342,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "AP_BU_premal_02",
@@ -457,7 +457,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "AP_BU_premal_03",
@@ -572,7 +572,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "AP_BU_premal_04",
@@ -687,7 +687,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "AP_BU_premal_05",
@@ -802,7 +802,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "AP_BU_premal_06",
@@ -917,7 +917,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_01",
@@ -1032,7 +1032,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_02",
@@ -1147,7 +1147,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_03",
@@ -1262,7 +1262,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_04",
@@ -1377,7 +1377,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_05",
@@ -1492,7 +1492,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_06",
@@ -1607,7 +1607,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_07",
@@ -1722,7 +1722,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_08",
@@ -1837,7 +1837,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_09",
@@ -1952,7 +1952,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_10",
@@ -2067,7 +2067,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_11",
@@ -2182,7 +2182,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_12",
@@ -2297,7 +2297,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_13",
@@ -2412,7 +2412,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_14",
@@ -2527,7 +2527,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_15",
@@ -2642,7 +2642,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_atypia_16",
@@ -2757,7 +2757,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_atypia_17",
@@ -2872,7 +2872,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_atypia_18",
@@ -2987,7 +2987,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_01",
@@ -3102,7 +3102,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_insitu_02",
@@ -3217,7 +3217,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_03",
@@ -3332,7 +3332,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_insitu_04",
@@ -3447,7 +3447,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_05",
@@ -3562,7 +3562,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_06",
@@ -3677,7 +3677,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_07",
@@ -3792,7 +3792,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_08",
@@ -3907,7 +3907,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_09",
@@ -4022,7 +4022,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_10",
@@ -4137,7 +4137,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_11",
@@ -4252,7 +4252,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_12",
@@ -4367,7 +4367,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_13",
@@ -4482,7 +4482,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_14",
@@ -4597,7 +4597,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_15",
@@ -4712,7 +4712,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_16",
@@ -4827,7 +4827,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_insitu_17",
@@ -4942,7 +4942,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_insitu_18",
@@ -5057,7 +5057,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_01",
@@ -5172,7 +5172,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_02",
@@ -5287,7 +5287,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_03",
@@ -5402,7 +5402,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_04",
@@ -5517,7 +5517,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_05",
@@ -5632,7 +5632,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_07",
@@ -5747,7 +5747,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_08",
@@ -5862,7 +5862,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_09",
@@ -5977,7 +5977,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_10",
@@ -6092,7 +6092,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_11",
@@ -6207,7 +6207,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_12",
@@ -6322,7 +6322,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_13",
@@ -6437,7 +6437,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_14",
@@ -6552,7 +6552,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_normadj_15",
@@ -6667,7 +6667,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_16",
@@ -6782,7 +6782,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_17",
@@ -6897,7 +6897,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normadj_18",
@@ -7012,7 +7012,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_01",
@@ -7127,7 +7127,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_02",
@@ -7242,7 +7242,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_03",
@@ -7357,7 +7357,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_04",
@@ -7472,7 +7472,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_05",
@@ -7587,7 +7587,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_normal_06",
@@ -7702,7 +7702,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_07",
@@ -7817,7 +7817,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_08",
@@ -7932,7 +7932,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_09",
@@ -8047,7 +8047,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_10",
@@ -8162,7 +8162,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_11",
@@ -8277,7 +8277,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_12",
@@ -8392,7 +8392,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_13",
@@ -8507,7 +8507,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_14",
@@ -8622,7 +8622,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_15",
@@ -8737,7 +8737,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_16",
@@ -8852,7 +8852,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_normal_17",
@@ -8967,7 +8967,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_normal_18",
@@ -9082,7 +9082,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_01",
@@ -9197,7 +9197,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_02",
@@ -9312,7 +9312,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_03",
@@ -9427,7 +9427,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_04",
@@ -9542,7 +9542,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_05",
@@ -9657,7 +9657,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_06",
@@ -9772,7 +9772,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_07",
@@ -9887,7 +9887,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_08",
@@ -10002,7 +10002,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_09",
@@ -10117,7 +10117,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_10",
@@ -10232,7 +10232,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_11",
@@ -10347,7 +10347,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_12",
@@ -10462,7 +10462,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_13",
@@ -10577,7 +10577,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_14",
@@ -10692,7 +10692,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_15",
@@ -10807,7 +10807,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_16",
@@ -10922,7 +10922,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_17",
@@ -11037,7 +11037,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_premal_18",
@@ -11152,7 +11152,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_01",
@@ -11267,7 +11267,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_02",
@@ -11382,7 +11382,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_primary_03",
@@ -11497,7 +11497,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_04",
@@ -11612,7 +11612,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_05",
@@ -11727,7 +11727,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_06",
@@ -11842,7 +11842,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "A_BU_primary_07",
@@ -11957,7 +11957,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_08",
@@ -12072,7 +12072,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_09",
@@ -12187,7 +12187,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_10",
@@ -12302,7 +12302,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_11",
@@ -12417,7 +12417,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_12",
@@ -12532,7 +12532,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_13",
@@ -12647,7 +12647,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_14",
@@ -12762,7 +12762,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_15",
@@ -12877,7 +12877,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_16",
@@ -12992,7 +12992,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_17",
@@ -13107,7 +13107,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "A_BU_primary_18",
@@ -13222,7 +13222,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "retry25c"
+  "_run": "nf-prism2-progression-retry25c"
  },
  {
   "sample": "B_Vanderbilt_atypia_01",
@@ -13337,7 +13337,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_atypia_02",
@@ -13452,7 +13452,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_atypia_03",
@@ -13567,7 +13567,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_atypia_04",
@@ -13682,7 +13682,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_atypia_05",
@@ -13797,7 +13797,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_atypia_06",
@@ -13912,7 +13912,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_normal_01",
@@ -14027,7 +14027,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_normal_02",
@@ -14142,7 +14142,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_01",
@@ -14257,7 +14257,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_02",
@@ -14372,7 +14372,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_03",
@@ -14487,7 +14487,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_04",
@@ -14602,7 +14602,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_05",
@@ -14717,7 +14717,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_06",
@@ -14832,7 +14832,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_premal_07",
@@ -14947,7 +14947,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_02",
@@ -15062,7 +15062,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_03",
@@ -15177,7 +15177,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_04",
@@ -15292,7 +15292,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_05",
@@ -15407,7 +15407,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_06",
@@ -15522,7 +15522,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_07",
@@ -15637,7 +15637,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_08",
@@ -15752,7 +15752,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_09",
@@ -15867,7 +15867,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_10",
@@ -15982,7 +15982,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_11",
@@ -16097,7 +16097,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "B_Vanderbilt_primary_12",
@@ -16212,7 +16212,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_01",
@@ -16327,7 +16327,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_02",
@@ -16442,7 +16442,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_03",
@@ -16557,7 +16557,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_04",
@@ -16672,7 +16672,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_05",
@@ -16787,7 +16787,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_06",
@@ -16902,7 +16902,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_07",
@@ -17017,7 +17017,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_08",
@@ -17132,7 +17132,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_09",
@@ -17247,7 +17247,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_10",
@@ -17362,7 +17362,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_11",
@@ -17477,7 +17477,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_12",
@@ -17592,7 +17592,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_13",
@@ -17707,7 +17707,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_14",
@@ -17822,7 +17822,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_15",
@@ -17937,7 +17937,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_16",
@@ -18052,7 +18052,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_17",
@@ -18167,7 +18167,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_18",
@@ -18282,7 +18282,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_19",
@@ -18397,7 +18397,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_20",
@@ -18512,7 +18512,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_22",
@@ -18627,7 +18627,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_Duke_primary_23",
@@ -18742,7 +18742,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_HMS_primary_02",
@@ -18857,7 +18857,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_01",
@@ -18972,7 +18972,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_02",
@@ -19087,7 +19087,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_03",
@@ -19202,7 +19202,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_04",
@@ -19317,7 +19317,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_05",
@@ -19432,7 +19432,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_06",
@@ -19547,7 +19547,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_07",
@@ -19662,7 +19662,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_08",
@@ -19777,7 +19777,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_09",
@@ -19892,7 +19892,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_10",
@@ -20007,7 +20007,7 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  },
  {
   "sample": "C_WUSTL_primary_11",
@@ -20122,6 +20122,6 @@
   "base_embedding_dim": 2560,
   "diagnostic_embedding_dim": 3072,
   "report_prompt": "Write a report",
-  "run": "progression-188"
+  "_run": "nf-prism2-progression-188-resume (spot)"
  }
 ]

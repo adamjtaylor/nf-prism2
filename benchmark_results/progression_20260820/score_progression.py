@@ -129,7 +129,23 @@ print("\n" + "=" * 78)
 vals = [yn(r, q) for r in rows for q in LADDER if not np.isnan(yn(r, q))]
 print(f"4. bf16 grid: {len(set(np.round(vals, 6)))} distinct values across {len(vals)} scores")
 
-json.dump({"n_slides": len(rows), "n_patients": len({r['pt'] for r in rows}),
-           "stage_mc": {"exact": exact / len(scored), "within_one": within1 / len(scored),
-                        "off_cohort": n_off / len(scored), "n": len(scored)},
-           "ladder": ladder_out}, open(os.path.join(HERE, "progression_metrics.json"), "w"), indent=2)
+# One file per arm. The three arms answer different questions and were previously overwriting
+# each other here, so whichever ARM ran last defined the file; the pre-registered primary endpoint
+# is Arm A and it now has its own name.
+runs = sorted({r["rec"].get("_run", "unknown") for r in rows})
+auc_out = {}
+for q in ["invasive_carcinoma", "malignancy", "negative_for_tumor", "carcinoma_in_situ"]:
+    pos = [v for v in (yn(r, q) for r in sub if r["ttt"] == "Primary") if not np.isnan(v)]
+    neg = [v for v in (yn(r, q) for r in sub if r["ttt"] in ("Normal", "Normal adjacent"))
+           if not np.isnan(v)]
+    a = auc(pos, neg)
+    auc_out[q] = dict(auc=None if a is None else round(float(a), 4), n_pos=len(pos), n_neg=len(neg))
+out = {"arm": ARM, "n_slides": len(rows), "n_patients": len({r['pt'] for r in rows}),
+       "runs": runs,
+       "stage_mc": {"exact": exact / len(scored), "within_one": within1 / len(scored),
+                    "off_cohort": n_off / len(scored), "n": len(scored)},
+       "ladder": ladder_out,
+       "normal_vs_primary_auc": auc_out,
+       "bf16_distinct_values": len(set(np.round(vals, 6))), "bf16_n_scores": len(vals)}
+json.dump(out, open(os.path.join(HERE, f"progression_metrics_{ARM}.json"), "w"), indent=2)
+print(f"\nwrote progression_metrics_{ARM}.json")

@@ -1,0 +1,185 @@
+{
+  "arm": "ALL",
+  "n_slides": 175,
+  "n_patients": 134,
+  "runs": [
+    "nf-prism2-progression-188-resume (spot)",
+    "nf-prism2-progression-retry25c"
+  ],
+  "stage_mc": {
+    "exact": 0.2057142857142857,
+    "within_one": 0.5714285714285714,
+    "off_cohort": 0.24,
+    "n": 175
+  },
+  "ladder": {
+    "negative_for_tumor": {
+      "rho": -0.782,
+      "ci": [
+        -0.816,
+        -0.738
+      ],
+      "peak": "Normal adjacent",
+      "means": {
+        "Normal": 0.9527,
+        "Normal adjacent": 0.9687,
+        "Atypia - hyperplasia": 0.9451,
+        "Premalignant": 0.8943,
+        "Premalignant - in situ": 0.6819,
+        "Primary": 0.3686
+      }
+    },
+    "benign": {
+      "rho": -0.731,
+      "ci": [
+        -0.798,
+        -0.657
+      ],
+      "peak": "Normal adjacent",
+      "means": {
+        "Normal": 0.9517,
+        "Normal adjacent": 0.9635,
+        "Atypia - hyperplasia": 0.9629,
+        "Premalignant": 0.9614,
+        "Premalignant - in situ": 0.7388,
+        "Primary": 0.3646
+      }
+    },
+    "hyperplasia_metaplasia": {
+      "rho": -0.158,
+      "ci": [
+        -0.281,
+        -0.034
+      ],
+      "peak": "Premalignant - in situ",
+      "means": {
+        "Normal": 0.242,
+        "Normal adjacent": 0.1517,
+        "Atypia - hyperplasia": 0.2004,
+        "Premalignant": 0.1801,
+        "Premalignant - in situ": 0.283,
+        "Primary": 0.1417
+      }
+    },
+    "dysplasia": {
+      "rho": 0.636,
+      "ci": [
+        0.566,
+        0.701
+      ],
+      "peak": "Premalignant - in situ",
+      "means": {
+        "Normal": 0.0449,
+        "Normal adjacent": 0.0582,
+        "Atypia - hyperplasia": 0.075,
+        "Premalignant": 0.1646,
+        "Premalignant - in situ": 0.4022,
+        "Primary": 0.3605
+      }
+    },
+    "atypia": {
+      "rho": 0.507,
+      "ci": [
+        0.411,
+        0.6
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.2746,
+        "Normal adjacent": 0.2792,
+        "Atypia - hyperplasia": 0.2369,
+        "Premalignant": 0.2766,
+        "Premalignant - in situ": 0.4737,
+        "Primary": 0.4772
+      }
+    },
+    "precancerous_lesion": {
+      "rho": 0.177,
+      "ci": [
+        0.06,
+        0.29
+      ],
+      "peak": "Premalignant - in situ",
+      "means": {
+        "Normal": 0.1425,
+        "Normal adjacent": 0.1316,
+        "Atypia - hyperplasia": 0.1392,
+        "Premalignant": 0.2574,
+        "Premalignant - in situ": 0.2776,
+        "Primary": 0.253
+      }
+    },
+    "carcinoma_in_situ": {
+      "rho": 0.576,
+      "ci": [
+        0.498,
+        0.658
+      ],
+      "peak": "Premalignant - in situ",
+      "means": {
+        "Normal": 0.0623,
+        "Normal adjacent": 0.0809,
+        "Atypia - hyperplasia": 0.0783,
+        "Premalignant": 0.0715,
+        "Premalignant - in situ": 0.6365,
+        "Primary": 0.4894
+      }
+    },
+    "invasive_carcinoma": {
+      "rho": 0.548,
+      "ci": [
+        0.459,
+        0.631
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.0258,
+        "Normal adjacent": 0.013,
+        "Atypia - hyperplasia": 0.0162,
+        "Premalignant": 0.0166,
+        "Premalignant - in situ": 0.3775,
+        "Primary": 0.4394
+      }
+    },
+    "malignancy": {
+      "rho": 0.731,
+      "ci": [
+        0.669,
+        0.781
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.0337,
+        "Normal adjacent": 0.0399,
+        "Atypia - hyperplasia": 0.0194,
+        "Premalignant": 0.029,
+        "Premalignant - in situ": 0.5439,
+        "Primary": 0.7388
+      }
+    }
+  },
+  "normal_vs_primary_auc": {
+    "invasive_carcinoma": {
+      "auc": 0.8342,
+      "n_pos": 63,
+      "n_neg": 37
+    },
+    "malignancy": {
+      "auc": 0.9659,
+      "n_pos": 63,
+      "n_neg": 37
+    },
+    "negative_for_tumor": {
+      "auc": 0.0062,
+      "n_pos": 63,
+      "n_neg": 37
+    },
+    "carcinoma_in_situ": {
+      "auc": 0.8574,
+      "n_pos": 63,
+      "n_neg": 37
+    }
+  },
+  "bf16_distinct_values": 49,
+  "bf16_n_scores": 1575
+}

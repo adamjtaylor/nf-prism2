@@ -1,0 +1,48 @@
+{
+  "spot_run": "nf-prism2-progression-188-resume (spot)",
+  "retry_run": "nf-prism2-progression-retry25c",
+  "n_spot": 163,
+  "n_retry": 12,
+  "n_merged": 175,
+  "added": [
+    "AP_BU_premal_04",
+    "A_BU_atypia_16",
+    "A_BU_atypia_17",
+    "A_BU_insitu_01",
+    "A_BU_insitu_03",
+    "A_BU_insitu_16",
+    "A_BU_normadj_14",
+    "A_BU_normal_05",
+    "A_BU_normal_17",
+    "A_BU_primary_02",
+    "A_BU_primary_06",
+    "A_BU_primary_18"
+  ],
+  "replaced": [],
+  "by_arm_class_after": {
+    "A | Atypia - hyperplasia": 19,
+    "A | Normal": 18,
+    "A | Normal adjacent": 17,
+    "A | Premalignant": 24,
+    "A | Premalignant - in situ": 19,
+    "A | Primary": 18,
+    "B | Atypia - hyperplasia": 6,
+    "B | Normal": 2,
+    "B | Premalignant": 7,
+    "B | Primary": 11,
+    "C | Primary": 34
+  },
+  "by_arm_class_before": {
+    "A | Atypia - hyperplasia": 17,
+    "A | Normal": 16,
+    "A | Normal adjacent": 16,
+    "A | Premalignant": 23,
+    "A | Premalignant - in situ": 16,
+    "A | Primary": 15,
+    "B | Atypia - hyperplasia": 6,
+    "B | Normal": 2,
+    "B | Premalignant": 7,
+    "B | Primary": 11,
+    "C | Primary": 34
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "arm": "B",
+  "n_slides": 26,
+  "n_patients": 26,
+  "runs": [
+    "nf-prism2-progression-188-resume (spot)"
+  ],
+  "stage_mc": {
+    "exact": 0.34615384615384615,
+    "within_one": 0.5769230769230769,
+    "off_cohort": 0.038461538461538464,
+    "n": 26
+  },
+  "ladder": {
+    "negative_for_tumor": {
+      "rho": -0.892,
+      "ci": [
+        -0.935,
+        -0.827
+      ],
+      "peak": "Normal",
+      "means": {
+        "Normal": 0.8998,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.8627,
+        "Premalignant": 0.656,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.1569
+      }
+    },
+    "benign": {
+      "rho": -0.735,
+      "ci": [
+        -0.843,
+        -0.52
+      ],
+      "peak": "Atypia - hyperplasia",
+      "means": {
+        "Normal": 0.9337,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.9626,
+        "Premalignant": 0.9619,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.2109
+      }
+    },
+    "hyperplasia_metaplasia": {
+      "rho": -0.187,
+      "ci": [
+        -0.466,
+        0.175
+      ],
+      "peak": "Normal",
+      "means": {
+        "Normal": 0.4024,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.2699,
+        "Premalignant": 0.1266,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.1857
+      }
+    },
+    "dysplasia": {
+      "rho": 0.657,
+      "ci": [
+        0.427,
+        0.811
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.0371,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.0993,
+        "Premalignant": 0.5629,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.572
+      }
+    },
+    "atypia": {
+      "rho": 0.213,
+      "ci": [
+        -0.172,
+        0.55
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.2929,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.2678,
+        "Premalignant": 0.2318,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.3429
+      }
+    },
+    "precancerous_lesion": {
+      "rho": 0.594,
+      "ci": [
+        0.339,
+        0.739
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.2977,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.1934,
+        "Premalignant": 0.7276,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.745
+      }
+    },
+    "carcinoma_in_situ": {
+      "rho": 0.838,
+      "ci": [
+        0.728,
+        0.93
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.0116,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.0176,
+        "Premalignant": 0.0479,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.2932
+      }
+    },
+    "invasive_carcinoma": {
+      "rho": 0.679,
+      "ci": [
+        0.452,
+        0.819
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.008,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.0046,
+        "Premalignant": 0.0028,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.4254
+      }
+    },
+    "malignancy": {
+      "rho": 0.758,
+      "ci": [
+        0.577,
+        0.852
+      ],
+      "peak": "Primary",
+      "means": {
+        "Normal": 0.0088,
+        "Normal adjacent": NaN,
+        "Atypia - hyperplasia": 0.007,
+        "Premalignant": 0.0139,
+        "Premalignant - in situ": NaN,
+        "Primary": 0.7972
+      }
+    }
+  },
+  "normal_vs_primary_auc": {
+    "invasive_carcinoma": {
+      "auc": 0.9545,
+      "n_pos": 11,
+      "n_neg": 2
+    },
+    "malignancy": {
+      "auc": 1.0,
+      "n_pos": 11,
+      "n_neg": 2
+    },
+    "negative_for_tumor": {
+      "auc": 0.0,
+      "n_pos": 11,
+      "n_neg": 2
+    },
+    "carcinoma_in_situ": {
+      "auc": 1.0,
+      "n_pos": 11,
+      "n_neg": 2
+    }
+  },
+  "bf16_distinct_values": 43,
+  "bf16_n_scores": 234
+}

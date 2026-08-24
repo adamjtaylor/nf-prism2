@@ -1,6 +1,11 @@
 {
+  "arm": "A",
   "n_slides": 115,
   "n_patients": 74,
+  "runs": [
+    "nf-prism2-progression-188-resume (spot)",
+    "nf-prism2-progression-retry25c"
+  ],
   "stage_mc": {
     "exact": 0.23478260869565218,
     "within_one": 0.7304347826086957,
@@ -152,5 +157,29 @@
         "Primary": 0.7885
       }
     }
-  }
+  },
+  "normal_vs_primary_auc": {
+    "invasive_carcinoma": {
+      "auc": 0.9984,
+      "n_pos": 18,
+      "n_neg": 35
+    },
+    "malignancy": {
+      "auc": 0.9976,
+      "n_pos": 18,
+      "n_neg": 35
+    },
+    "negative_for_tumor": {
+      "auc": 0.0016,
+      "n_pos": 18,
+      "n_neg": 35
+    },
+    "carcinoma_in_situ": {
+      "auc": 0.9698,
+      "n_pos": 18,
+      "n_neg": 35
+    }
+  },
+  "bf16_distinct_values": 41,
+  "bf16_n_scores": 1035
 }

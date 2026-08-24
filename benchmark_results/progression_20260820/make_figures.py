@@ -11,7 +11,7 @@ Form follows the job of each result:
 Palette: dataviz reference instance. Sequential blue for magnitude; categorical slots 1 and 2
 (blue #2a78d6, orange #eb6834) validated at CVD dE 24.7 protan, 33.6 normal vision.
 """
-import csv, json, os, itertools
+import collections, csv, json, os, itertools
 import numpy as np
 import matplotlib as mpl
 mpl.use("Agg")
@@ -214,9 +214,35 @@ print("wrote fig4")
 # Two jobs: show that the free-text site description is stable while the forced choice slips,
 # and contrast forced-choice accuracy between an everyday vocabulary (organ) and HTAN's
 # curation vocabulary (progression stage).
-def _mcsite(r):
+# The forced-choice option set is the HTAN data model's own valid values plus off-cohort
+# distractors, so correctness is decided by mapping the chosen option back to an organ and
+# comparing it with the slide's own organ, rather than by hard-coding a letter.
+ANSWER_ORGAN = {"Lung": "Lung", "Breast": "Breast", "Pancreas": "Pancreas",
+                "Fallopian tube or ovary": "Fallopian tube", "Colon or rectum": "Colon",
+                "Esophagus NOS": "Esophagus", "Skin": "Skin"}
+ATLAS_ORGAN = {"HTAN BU": "Lung", "HTAN Vanderbilt": "Colon"}
+ORGAN_FIX = {"Other and Ill-defined Sites": "Fallopian tube"}
+
+def _organ(r):
+    o = ORGAN_FIX.get((r.get("organ") or "").strip(), (r.get("organ") or "").strip())
+    return o or ATLAS_ORGAN.get(r["atlas"], "unknown")
+
+def _site_answer(r):
     a = (r["rec"].get("multiple_choice", {}).get("primary_site_mc", {}).get("answer") or "").strip()
-    return {"B": "Lung", "J": "Esophagus"}.get(a[:1].upper(), "other")
+    return ANSWER_ORGAN.get(a.split(". ", 1)[-1], "other") if a else None
+
+def _site_accuracy(sub):
+    ans = [(r, _site_answer(r)) for r in sub]
+    answered = [(r, a) for r, a in ans if a]
+    ok = sum(1 for r, a in answered if a == _organ(r))
+    return ok, len(answered)
+
+def _mcsite(r):
+    """Lung is the only correct answer in Arm A; everything else is wrong and is shown as such.
+    An earlier version bucketed anything that was not Lung or Esophagus as 'other' and then never
+    plotted it, which silently dropped the one slide that answered Skin."""
+    a = _site_answer(r)
+    return "Lung" if a == "Lung" else ("Esophagus" if a == "Esophagus" else "other wrong answer")
 def _desc(r):
     d = (r["rec"].get("open_ended", {}).get("specimen_site", {}).get("answer") or "").lower()
     for k, v in [("bronch", "bronchial wall"), ("lung", "lung / parenchyma"), ("pleur", "pleura"),
@@ -233,23 +259,35 @@ tab = {}
 for r in rows:
     tab[(_desc(r), _mcsite(r))] = tab.get((_desc(r), _mcsite(r)), 0) + 1
 y = np.arange(len(cats))
-lung = [tab.get((c, "Lung"), 0) for c in cats]
-eso = [tab.get((c, "Esophagus"), 0) for c in cats]
+lung = np.array([tab.get((c, "Lung"), 0) for c in cats])
+eso = np.array([tab.get((c, "Esophagus"), 0) for c in cats])
+oth = np.array([tab.get((c, "other wrong answer"), 0) for c in cats])
+assert (lung + eso + oth).sum() == len(rows), "every Arm A slide must appear in exactly one bar"
 ax.barh(y, lung, height=0.58, color=BLUE, label="answered Lung (correct)")
 ax.barh(y, eso, left=lung, height=0.58, color=ORANGE, label="answered Esophagus (wrong)")
-for i, (l, e) in enumerate(zip(lung, eso)):
+ax.barh(y, oth, left=lung + eso, height=0.58, color=INK3, label="answered something else (wrong)")
+for i, (l, e, o) in enumerate(zip(lung, eso, oth)):
     if l: ax.text(l / 2, i, str(l), ha="center", va="center", fontsize=8.5, color="#ffffff")
-    if e: ax.text(l + e + 1.2, i, str(e), va="center", fontsize=8.5, color=ORANGE)
+    if e or o: ax.text(l + e + o + 1.2, i, str(e + o), va="center", fontsize=8.5, color=ORANGE)
 ax.set_yticks(y, cats, fontsize=9); ax.invert_yaxis()
 ax.set_xlabel("Arm A slides (HTAN records only 'Lung NOS', and no site at all)")
 ax.legend(frameon=False, fontsize=8.5, loc="lower right")
 ax.grid(axis="x", color="#ecebe6", lw=0.7); ax.set_axisbelow(True)
+n_bronch = sum(1 for r in rows if _desc(r) == "bronchial wall")
+n_verbatim = max(collections.Counter(
+    (r["rec"].get("open_ended", {}).get("specimen_site", {}).get("answer") or "").strip()
+    for r in rows if _desc(r) == "bronchial wall").values())
 ax.set_title("The free text is stable; the forced choice slips.\n"
-             "All 83 bronchial-wall descriptions are verbatim identical.", fontsize=9.5, color=INK)
+             f"{n_verbatim} of the {n_bronch} bronchial-wall descriptions are verbatim identical.",
+             fontsize=9.5, color=INK)
 
 ax = axes[1]
-bars = [("primary site\nArm A", 74 / 81, 0.10), ("primary site\nArm C", 31 / 34, 0.10),
-        ("progression stage\nall arms", 0.209, 0.125)]
+okA, nA = _site_accuracy([r for r in rows_all if _arm(r) == "A"])
+okC, nC = _site_accuracy([r for r in rows_all if _arm(r) == "C"])
+_stage = json.load(open(f"{HERE}/progression_metrics_ALL.json"))["stage_mc"]["exact"]
+bars = [(f"primary site\nArm A  (n={nA})", okA / nA, 0.10),
+        (f"primary site\nArm C  (n={nC})", okC / nC, 0.10),
+        (f"progression stage\nall arms  (n={len(rows_all)})", _stage, 0.125)]
 x = np.arange(len(bars))
 ax.bar(x, [b[1] for b in bars], width=0.5, color=[BLUE, BLUE, ORANGE])
 for i, b in enumerate(bars):
